@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 
 import * as $ from 'jquery';
 import 'bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
