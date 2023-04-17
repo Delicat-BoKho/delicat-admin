@@ -1,1 +1,34 @@
-<p>login works!</p>
+<section>
+  <div class="form-box">
+    <div class="form-value">
+      <form action="">
+        <h2>Login</h2>
+        <div class="inputbox">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <input type="email" name="email" id="email" required />
+          <label for="email">Email</label>
+        </div>
+        <div class="inputbox">
+          <fa-icon [icon]="faLock"></fa-icon>
+          <input type="password" name="password" id="password" required />
+          <label for="password">Password</label>
+        </div>
+        <div class="forget">
+          <label for="rememberMe">
+            <input type="checkbox" name="rememberMe" id="rememberMe" /> Remember
+            Me
+            <br />
+            <a href="#"> Forget Password </a>
+          </label>
+        </div>
+        <button class="btn btn-outline-primary">Log in</button>
+        <div class="register">
+          <p>
+            Don't have a account?<br />
+            <a href="#">Register</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
