@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import * as $ from 'jquery';
 import 'bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './alert/alert.component';
@@ -49,7 +50,7 @@ import { SettingPasswordComponent } from './setting/setting-password/setting-pas
     SettingsComponent,
     SettingPasswordComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })
