@@ -1,1 +1,44 @@
-<p>menu works!</p>
+<input type="checkbox" id="check" />
+<label for="check">
+  <fa-icon [icon]="faBars" id="btn"></fa-icon>
+  <fa-icon [icon]="faCancel" id="close"></fa-icon>
+</label>
+<div class="sidebar">
+  <header>Menu</header>
+  <ul>
+    <li>
+      <a routerLink="/general">
+        <fa-icon [icon]="faChartLine"></fa-icon>
+        General
+      </a>
+    </li>
+    <li>
+      <a routerLink="/orders"> <fa-icon [icon]="faOrders"></fa-icon> Orders </a>
+    </li>
+    <li>
+      <a routerLink="/customers">
+        <fa-icon [icon]="faCustomers"></fa-icon> Customers</a
+      >
+    </li>
+    <li>
+      <a routerLink="/products">
+        <fa-icon [icon]="faProducts"></fa-icon> Products</a
+      >
+    </li>
+    <li>
+      <a routerLink="/contents">
+        <fa-icon [icon]="faContents"></fa-icon> Contents</a
+      >
+    </li>
+    <li>
+      <a routerLink="/settings">
+        <fa-icon [icon]="faSettings"></fa-icon> Settings</a
+      >
+    </li>
+    <li>
+      <a> <fa-icon [icon]="faLogOut"></fa-icon> Logout </a>
+    </li>
+  </ul>
+</div>
+
+<router-outlet></router-outlet>
