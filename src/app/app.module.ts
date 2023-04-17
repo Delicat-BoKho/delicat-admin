@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {AngularFireModule} from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -58,7 +58,16 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     SettingsComponent,
     SettingPasswordComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, FontAwesomeModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()), provideFunctions(() => getFunctions()), provideRemoteConfig(() => getRemoteConfig()), provideStorage(() => getStorage())],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule, FontAwesomeModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()), provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()), provideFunctions(() => getFunctions()),
+    provideRemoteConfig(() => getRemoteConfig()), provideStorage(() => getStorage()),
+    AngularFireModule.initializeApp(environment.firebase)
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
