@@ -13,8 +13,12 @@ export class ProductService {
 
   // save meta data of file to firestore
   saveMetaDataOfFile(product : Product) {
-    const fileMeta = {
-      id : '',
+    //Tạo một document có id tương tự như id nhập tay
+    //**** Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
+    const myDoc = this.fireStore.collection('/Product').doc(product.id);
+    //Tạo một file json vì firebase chỉ nhận data dạng json, không nhận dạng class nên ko đẩy trực tiếp được
+    const productMeta = {
+      id : product.id,
       name : product.name,
       type: product.type,
       price: product.price,
@@ -25,15 +29,26 @@ export class ProductService {
       color: product.color,
     }
 
-    fileMeta.id = this.fireStore.createId();
+    //đẩy data lên
+    myDoc.set(productMeta)
+    .then(() => {
+      console.log('Document successfully written!');
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error);
+    });
 
-    this.fireStore.collection('/Product').add(fileMeta).then( res => console.log("save to firestore successfully!", res));
 
   }
 
   // dislpay products
   getProducts() {
     return this.fireStore.collection('/Product').snapshotChanges();
+  }
+  // display one product
+
+  getProductById(productId: string) {
+    return this.fireStore.collection('/Product').doc(productId).snapshotChanges();
   }
 
   // delete products
@@ -46,13 +61,6 @@ export class ProductService {
 
 
   }
-  //hạn chế up nhầm hình
-  updateProduct(product : Product){
-    this.fireStore.collection('/Product').doc(product.id).set(product, { merge: true }).then(() => {
-      console.log('Product successfully deleted');
-    }).catch((error) => {
-      console.error('Error deleting product: ', error);
-    });
 
-  }
+
 }

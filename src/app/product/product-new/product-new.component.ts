@@ -98,7 +98,7 @@ export class ProductNewComponent {
 
   updateProduct(product : Product) {
     if(window.confirm('Are you sure you want to update '   + '?')) {
-      this.service.updateProduct(product);
+      this.service.saveMetaDataOfFile(product);
       // this.ngOnInit();
    }
 
