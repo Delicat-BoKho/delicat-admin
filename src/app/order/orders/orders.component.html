@@ -29,61 +29,69 @@
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="order-id text-primary">
-                          {{ order.id }}
-                        </h6>
+                        <h6 class="order-id text-primary">#{{ order.id }}</h6>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">
+                    <span class="order-info text-xs font-weight-bold mb-0">
                       {{ order.date }}
-                    </p>
+                    </span>
                   </td>
-                  <td class="align-middle text-center">
+                  <td class="text-center">
                     <a
-                      class="text-xs font-weight-bold text-secondary mb-0"
+                      class="order-info mb-0"
                       routerLink="/customer/{{ order.customerID }}"
                     >
                       {{ order.customerID }}
                     </a>
                   </td>
-                  <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">
+                  <td class="text-center">
+                    <span class="order-info">
                       {{ order.paymentMethod }}
                     </span>
                   </td>
-                  <td class="align-middle text-center">
+                  <td class="text-center">
                     <ul>
                       <li
-                        class="text-secondary text-xs font-weight-bold"
+                        class="order-info"
                         *ngFor="let product of order.products"
                         [attr.data-toggle]="'tooltip'"
                         [attr.title]="product.name"
                       >
-                        {{ product.name }} ({{ product.quantity }})
+                        #{{ product.id }} ({{ product.quantity }})
                       </li>
                     </ul>
                   </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="badge badge-sm bg-gradient-secondary">
+                  <td class="text-center text-sm">
+                    <span
+                      class="badge"
+                      [ngClass]="{
+                        pending: order.status === 'pending',
+                        dispatched: order.status === 'dispatched',
+                        completed: order.status === 'completed',
+                        other: !['pending', 'dispatched', 'completed'].includes(
+                          order.status
+                        )
+                      }"
+                    >
                       {{ order.status }}
                     </span>
                   </td>
-                  <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">
+                  <td>
+                    <span class="order-info">
                       {{ order.deliveryAddress }}
                     </span>
                   </td>
-                  <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">
-                      {{ order.total }}
+                  <td class="text-center">
+                    <span class="order-info">
+                      {{ order.total | currency }}
                     </span>
                   </td>
-                  <td class="align-middle">
+                  <td>
                     <button class="btn btn-info btn-sm">Edit</button>
                   </td>
-                  <td class="align-middle">
+                  <td>
                     <button class="btn btn-danger btn-sm">Delete</button>
                   </td>
                 </tr>
@@ -95,3 +103,36 @@
     </div>
   </div>
 </div>
+
+<!-- <div
+  class="modal fade"
+  id="deleteConfirmationModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteConfirmationModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">
+          Confirm Deletion
+        </h5>
+      </div>
+      <div class="modal-body">Are you sure you want to delete this order?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteOrder()">
+          Yes
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="cancelDelete()"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->

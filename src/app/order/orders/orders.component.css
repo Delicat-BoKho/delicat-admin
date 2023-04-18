@@ -3,6 +3,12 @@
   font-family: "Poppins", sans-serif;
 }
 
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
 /* Styles for tooltips */
 [data-toggle="tooltip"] {
   position: relative;
@@ -30,9 +36,8 @@
 }
 
 .container-title {
-  background-image: linear-gradient(195deg, #ec407a, #d81b60);
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
-    0 7px 10px -5px rgba(233, 30, 99, 0.4);
+  background-image: linear-gradient(195deg, #2c74b3, #205295);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgb(32, 82, 149);
   border-radius: 0.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1rem;
@@ -57,4 +62,65 @@ th {
 h6.order-id {
   margin-bottom: 0 !important;
   line-height: 1.5;
+}
+
+tr td .order-info {
+  color: #7b809a !important;
+  line-height: 1.25;
+  font-weight: 600 !important;
+}
+
+tr td {
+  vertical-align: middle !important;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.badge,
+button {
+  display: inline-block;
+  padding: 0.55em 0.9em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.45rem;
+}
+
+.badge.pending {
+  background-image: linear-gradient(195deg, #ef5350, #e53935);
+}
+
+.badge.dispatched {
+  background-image: linear-gradient(195deg, #ffa726, #fb8c00);
+}
+
+.badge.completed {
+  background-image: linear-gradient(195deg, #66bb6a, #43a047);
+}
+
+.badge.other {
+  background-image: linear-gradient(195deg, #747b8a, #495361);
+}
+
+.btn-info {
+  box-shadow: 0 3px 3px 0 rgba(26, 115, 232, 0.15),
+    0 3px 1px -2px rgba(26, 115, 232, 0.2), 0 1px 5px 0 rgba(26, 115, 232, 0.15);
+  background-color: #1a73e8;
+  border-color: #1a73e8;
+}
+
+.btn-info:hover {
+  background-color: #1662c5;
+  border-color: #155cba;
+  box-shadow: 0 14px 26px -12px rgba(26, 115, 232, 0.4),
+    0 4px 23px 0 rgba(26, 115, 232, 0.15),
+    0 8px 10px -5px rgba(26, 115, 232, 0.2);
 }

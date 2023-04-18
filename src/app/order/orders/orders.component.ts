@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-declare var $: any;
+import * as $ from 'jquery';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-orders',
@@ -7,17 +8,28 @@ declare var $: any;
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
+  formModal: any;
+  errMessage: string = '';
+  orderToDelete: any;
+
+  // sample data
   orders: any = [
     {
       id: 1,
       date: '2023-04-15',
       products: [
-        { name: 'Product 1', quantity: 2 },
-        { name: 'Product 2', quantity: 1 },
-        { name: 'Product 3', quantity: 3 },
+        { id: '1', name: 'Product1', quantity: 2 },
+        { id: '2', name: 'Product 2', quantity: 1 },
+        {
+          id: '3',
+          name: 'Product 3 loremProduct 3 loremProduct 3 lorem',
+          quantity: 3,
+        },
       ],
       total: 500,
       customer: 'John Doe',
+      paymentMethod: 'Credit Card',
+      status: 'completed',
     },
     {
       id: 'order01',
@@ -29,7 +41,7 @@ export class OrdersComponent implements OnInit {
       ],
       total: 300,
       customerID: 'customer01',
-      status: 'finished',
+      status: 'pending',
     },
     {
       id: 'order01',
@@ -41,7 +53,7 @@ export class OrdersComponent implements OnInit {
       ],
       total: 300,
       customerID: 'customer01',
-      status: 'finished',
+      status: 'dispatched',
       deliveryAddress: '1234 Main St, New York, NY 10001',
     },
   ];
