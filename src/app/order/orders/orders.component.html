@@ -1,1 +1,97 @@
-<p>orders works!</p>
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="container-title">
+            <h1 class="title">Orders</h1>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0 table-striped">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Order Date</th>
+                  <th>Customer ID</th>
+                  <th>Payment Method</th>
+                  <th>Products & Quantity</th>
+                  <th>Status</th>
+                  <th>Delivery Address</th>
+                  <th>Order Total</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of orders">
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="order-id text-primary">
+                          {{ order.id }}
+                        </h6>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">
+                      {{ order.date }}
+                    </p>
+                  </td>
+                  <td class="align-middle text-center">
+                    <a
+                      class="text-xs font-weight-bold text-secondary mb-0"
+                      routerLink="/customer/{{ order.customerID }}"
+                    >
+                      {{ order.customerID }}
+                    </a>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">
+                      {{ order.paymentMethod }}
+                    </span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <ul>
+                      <li
+                        class="text-secondary text-xs font-weight-bold"
+                        *ngFor="let product of order.products"
+                        [attr.data-toggle]="'tooltip'"
+                        [attr.title]="product.name"
+                      >
+                        {{ product.name }} ({{ product.quantity }})
+                      </li>
+                    </ul>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <span class="badge badge-sm bg-gradient-secondary">
+                      {{ order.status }}
+                    </span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">
+                      {{ order.deliveryAddress }}
+                    </span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">
+                      {{ order.total }}
+                    </span>
+                  </td>
+                  <td class="align-middle">
+                    <button class="btn btn-info btn-sm">Edit</button>
+                  </td>
+                  <td class="align-middle">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
