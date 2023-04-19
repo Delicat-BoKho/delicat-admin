@@ -25,7 +25,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let order of orders">
+                <tr *ngFor="let order of orders | paginate : paginationConfig">
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
@@ -102,6 +102,15 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="d-flex justify-content-center my-3">
+  <pagination-controls
+    id="orders"
+    previousLabel="Previous"
+    nextLabel="Next"
+    (pageChange)="onPageChange($event)"
+  ></pagination-controls>
 </div>
 
 <!-- <div

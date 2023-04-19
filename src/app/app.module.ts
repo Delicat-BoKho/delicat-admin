@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import * as $ from 'jquery';
 import 'bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './alert/alert.component';
@@ -26,7 +28,6 @@ import { ContentEditComponent } from './content/content-edit/content-edit.compon
 import { ContentNewComponent } from './content/content-new/content-new.component';
 import { SettingsComponent } from './setting/settings/settings.component';
 import { SettingPasswordComponent } from './setting/setting-password/setting-password.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SettingsComponent,
     SettingPasswordComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, FontAwesomeModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    FontAwesomeModule,
+    NgxPaginationModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

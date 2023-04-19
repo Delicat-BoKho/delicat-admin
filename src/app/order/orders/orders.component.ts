@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import * as bootstrap from 'bootstrap';
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
   selector: 'app-orders',
@@ -11,6 +12,17 @@ export class OrdersComponent implements OnInit {
   formModal: any;
   errMessage: string = '';
   orderToDelete: any;
+  p: number = 1;
+
+  // define pagination
+  paginationConfig: PaginationInstance = {
+    id: 'orders',
+    itemsPerPage: 10,
+    currentPage: this.p,
+  };
+  onPageChange(pageNumber: number) {
+    this.paginationConfig.currentPage = pageNumber;
+  }
 
   // sample data
   orders: any = [
