@@ -4,7 +4,7 @@
   <tr>
     <td>Nhập Id:</td>
     <td>
-      <input type="text"  [(ngModel)]="product.id"  />
+      <input type="text"  [(ngModel)]="product.id"   />
     </td>
   </tr>
   <tr>
@@ -16,7 +16,7 @@
   <tr>
     <td>Nhập loại:</td>
     <td>
-      <input type="text"  [(ngModel)]="product.type"  />
+      <input type="text"  [(ngModel)]="product.type" placeholder="accessories hoặc suit" />
     </td>
   </tr>
   <tr>
@@ -51,7 +51,7 @@
   <tr>
     <td>Nhập tag:</td>
     <td>
-      <input type="text"  [(ngModel)]="product.tag"  />
+      <input type="text"  [(ngModel)]="product.tag"  placeholder="Suits or Blazers or Shirts or Trousers"/>
     </td>
   </tr>
   <tr>
@@ -62,10 +62,45 @@
   </tr>
   <tr>
     <td>Nhập màu:</td>
-    <td>
-      <input type="text" placeholder="Ví dụ: red,blue" [(ngModel)]="colortemp"  />
+    <td  >
+      <input type="text" placeholder="red or cream or green or brown or gray" [(ngModel)]="colortemp" style="width: 300px;" />
     </td>
   </tr>
+
+  <tr>
+    <td>Nhập Id của comment</td>
+    <td>
+      <input type="text" placeholder="Cú pháp C + ID sản phẩm, ví dụ CS001"   [(ngModel)]="reviewTemp.id"  />
+    </td>
+  </tr>
+  <tr>
+    <td>Nhập rating của comment</td>
+    <td>
+      <input type="number" placeholder="từ 1 đến 5"   [(ngModel)]="reviewTemp.ratingComment"  />
+    </td>
+  </tr>
+  <tr>
+    <td>Nhập username của comment</td>
+    <td>
+      <input type="text"    [(ngModel)]="reviewTemp.userName"  />
+    </td>
+  </tr>
+  <tr>
+    <td>Nhập ngày của comment</td>
+    <td>
+      <input type="text"  placeholder="9 March 2023"   [(ngModel)]="reviewTemp.dateCreate"  />
+    </td>
+  </tr>
+  <tr>
+    <td>Nhập nội dung của comment</td>
+    <td>
+      <input type="text"     [(ngModel)]="reviewTemp.review"  />
+    </td>
+  </tr>
+
+
+
+
   <tr>
     <td>
       <button type="button" class="btn btn-outline-warning" [disabled] = "!selectedFiles" (click)="uploadFile()">Upload</button>

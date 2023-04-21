@@ -3,7 +3,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, forkJoin, switchMap,Observable  } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
-
+import { Comment } from 'src/app/models/comment';
 
 @Component({
   selector: 'app-product-new',
@@ -19,7 +19,8 @@ export class ProductNewComponent {
   errMessage:string=''
   sizetemp:string=""
   colortemp:string=""
-  testArray=[];
+  reviewTemp=new Comment();
+
 
   constructor(private service: ProductService, private fireStorage: AngularFireStorage) { }
 
@@ -66,8 +67,13 @@ export class ProductNewComponent {
 
     this.product.size = this.sizetemp.split(',');
     this.product.color = this.colortemp.split(',');
+
+    this.product.reviews.push(this.reviewTemp);
+
+
     this.service.saveMetaDataOfFile(this.product);
     this.product = new Product();
+
   }
 
   getProducts() {
@@ -99,6 +105,7 @@ export class ProductNewComponent {
   updateProduct(product : Product) {
     if(window.confirm('Are you sure you want to update '   + '?')) {
       this.service.saveMetaDataOfFile(product);
+
       // this.ngOnInit();
    }
 

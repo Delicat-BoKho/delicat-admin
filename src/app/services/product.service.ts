@@ -14,8 +14,10 @@ export class ProductService {
   // save meta data of file to firestore
   saveMetaDataOfFile(product : Product) {
     //Tạo một document có id tương tự như id nhập tay
-    //**** Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
+    //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
     const myDoc = this.fireStore.collection('/Product').doc(product.id);
+    //Tạo subcollection cho mảng reviews
+    const subCollection = myDoc.collection('reviews').doc(product.reviews[0].id).ref;
     //Tạo một file json vì firebase chỉ nhận data dạng json, không nhận dạng class nên ko đẩy trực tiếp được
     const productMeta = {
       id : product.id,
@@ -31,6 +33,21 @@ export class ProductService {
 
     //đẩy data lên
     myDoc.set(productMeta)
+    .then(() => {
+      console.log('Document successfully written!');
+    })
+    .catch((error) => {
+      console.error('Error writing document: ', error);
+    });
+    subCollection.set(
+      {
+        id:product.reviews[0].id,
+        ratingComment: product.reviews[0].ratingComment,
+        userName: product.reviews[0].userName,
+        dateCreate: product.reviews[0].dateCreate,
+        review: product.reviews[0].review
+      }
+    )
     .then(() => {
       console.log('Document successfully written!');
     })
@@ -53,12 +70,21 @@ export class ProductService {
 
   // delete products
   deleteProduct(product : Product) {
+
+    // for (let i=0;i< product.reviews.length;i++){
+    //   this.fireStore.collection('/Product').doc(product.id).collection('reviews').doc(product.reviews[i].id).delete().then(() => {
+    //     console.log('Product successfully deleted');
+    //   }).catch((error) => {
+    //     console.error('Error deleting product: ', error);
+    //   });
+    // }
+
+
     this.fireStore.collection('/Product').doc(product.id).delete().then(() => {
       console.log('Product successfully deleted');
     }).catch((error) => {
       console.error('Error deleting product: ', error);
     });
-
 
   }
 

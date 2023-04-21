@@ -4,7 +4,7 @@ export interface IComment{
 
 
 export class Comment{
-  id:number=0;
+  id:string='';
   ratingComment:number=0;
   userName:string='';
   dateCreate:string=''
