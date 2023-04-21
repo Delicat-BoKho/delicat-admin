@@ -73,6 +73,9 @@ export class ProductNewComponent {
 
     this.service.saveMetaDataOfFile(this.product);
     this.product = new Product();
+    this.reviewTemp=new Comment();
+    this.sizetemp=""
+    this.colortemp=""
 
   }
 
