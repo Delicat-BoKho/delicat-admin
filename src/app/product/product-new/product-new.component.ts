@@ -26,6 +26,7 @@ export class ProductNewComponent {
 
   ngOnInit(): void {
     this.getProducts();
+    this.service.getProduct().subscribe(product=>console.log(product))
   }
 
   selectFile(event: any) {
@@ -70,24 +71,20 @@ export class ProductNewComponent {
 
     this.product.reviews.push(this.reviewTemp);
 
-
     this.service.saveMetaDataOfFile(this.product);
     this.product = new Product();
     this.reviewTemp=new Comment();
     this.sizetemp=""
     this.colortemp=""
+    this.percentage= 0;
 
   }
 
   getProducts() {
     this.service.getProducts().subscribe({
       next:(res:any) => {
-        this.products = res.map((e : any) => {
-            const data = e.payload.doc.data();
-            data.id = e.payload.doc.id;
-            //console.log(data);
-            return data;
-        });
+        this.products = res
+
     }, error:(err) => {
         this.errMessage=err
         console.log('Error occured while fetching file meta data');
@@ -108,7 +105,7 @@ export class ProductNewComponent {
   updateProduct(product : Product) {
     if(window.confirm('Are you sure you want to update '   + '?')) {
       this.service.saveMetaDataOfFile(product);
-
+      console.log(product)
       // this.ngOnInit();
    }
 

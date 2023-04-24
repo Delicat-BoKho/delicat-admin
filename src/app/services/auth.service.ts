@@ -19,7 +19,7 @@ export class AuthService {
   login(email : string, password : string) {
     this.fireauth.signInWithEmailAndPassword(email,password).then( async res => {
         localStorage.setItem('token',JSON.stringify(res.user?.uid));
-
+        console.log(res)
         if(res.user?.emailVerified == true) {
           //đăng nhập thành công, kiểm tra xem customer này có trong collection customer chưa
           const docRef = firebase.firestore().doc('Customer/'+res.user?.uid);
