@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {AngularFireModule} from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -27,6 +27,14 @@ import { ContentNewComponent } from './content/content-new/content-new.component
 import { SettingsComponent } from './setting/settings/settings.component';
 import { SettingPasswordComponent } from './setting/setting-password/setting-password.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -50,7 +58,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SettingsComponent,
     SettingPasswordComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, FontAwesomeModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule, FontAwesomeModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()), provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()), provideFunctions(() => getFunctions()),
+    provideRemoteConfig(() => getRemoteConfig()), provideStorage(() => getStorage()),
+    AngularFireModule.initializeApp(environment.firebase)
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
