@@ -1,10 +1,93 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css']
+  styleUrls: ['./orders.component.css'],
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
+  errMessage: string = '';
+  orderToDelete: any;
 
+  // Define pagination
+  paginationConfig: PaginationInstance = {
+    id: 'orders',
+    itemsPerPage: 8,
+    currentPage: 1,
+  };
+  onPageChange(pageNumber: number) {
+    this.paginationConfig.currentPage = pageNumber;
+  }
+
+  // Sample data
+  orders: any = [
+    {
+      id: 'O000',
+      date: '2023-04-15',
+      products: [
+        { id: '1', name: 'Product1', quantity: 2 },
+        { id: '2', name: 'Product 2', quantity: 1 },
+        {
+          id: 'S301',
+          name: 'Oatmeal Sharkskin Slim Fit Suit',
+          quantity: 3,
+        },
+      ],
+      total: 500,
+      customerID: 'C001',
+      paymentMethod: 'Cash',
+      status: 'completed',
+    },
+    {
+      id: 'O001',
+      date: '2023-04-16',
+      paymentMethod: 'Credit Card',
+      products: [
+        { name: 'Product 2', quantity: 1 },
+        { name: 'Product 4', quantity: 2 },
+      ],
+      total: 300,
+      customerID: 'C002',
+      status: 'pending',
+    },
+    {
+      id: 'O002',
+      date: '2023-04-16',
+      paymentMethod: 'Credit Card',
+      products: [
+        { name: 'Product 2', quantity: 1 },
+        { name: 'Product 4', quantity: 2 },
+      ],
+      total: 300,
+      customerID: 'C003',
+      status: 'dispatched',
+      deliveryAddress: '1234 Main St, New York, NY 10001',
+    },
+    {
+      id: 'O003',
+      date: '2023-04-16',
+      paymentMethod: 'Credit Card',
+      products: [
+        { name: 'Product 2', quantity: 1 },
+        { name: 'Product 4', quantity: 2 },
+      ],
+      total: 300,
+      customerID: 'C003',
+      status: 'unknown',
+      deliveryAddress: '1234 Main St, New York, NY 10001',
+    },
+  ];
+
+  constructor() {} // orderService here
+
+  ngOnInit(): void {
+    // Code to view all orders here
+  }
+
+  confirmDeleteOrder(order: any) {}
+
+  deleteOrder() {}
+
+  cancelDeleteOrder() {}
 }
