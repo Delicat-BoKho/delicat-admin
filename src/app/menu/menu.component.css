@@ -3,7 +3,8 @@
   margin: 0;
   list-style: none;
   text-decoration: none;
-  color: #cbe4de;
+  color: #e3f2fd;
+  font-family: "Poppins";
 }
 
 .sidebar {
@@ -11,14 +12,14 @@
   left: -250px;
   width: 250px;
   height: 100%;
-  background: #144272;
+  background: #1976d2;
   transition: all 0.5s ease;
 }
 .sidebar header {
   font-size: 20px;
   line-height: 70px;
   text-align: center;
-  background: #205295;
+  background: #2196f3;
   user-select: none;
   margin-left: 10px;
 }
@@ -46,7 +47,7 @@ ul li:hover a {
 label #btn,
 label #close {
   position: absolute;
-  background: #144272;
+  background: #1976d2;
   border-radius: 3px;
   cursor: pointer;
 }
