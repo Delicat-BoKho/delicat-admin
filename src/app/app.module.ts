@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {AngularFireModule} from '@angular/fire/compat';
+import { AngularFireModule } from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import * as $ from 'jquery';
-import 'bootstrap';
 
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from './alert/alert.component';
@@ -26,15 +23,21 @@ import { ContentEditComponent } from './content/content-edit/content-edit.compon
 import { ContentNewComponent } from './content/content-new/content-new.component';
 import { SettingsComponent } from './setting/settings/settings.component';
 import { SettingPasswordComponent } from './setting/setting-password/setting-password.component';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
-import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import {
+  provideRemoteConfig,
+  getRemoteConfig,
+} from '@angular/fire/remote-config';
+import { provideStorage, getStorage } from '@angular/fire/storage';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -61,12 +64,19 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, FontAwesomeModule,
+    FormsModule,
+    FontAwesomeModule,
+    TooltipModule.forRoot(),
+
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()), provideDatabase(() => getDatabase()),
-    provideFirestore(() => getFirestore()), provideFunctions(() => getFunctions()),
-    provideRemoteConfig(() => getRemoteConfig()), provideStorage(() => getStorage()),
-    AngularFireModule.initializeApp(environment.firebase)
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore()),
+    provideFunctions(() => getFunctions()),
+    provideRemoteConfig(() => getRemoteConfig()),
+    provideStorage(() => getStorage()),
+    AngularFireModule.initializeApp(environment.firebase),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

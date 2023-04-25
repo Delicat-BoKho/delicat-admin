@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-declare var $: any;
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 
