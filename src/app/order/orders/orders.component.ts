@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
@@ -7,6 +8,9 @@ import { PaginationInstance } from 'ngx-pagination';
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
+  @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
+  modalRef: BsModalRef | null = null;
+
   errMessage: string = '';
   orderToDelete: any;
 
@@ -79,15 +83,30 @@ export class OrdersComponent implements OnInit {
     },
   ];
 
-  constructor() {} // orderService here
+  constructor(private modalService: BsModalService) {}
 
   ngOnInit(): void {
     // Code to view all orders here
   }
 
-  confirmDeleteOrder(order: any) {}
+  confirmDeleteOrder(order: any): void {
+    this.orderToDelete = order;
+    this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
+      class: 'modal-dialog-centered',
+    });
+  }
 
-  deleteOrder() {}
+  deleteOrder() {
+    // Code to delete the order here
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
+  }
 
-  cancelDeleteOrder() {}
+  cancelDeleteOrder() {
+    this.orderToDelete = null;
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
+  }
 }
