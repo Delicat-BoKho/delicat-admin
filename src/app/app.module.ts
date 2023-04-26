@@ -38,6 +38,8 @@ import {
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     FormsModule,
     FontAwesomeModule,
     TooltipModule.forRoot(),
+    NgxPaginationModule,
+    ModalModule.forRoot(),
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
