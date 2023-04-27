@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, forkJoin, switchMap, Observable } from 'rxjs';
 import { Product } from 'src/app/models/product';
@@ -23,6 +23,8 @@ export class ProductNewComponent {
   reviewTemp = new Comment();
   productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
+
+  @Input() editorConfig: any;
 
   constructor(
     private service: ProductService,
@@ -122,4 +124,7 @@ export class ProductNewComponent {
       // this.ngOnInit();
     }
   }
+
+  cancel() {}
+  createProduct() {}
 }
