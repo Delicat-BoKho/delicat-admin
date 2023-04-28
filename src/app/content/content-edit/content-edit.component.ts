@@ -13,12 +13,12 @@ export class ContentEditComponent {
 
   // Sample data
   content = {
-    id: '',
-    title: '',
-    author: '',
-    date: '',
+    id: 'C001',
+    title: 'Sample Title',
+    author: 'Sample Author',
+    date: '2021-01-01',
     img: '',
-    content: '',
+    content: 'Sample Content',
   };
 
   uploadFile() {}

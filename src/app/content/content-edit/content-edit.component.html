@@ -4,7 +4,12 @@
       <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="container-title">
-            <h1 class="title">Create New Content</h1>
+            <h1 class="title">
+              Content
+              <span class="id">
+                {{ content.id }}
+              </span>
+            </h1>
           </div>
         </div>
         <div class="card-body px-0 pb-2 px-4">
@@ -89,14 +94,9 @@
               >
               </angular-editor>
             </div>
-
             <div class="card-footer text-center">
-              <button
-                class="btn btn-primary mx-3"
-                [disabled]="!selectedFile"
-                (click)="uploadFile()"
-              >
-                Create Content
+              <button class="btn btn-primary mx-3" (click)="uploadFile()">
+                Save Change
               </button>
               <button class="btn btn-danger" (click)="cancel()">Cancel</button>
             </div>
