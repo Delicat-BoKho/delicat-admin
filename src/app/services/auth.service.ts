@@ -6,8 +6,9 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-
 import { Customer } from '../models/customer';
+import { sha256, sha224 } from 'js-sha256';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +18,8 @@ export class AuthService {
 
   // login method
   login(email : string, password : string) {
-
-    this.fireauth.signInWithEmailAndPassword(email,password).then( async res => {
+    const passwordHash=sha256(password)
+    this.fireauth.signInWithEmailAndPassword(email,passwordHash).then( async res => {
         localStorage.setItem('token',JSON.stringify(res.user?.uid));
         console.log(res)
         if(res.user?.emailVerified == true) {
@@ -61,7 +62,8 @@ export class AuthService {
 
   // register method
   register(email : string, password : string) {
-    this.fireauth.createUserWithEmailAndPassword(email, password).then( res => {
+    const passwordHash=sha256(password)
+    this.fireauth.createUserWithEmailAndPassword(email, passwordHash).then( res => {
       alert('Registration Successful');
       this.sendEmailForVarification(res.user);
       this.router.navigate(['/login']);
