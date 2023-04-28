@@ -32,7 +32,7 @@ export class ProductNewComponent {
   ngOnInit(): void {
     this.getProducts();
     this.getProductByIds();
-    console.log(this.listProduct);
+    // console.log(this.listProduct);
   }
 
   selectFile(event: any) {
