@@ -6,14 +6,17 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
-  admin: any = {
+  account: any = {
     name: 'John Doe',
     username: 'johndoe',
-    email: '',
+    password: '123456',
     phone: '',
   };
-  currentPassword: string = '';
-  newPassword: string = '';
+
+  showPassword: boolean = false;
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
   // Define the modal reference variable
   @ViewChild('logoutDialog') logoutDialog!: TemplateRef<any>;
 
@@ -46,8 +49,8 @@ export class SettingsComponent {
     this.logoutModalRef.hide();
   }
 
-  saveChanges() {
-    // Perform the save action
+  changePassword() {
+    // Perform the change passwordn
     // ...
   }
 }
