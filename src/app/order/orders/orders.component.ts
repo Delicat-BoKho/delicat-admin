@@ -20,7 +20,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Code to view all orders here
     this.getOrders();
-    console.log(this.getProduct(this.ProductId));
+    // console.log(this.getProduct(this.ProductId));
   }
   ngAfterViewInit(): void {}
   // Define pagination
