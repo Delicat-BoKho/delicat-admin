@@ -1,1 +1,254 @@
-<p>customer-new works!</p>
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="container-title">
+            <h1 class="title">Create New Customer</h1>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2 px-4">
+          <div class="form">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="id">Customer ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id"
+                  placeholder="Enter customer ID"
+                  [(ngModel)]="customer.id"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="name">Customer Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  [(ngModel)]="customer.fullName"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter customer username"
+                  [(ngModel)]="customer.username"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="phone">Phone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  placeholder="Enter customer number"
+                  [(ngModel)]="customer.phone"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="password">Password</label>
+                <input
+                  type="{{ showPassword ? 'text' : 'password' }}"
+                  class="form-control"
+                  id="password"
+                  [(ngModel)]="customer.password"
+                />
+                <div class="form-check">
+                  <label for="showPassword" class="form-check-label"
+                    >Show password</label
+                  >
+                  <input
+                    id="showPassword"
+                    type="checkbox"
+                    class="form-check-input"
+                    (change)="togglePassword()"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label for="address">Address</label>
+                <div>
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    [ngModel]="customer.address"
+                  >
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cart">Cart</label>
+              <table class="table table-responsive table-striped">
+                <thead>
+                  <tr>
+                    <th colspan="1">Product ID</th>
+                    <th colspan="2">Name</th>
+                    <th colspan="2">Specifications</th>
+                    <th colspan="1">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'cartItem' + index + '.id'"
+                        [id]="'cartItem' + index + '.id'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'cartItem' + index + '.name'"
+                        [id]="'cartItem' + index + '.name'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'cartItem' + index + '.specifications'"
+                        [id]="'cartItem' + index + '.specifications'"
+                      />
+                    </td>
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="number"
+                        [name]="'cartItem' + index + '.quantity'"
+                        [id]="'cartItem' + index + '.quantity'"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group">
+              <label for="order">Order</label>
+              <table class="table table-responsive table-striped">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th colspan="2">Date</th>
+                    <th colspan="2">Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let index of [1, 2, 3, 4, 5]">
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'orderItem' + index + '.id'"
+                        [id]="'orderItem' + index + '.id'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'orderItem' + index + '.name'"
+                        [id]="'orderItem' + index + '.name'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <select
+                        class="form-control"
+                        [name]="'orderItem' + index + '.status'"
+                        [id]="'orderItem' + index + '.status'"
+                      >
+                        <option disabled [ngValue]="''" selected>
+                          Choose order status
+                        </option>
+                        <option [ngValue]="'pending'">Pending</option>
+                        <option [ngValue]="'dispatched'">Dispatched</option>
+                        <option [ngValue]="'completed'">Completed</option>
+                        <option [ngValue]="'cancelled'">Cancelled</option>
+                        <option [ngValue]="'unknown'">Unknown</option>
+                      </select>
+                    </td>
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="number"
+                        [name]="'orderItem' + index + '.total'"
+                        [id]="'orderItem' + index + '.total'"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group">
+              <label for="wishlist">Wishlist</label>
+              <table class="table table-responsive table-striped">
+                <thead>
+                  <tr>
+                    <th colspan="1">Product ID</th>
+                    <th colspan="2">Name</th>
+                    <th colspan="2">Specifications</th>
+                    <th colspan="1">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let index of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'wishlist' + index + '.id'"
+                        [id]="'wishlist' + index + '.id'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'wishlist' + index + '.name'"
+                        [id]="'wishlist' + index + '.name'"
+                      />
+                    </td>
+                    <td colspan="2">
+                      <input
+                        class="form-control"
+                        type="text"
+                        [name]="'wishlist' + index + '.specifications'"
+                        [id]="'wishlist' + index + '.specifications'"
+                      />
+                    </td>
+                    <td colspan="1">
+                      <input
+                        class="form-control"
+                        type="number"
+                        [name]="'wishlist' + index + '.quantity'"
+                        [id]="'wishlist' + index + '.quantity'"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-primary mx-3" (click)="onSave()">
+              Save Change
+            </button>
+            <button class="btn btn-danger" (click)="goBack()">Go Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

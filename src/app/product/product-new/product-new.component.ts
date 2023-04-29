@@ -30,8 +30,8 @@ export class ProductNewComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
-    this.getProductByIds();
+    // this.getProducts();
+    // this.getProductByIds();
     console.log(this.listProduct);
   }
 
@@ -42,7 +42,7 @@ export class ProductNewComponent {
     const promises = [];
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      const path = 'Products/' + this.selectedFiles[i].name;
+      const path = 'ProductsTemp/' + this.selectedFiles[i].name;
       const storageRef = this.fireStorage.ref(path);
       const uploadTask = storageRef.put(this.selectedFiles[i]);
 
@@ -98,13 +98,13 @@ export class ProductNewComponent {
     });
   }
   /////
-  getProductByIds() {
-    for (let i = 0; i < this.productIdsss.length; i++) {
-      this.service
-        .getProduct(this.productIdsss[i])
-        .subscribe((p) => this.listProduct.push(p));
-    }
-  }
+  // getProductByIds() {
+  //   for (let i = 0; i < this.productIdsss.length; i++) {
+  //     this.service
+  //       .getProduct(this.productIdsss[i])
+  //       .subscribe((p) => this.listProduct.push(p));
+  //   }
+  // }
 
   ////
   //không xóa được hình lưu trong storage
