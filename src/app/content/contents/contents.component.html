@@ -5,6 +5,11 @@
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="container-title">
             <h1 class="title">Contents</h1>
+            <div class="text-center">
+              <button class="btn btn-outline-success" routerLink="/content-new">
+                Create New Content
+              </button>
+            </div>
           </div>
         </div>
         <div class="card-body px-0 pb-2">
@@ -13,7 +18,7 @@
               <thead>
                 <tr>
                   <th>Content ID</th>
-                  <th>Title</th>
+                  <th colspan="2">Title</th>
                   <th>Author</th>
                   <th>Date</th>
                   <th></th>
@@ -30,7 +35,7 @@
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td colspan="2">
                     <span class="content-info text-xs font-weight-bold mb-0">
                       {{ content.title }}
                     </span>
