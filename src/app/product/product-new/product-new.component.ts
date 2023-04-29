@@ -24,8 +24,6 @@ export class ProductNewComponent {
   productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
 
-  @Input() editorConfig: any;
-
   constructor(
     private service: ProductService,
     private fireStorage: AngularFireStorage
