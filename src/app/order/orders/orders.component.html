@@ -29,37 +29,41 @@
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="id text-primary">#{{ order.id }}</h6>
+                        <h6 class="id text-primary">{{ order.id }}</h6>
                       </div>
                     </div>
                   </td>
                   <td>
                     <span class="order-info text-xs font-weight-bold mb-0">
-                      {{ order.date }}
+                      {{ order.Date }}
                     </span>
                   </td>
                   <td class="text-center">
                     <a
                       class="order-info mb-0 id"
-                      routerLink="/customer/{{ order.customerID }}"
+                      routerLink="/customer/{{ order.CustomerID }}"
                     >
-                      {{ order.customerID }}
+                      {{ order.CustomerID }}
                     </a>
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.paymentMethod }}
+                      {{ order.PaymentMethod }}
                     </span>
                   </td>
                   <td class="text-center">
                     <ul>
                       <li
                         class="order-info id"
-                        *ngFor="let product of order.products"
+                        #p
+                        *ngFor="let product of order.SaleProducts"
                         [attr.data-toggle]="'tooltip'"
-                        [attr.title]="product.name"
+                        [attr.title]="product.ProductID"
                       >
-                        #{{ product.id }} ({{ product.quantity }})
+                        <!-- {{ getProduct(product.ProductID) }} -->
+                        {{ product.ProductID }} |
+                        {{ product.ProductName }}
+                        ({{ product.Description }}) ({{ product.Quantity }})
                       </li>
                     </ul>
                   </td>
@@ -67,25 +71,25 @@
                     <span
                       class="badge"
                       [ngClass]="{
-                        pending: order.status === 'pending',
-                        dispatched: order.status === 'dispatched',
-                        completed: order.status === 'completed',
+                        pending: order.Status === 'pending',
+                        dispatched: order.Status === 'dispatched',
+                        completed: order.Status === 'completed',
                         other: !['pending', 'dispatched', 'completed'].includes(
-                          order.status
+                          order.Status
                         )
                       }"
                     >
-                      {{ order.status }}
+                      {{ order.Status }}
                     </span>
                   </td>
                   <td>
                     <span class="order-info">
-                      {{ order.deliveryAddress }}
+                      {{ order.DeliveryAddress }}
                     </span>
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.total | currency }}
+                      {{ order.Total | currency }}
                     </span>
                   </td>
                   <td>
