@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, forkJoin, switchMap, Observable } from 'rxjs';
 import { Product } from 'src/app/models/product';
@@ -24,15 +24,17 @@ export class ProductNewComponent {
   productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
 
+  @Input() editorConfig: any;
+
   constructor(
     private service: ProductService,
     private fireStorage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
-    this.getProductByIds();
-    // console.log(this.listProduct);
+    // this.getProducts();
+    // this.getProductByIds();
+    console.log(this.listProduct);
   }
 
   selectFile(event: any) {
@@ -42,7 +44,7 @@ export class ProductNewComponent {
     const promises = [];
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      const path = 'Products/' + this.selectedFiles[i].name;
+      const path = 'ProductsTemp/' + this.selectedFiles[i].name;
       const storageRef = this.fireStorage.ref(path);
       const uploadTask = storageRef.put(this.selectedFiles[i]);
 
@@ -98,13 +100,13 @@ export class ProductNewComponent {
     });
   }
   /////
-  getProductByIds() {
-    for (let i = 0; i < this.productIdsss.length; i++) {
-      this.service
-        .getProduct(this.productIdsss[i])
-        .subscribe((p) => this.listProduct.push(p));
-    }
-  }
+  // getProductByIds() {
+  //   for (let i = 0; i < this.productIdsss.length; i++) {
+  //     this.service
+  //       .getProduct(this.productIdsss[i])
+  //       .subscribe((p) => this.listProduct.push(p));
+  //   }
+  // }
 
   ////
   //không xóa được hình lưu trong storage
@@ -122,4 +124,7 @@ export class ProductNewComponent {
       // this.ngOnInit();
     }
   }
+
+  cancel() {}
+  createProduct() {}
 }

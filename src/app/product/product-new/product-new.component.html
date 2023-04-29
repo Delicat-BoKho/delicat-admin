@@ -1,185 +1,185 @@
-<p> {{product|json}}</p>
-<p>{{errMessage}}</p>
-<table>
-  <tr>
-    <td>Nhập Id:</td>
-    <td>
-      <input type="text"  [(ngModel)]="product.id"   />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập tên:</td>
-    <td>
-      <input type="text"  [(ngModel)]="product.name"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập loại:</td>
-    <td>
-      <input type="text"  [(ngModel)]="product.type" placeholder="accessories hoặc suit" />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập Giá:</td>
-    <td>
-      <input type="number"  [(ngModel)]="product.price"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Tải hình</td>
-    <td>
-      <input type="file" class="text-nowrap text-truncate file" multiple (change)="selectFile($event)">
+{{product|json}}
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="container-title">
+            <h1 class="title">Create New Product</h1>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2 px-4">
+          <div class="form">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="productId">Product ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productId"
+                  placeholder="Enter product ID"
+                  [(ngModel)]="product.id"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="productName">Product Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productName"
+                  placeholder="Enter product name"
+                  [(ngModel)]="product.name"
+                />
+              </div>
+            </div>
 
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-      <div class="progress mt-2">
-        <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{percentage}}"aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage + '%' }">
-            {{percentage}}%
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="type">Type</label>
+                <select
+                  class="form-control"
+                  id="type"
+                  [(ngModel)]="product.type"
+                >
+                  <option disabled [ngValue]="''">Choose product type</option>
+                  <option [ngValue]="'suit'" selected>Suit</option>
+                  <option [ngValue]="'accessories'">Accessories</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="productPrice">Product Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="productPrice"
+                  placeholder="Enter product price"
+                  [(ngModel)]="product.price"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="productDescription">Product Description</label>
+              <angular-editor
+                [config]="editorConfig"
+                placeholder="Enter product description"
+                [(ngModel)]="product.describe"
+              >
+              </angular-editor>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="imgURL">Product Images</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="imgURL"
+                  (change)="selectFile($event)"
+                  multiple
+                />
+              </div>
+              <div class="col-2">
+                <br />
+                <div class="progress mt-2">
+                  <div
+                    class="progress-bar progress-bar-info"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: percentage + '%' }"
+                  >
+                    {{ percentage }}%
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label for="tags">Product Tags</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tags"
+                  placeholder="Enter product tags"
+                  [(ngModel)]="product.tag"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="sizes">Product Sizes</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sizes"
+                  placeholder="Enter product sizes, separated by a comma"
+                  [(ngModel)]="sizetemp"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="colors">Product Colors</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="colors"
+                  placeholder="Enter product colors, separated by a comma"
+                  [(ngModel)]="colortemp"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="productReviews">Product Reviews</label>
+              <div class="form-group col-12">
+                <table class="table table-striped">
+
+
+
+                  <tr>
+                    <td>Nhập Id của comment</td>
+                    <td>
+                      <input type="text" placeholder="Cú pháp C + ID sản phẩm, ví dụ CS001"   [(ngModel)]="reviewTemp.id"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập rating của comment</td>
+                    <td>
+                      <input type="number" placeholder="từ 1 đến 5"   [(ngModel)]="reviewTemp.ratingComment"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập username của comment</td>
+                    <td>
+                      <input type="text"    [(ngModel)]="reviewTemp.userName"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập ngày của comment</td>
+                    <td>
+                      <input type="text"  placeholder="9 March 2023"   [(ngModel)]="reviewTemp.dateCreate"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập nội dung của comment</td>
+                    <td>
+                      <input type="text"     [(ngModel)]="reviewTemp.review"  />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer text-center">
+              <button
+                class="btn btn-primary mx-3"
+                [disabled]="!selectedFiles"
+                (click)="uploadFile()"
+              >
+                Create Product
+              </button>
+              <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập mô tả:</td>
-    <td>
-      <input type="text"  [(ngModel)]="product.describe"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập tag:</td>
-    <td>
-      <input type="text" style="width: 300px;"  [(ngModel)]="product.tag"  placeholder="Suits or Blazers or Shirts or Trousers"/>
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập size:</td>
-    <td>
-      <input type="text"  placeholder="Ví dụ: M,S" [(ngModel)]="sizetemp"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập màu:</td>
-    <td  >
-      <input type="text" placeholder="red or cream or green or brown or gray or black or navy" [(ngModel)]="colortemp" style="width: 400px;" />
-    </td>
-  </tr>
-
-  <tr>
-    <td>Nhập Id của comment</td>
-    <td>
-      <input type="text" placeholder="Cú pháp C + ID sản phẩm+ _1, ví dụ CS001_1"   [(ngModel)]="reviewTemp.id"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập rating của comment</td>
-    <td>
-      <input type="number" placeholder="từ 1 đến 5"   [(ngModel)]="reviewTemp.ratingComment"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập username của comment</td>
-    <td>
-      <input type="text"    [(ngModel)]="reviewTemp.userName"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập ngày của comment</td>
-    <td>
-      <input type="text"  placeholder="9 March 2023"   [(ngModel)]="reviewTemp.dateCreate"  />
-    </td>
-  </tr>
-  <tr>
-    <td>Nhập nội dung của comment</td>
-    <td>
-      <input type="text"     [(ngModel)]="reviewTemp.review"  />
-    </td>
-  </tr>
-
-
-
-
-  <tr>
-    <td>
-      <button type="button" class="btn btn-outline-warning" [disabled] = "!selectedFiles" (click)="uploadFile()">Upload</button>
-    </td>
-  </tr>
-</table>
-<!-- Trả dữ liệu -->
-<table border="1">
-  <thead>
-    <tr>
-      <td>Id:</td>
-      <td>Tên:</td>
-      <td>Loại:</td>
-      <td>Giá:</td>
-      <td>Hình</td>
-      <td>Mô tả:</td>
-      <td>Tag:</td>
-      <td>Size:</td>
-      <td>Màu:</td>
-
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let product of products">
-      <td>
-          {{product.id}}
-      </td>
-
-
-
-      <td>
-          {{product.name}}
-      </td>
-
-
-      <td>
-        {{product.type}}
-      </td>
-
-
-      <td>
-        {{product.price}}
-      </td>
-
-
-      <td >
-        {{product.imgURL}}
-      </td>
-
-
-      <td>
-
-        <input type="text" [(ngModel)]="product.describe"/>
-      </td>
-
-
-      <td>
-        {{product.tag}}
-      </td>
-
-
-      <td>
-        {{product.size}}
-      </td>
-
-
-      <td>
-        <input type="text" [(ngModel)]="product.color">
-      </td>
-
-      <td>
-        <button (click)="deleteProduct(product)"> Delete</button>
-      </td>
-      <td>
-        <button (click)="updateProduct(product)"> Update</button>
-      </td>
-    </tr>
-
-  </tbody>
-
-</table>
-
+    </div>
+  </div>
+</div>

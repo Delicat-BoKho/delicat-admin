@@ -1,1 +1,206 @@
-<p>product-edit works!</p>
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="container-title">
+            <h1 class="title">
+              Product
+              <span class="id fw-bold text-danger">{{ product.id }}</span>
+            </h1>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2 px-4">
+          <div class="form">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="id">Product ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id"
+                  placeholder="Enter product ID"
+                  [(ngModel)]="product.id"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="name">Product Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  [(ngModel)]="product.name"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="type">Type</label>
+                <select
+                  class="form-control"
+                  id="type"
+                  [(ngModel)]="product.type"
+                >
+                  <option value="" disabled>Choose product type</option>
+                  <option value="suit">Suit</option>
+                  <option value="accessories">Accessories</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="productPrice">Product Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="productPrice"
+                  placeholder="Enter product price"
+                  [(ngModel)]="product.price"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="productDescription">Product Description</label>
+              <angular-editor
+                [config]="editorConfig"
+                placeholder="Enter product description"
+                [(ngModel)]="product.describe"
+              >
+              </angular-editor>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="imgURL">Product Images</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="imgURL"
+                  [(ngModel)]="product.imgURL"
+                  multiple
+                />
+              </div>
+              <div class="col-2">
+                <br />
+                <div class="progress mt-2">
+                  <div
+                    class="progress-bar progress-bar-info"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: percentage + '%' }"
+                  >
+                    {{ percentage }}%
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label for="tags">Product Tags</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="tags"
+                  placeholder="Enter product tags"
+                  [(ngModel)]="product.tag"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="sizes">Product Sizes</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sizes"
+                  placeholder="Enter product sizes, separated by a comma"
+                  [(ngModel)]="sizetemp"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="colors">Product Colors</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="colors"
+                  placeholder="Enter product colors, separated by a comma"
+                  [(ngModel)]="colortemp"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="productReviews">Product Reviews</label>
+              <div class="form-group col-12">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Comment ID</th>
+                      <th>Rating</th>
+                      <th>User</th>
+                      <th>Date</th>
+                      <th colspan="4">Review</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let i of [0, 1, 2, 3, 4]">
+                      <td>
+                        <input
+                          class="form-control"
+                          type="text"
+                          [name]="'comment' + i + '.id'"
+                          [id]="'comment' + i + '.id'"
+                          placeholder="C + proID + _ + i"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control"
+                          type="number"
+                          min="1"
+                          max="5"
+                          [name]="'comment' + i + '.rating'"
+                          [id]="'comment' + i + '.rating'"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control"
+                          type="text"
+                          [name]="'comment' + i + '.userName'"
+                          [id]="'comment' + i + '.userName'"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control"
+                          type="date"
+                          [name]="'comment' + i + '.dateCreate'"
+                          [id]="'comment' + i + '.dateCreate'"
+                        />
+                      </td>
+                      <td colspan="4">
+                        <textarea
+                          class="form-control"
+                          type="text"
+                          [name]="'comment' + i + '.review'"
+                          [id]="'comment' + i + '.review'"
+                          placeholder="Enter review"
+                        ></textarea>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-primary mx-3" (click)="onSave()">
+                Save Change
+              </button>
+              <button class="btn btn-primary" (click)="goBack()">
+                Go Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

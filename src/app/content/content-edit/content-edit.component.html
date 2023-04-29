@@ -1,1 +1,108 @@
-<p>content-edit works!</p>
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="container-title">
+            <h1 class="title">
+              Content
+              <span class="id">
+                {{ content.id }}
+              </span>
+            </h1>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2 px-4">
+          <div class="form">
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="productId">Content ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productId"
+                  placeholder="Enter content ID"
+                  [(ngModel)]="content.id"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="productName">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter content title"
+                  [(ngModel)]="content.title"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="author">Author</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="author"
+                  placeholder="Enter author"
+                  [(ngModel)]="content.author"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="date">Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="date"
+                  placeholder="Enter date created"
+                  [(ngModel)]="content.date"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="img">Content Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="img"
+                  [(ngModel)]="content.img"
+                />
+              </div>
+              <div class="col-2">
+                <br />
+                <div class="progress mt-2">
+                  <div
+                    class="progress-bar progress-bar-info"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: percentage + '%' }"
+                  >
+                    {{ percentage }}%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <label for="productDescription">Content </label>
+              <angular-editor
+                [config]="editorConfig"
+                placeholder="Enter content"
+                [(ngModel)]="content.content"
+              >
+              </angular-editor>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-primary mx-3" (click)="uploadFile()">
+                Save Change
+              </button>
+              <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
