@@ -24,7 +24,9 @@
   text-transform: capitalize;
   padding-left: 1rem;
 }
-
+table {
+  table-layout: fixed;
+}
 th {
   text-transform: uppercase;
   color: #7b809a;
