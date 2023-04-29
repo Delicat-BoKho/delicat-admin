@@ -46,17 +46,17 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     });
   }
   //lay san pham tu order
-  getProduct(id: string) {
-    this.Pservice.getProduct(id).subscribe({
-      next: (res: any) => {
-        console.log(res.name);
-      },
-      error: (err) => {
-        this.errMessage = err;
-        console.log('Error occured while fetching file meta data');
-      },
-    });
-  }
+  // getProduct(id: string) {
+  //   this.Pservice.getProduct(id).subscribe({
+  //     next: (res: any) => {
+  //       console.log(res.name);
+  //     },
+  //     error: (err) => {
+  //       this.errMessage = err;
+  //       console.log('Error occured while fetching file meta data');
+  //     },
+  //   });
+  // }
   // Sample data
   // orders: any = [
   //   {
