@@ -1,3 +1,4 @@
+{{product|json}}
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -73,7 +74,7 @@
                   type="file"
                   class="form-control"
                   id="imgURL"
-                  [(ngModel)]="product.imgURL"
+                  (change)="selectFile($event)"
                   multiple
                 />
               </div>
@@ -129,63 +130,39 @@
               <label for="productReviews">Product Reviews</label>
               <div class="form-group col-12">
                 <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Comment ID</th>
-                      <th>Rating</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th colspan="4">Review</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let i of [0, 1, 2, 3, 4]">
-                      <td>
-                        <input
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.id'"
-                          [id]="'comment' + i + '.id'"
-                          placeholder="C + proID + _ + i"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="number"
-                          min="1"
-                          max="5"
-                          [name]="'comment' + i + '.rating'"
-                          [id]="'comment' + i + '.rating'"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.userName'"
-                          [id]="'comment' + i + '.userName'"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="date"
-                          [name]="'comment' + i + '.dateCreate'"
-                          [id]="'comment' + i + '.dateCreate'"
-                        />
-                      </td>
-                      <td colspan="4">
-                        <textarea
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.review'"
-                          [id]="'comment' + i + '.review'"
-                          placeholder="Enter review"
-                        ></textarea>
-                      </td>
-                    </tr>
-                  </tbody>
+
+
+
+                  <tr>
+                    <td>Nhập Id của comment</td>
+                    <td>
+                      <input type="text" placeholder="Cú pháp C + ID sản phẩm, ví dụ CS001"   [(ngModel)]="reviewTemp.id"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập rating của comment</td>
+                    <td>
+                      <input type="number" placeholder="từ 1 đến 5"   [(ngModel)]="reviewTemp.ratingComment"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập username của comment</td>
+                    <td>
+                      <input type="text"    [(ngModel)]="reviewTemp.userName"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập ngày của comment</td>
+                    <td>
+                      <input type="text"  placeholder="9 March 2023"   [(ngModel)]="reviewTemp.dateCreate"  />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập nội dung của comment</td>
+                    <td>
+                      <input type="text"     [(ngModel)]="reviewTemp.review"  />
+                    </td>
+                  </tr>
                 </table>
               </div>
             </div>
