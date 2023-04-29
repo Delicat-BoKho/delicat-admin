@@ -60,12 +60,12 @@
             </div>
             <div class="row">
               <label for="productDescription">Product Description</label>
-              <angular-editor
-                [config]="editorConfig"
+              <textarea
+                class="form-control"
                 placeholder="Enter product description"
                 [(ngModel)]="product.describe"
               >
-              </angular-editor>
+              </textarea>
             </div>
             <div class="row">
               <div class="form-group col-4">

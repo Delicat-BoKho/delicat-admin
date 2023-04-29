@@ -7,8 +7,6 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./product-edit.component.css'],
 })
 export class ProductEditComponent {
-  @Input() editorConfig: any;
-
   // Sample data
   product = new Product();
   percentage: number = 0;
@@ -17,6 +15,7 @@ export class ProductEditComponent {
 
   constructor() {
     this.product.id = 'P001';
+    this.product.name = 'Product 1';
   }
 
   onSave() {}
