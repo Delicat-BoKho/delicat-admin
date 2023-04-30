@@ -8,6 +8,11 @@
               Product
               <span class="id fw-bold text-danger">{{ product.id }}</span>
             </h1>
+            <div class="text-center">
+              <button class="btn btn-secondary" (click)="toggleEdit()">
+                Toggle Edit
+              </button>
+            </div>
           </div>
         </div>
         <div class="card-body px-0 pb-2 px-4">
@@ -21,6 +26,7 @@
                   id="id"
                   placeholder="Enter product ID"
                   [(ngModel)]="product.id"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
@@ -30,6 +36,7 @@
                   class="form-control"
                   id="name"
                   [(ngModel)]="product.name"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -41,6 +48,7 @@
                   class="form-control"
                   id="type"
                   [(ngModel)]="product.type"
+                  [disabled]="!editable"
                 >
                   <option value="" disabled>Choose product type</option>
                   <option value="suit">Suit</option>
@@ -55,6 +63,7 @@
                   id="productPrice"
                   placeholder="Enter product price"
                   [(ngModel)]="product.price"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -64,6 +73,7 @@
                 class="form-control"
                 placeholder="Enter product description"
                 [(ngModel)]="product.describe"
+                [disabled]="!editable"
               >
               </textarea>
             </div>
@@ -76,6 +86,7 @@
                   id="imgURL"
                   [(ngModel)]="product.imgURL"
                   multiple
+                  [disabled]="!editable"
                 />
               </div>
               <div class="col-2">
@@ -101,6 +112,7 @@
                   id="tags"
                   placeholder="Enter product tags"
                   [(ngModel)]="product.tag"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -113,6 +125,7 @@
                   id="sizes"
                   placeholder="Enter product sizes, separated by a comma"
                   [(ngModel)]="sizetemp"
+                  [disabled]="!editable"
                 />
               </div>
               <div class="form-group col-6">
@@ -123,73 +136,11 @@
                   id="colors"
                   placeholder="Enter product colors, separated by a comma"
                   [(ngModel)]="colortemp"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
-            <div class="row">
-              <label for="productReviews">Product Reviews</label>
-              <div class="form-group col-12">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Comment ID</th>
-                      <th>Rating</th>
-                      <th>User</th>
-                      <th>Date</th>
-                      <th colspan="4">Review</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let i of [0, 1, 2, 3, 4]">
-                      <td>
-                        <input
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.id'"
-                          [id]="'comment' + i + '.id'"
-                          placeholder="C + proID + _ + i"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="number"
-                          min="1"
-                          max="5"
-                          [name]="'comment' + i + '.rating'"
-                          [id]="'comment' + i + '.rating'"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.userName'"
-                          [id]="'comment' + i + '.userName'"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="date"
-                          [name]="'comment' + i + '.dateCreate'"
-                          [id]="'comment' + i + '.dateCreate'"
-                        />
-                      </td>
-                      <td colspan="4">
-                        <textarea
-                          class="form-control"
-                          type="text"
-                          [name]="'comment' + i + '.review'"
-                          [id]="'comment' + i + '.review'"
-                          placeholder="Enter review"
-                        ></textarea>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+
             <div class="card-footer text-center">
               <button class="btn btn-primary mx-3" (click)="onSave()">
                 Save Change
