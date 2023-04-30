@@ -65,6 +65,7 @@ export class ContentNewComponent {
 
       // Update the content object with the download URL and create the new content document
       this.content.img = url;
+      this.content.date = this.formatDate(this.content.date);
       await this.cService.createNewContent(this.content);
 
       console.log('Content created successfully!');
