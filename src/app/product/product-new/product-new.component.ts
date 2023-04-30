@@ -24,6 +24,8 @@ export class ProductNewComponent {
   productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
 
+  @Input() editorConfig: any;
+
   constructor(
     private service: ProductService,
     private fireStorage: AngularFireStorage
@@ -84,35 +86,6 @@ export class ProductNewComponent {
     this.sizetemp = '';
     this.colortemp = '';
     this.percentage = 0;
-  }
-
-  getProducts() {
-    this.service.getProducts().subscribe({
-      next: (res: any) => {
-        this.products = res;
-      },
-      error: (err) => {
-        this.errMessage = err;
-        console.log('Error occured while fetching file meta data');
-      },
-    });
-  }
-  /////
-  // getProductByIds() {
-  //   for (let i = 0; i < this.productIdsss.length; i++) {
-  //     this.service
-  //       .getProduct(this.productIdsss[i])
-  //       .subscribe((p) => this.listProduct.push(p));
-  //   }
-  // }
-
-  ////
-  //không xóa được hình lưu trong storage
-  deleteProduct(product: Product) {
-    if (window.confirm('Are you sure you want to delete ' + '?')) {
-      this.service.deleteProduct(product);
-      // this.ngOnInit();
-    }
   }
 
   updateProduct(product: Product) {
