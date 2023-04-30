@@ -1,4 +1,4 @@
-import { Product } from './product';
+import { saleProduct } from './product';
 
 export class Order {
   constructor(
@@ -9,6 +9,6 @@ export class Order {
     public OrderDate: string = '',
     public PaymentMethod: string = '',
     public Status: string = '',
-    public SaleProducts: Array<Product> = []
+    public SaleProducts: Array<saleProduct> = []
   ) {}
 }
