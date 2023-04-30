@@ -61,7 +61,7 @@
                   type="file"
                   class="form-control"
                   id="img"
-                  [(ngModel)]="content.img"
+                  (change)="selectFile($event)"
                 />
               </div>
               <div class="col-2">

@@ -1,5 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Content } from 'src/app/models/content';
+import { ContentService } from 'src/app/services/content.service';
 
 @Component({
   selector: 'app-content-new',
@@ -7,8 +11,8 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./content-new.component.css'],
 })
 export class ContentNewComponent {
+  content: Content = new Content();
   selectedFile!: FileList;
-  currentFileUpload: any;
   percentage: number = 0;
 
   // Define angular-editor configurations
@@ -21,16 +25,60 @@ export class ContentNewComponent {
     toolbarHiddenButtons: [['insertImage', 'insertVideo', 'fontName']],
   };
 
-  // Sample data
-  content = {
-    id: '',
-    title: '',
-    author: '',
-    date: '',
-    img: '',
-    content: '',
-  };
+  constructor(
+    private cService: ContentService,
+    private fireStorage: AngularFireStorage,
+    private router: Router
+  ) {}
 
-  uploadFile() {}
-  cancel() {}
+  selectFile(event: any) {
+    this.selectedFile = event.target.files;
+  }
+
+  formatDate(inputDate: string): string {
+    const date = new Date(inputDate);
+    const options: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    };
+    const formattedDate: string = date.toLocaleDateString('en-US', options);
+    return formattedDate.replace(',', '');
+  }
+
+  async uploadFile() {
+    const id = this.content.id;
+    const file = this.selectedFile[0];
+    const filePath = `content/${id}/${file.name}`;
+    const fileRef = this.fireStorage.ref(filePath);
+
+    try {
+      // Start the upload task and get the upload percentage
+      const task = this.fireStorage.upload(filePath, file);
+      task.percentageChanges().subscribe((percentage) => {
+        this.percentage = percentage ?? 0; // Use 0 if percentage is undefined
+      });
+
+      // Wait for the upload to complete and get the download URL
+      await task;
+      const url = await fileRef.getDownloadURL().toPromise();
+
+      // Update the content object with the download URL and create the new content document
+      this.content.img = url;
+      await this.cService.createNewContent(this.content);
+
+      console.log('Content created successfully!');
+      this.resetForm();
+    } catch (error) {
+      console.error('Error creating new content:', error);
+    }
+  }
+
+  cancel() {
+    this.router.navigate(['/contents']);
+  }
+
+  resetForm() {
+    this.content = new Content();
+  }
 }
