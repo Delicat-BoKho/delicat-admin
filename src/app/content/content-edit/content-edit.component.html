@@ -10,6 +10,11 @@
                 {{ content.id }}
               </span>
             </h1>
+            <div class="text-center">
+              <button class="btn btn-secondary" (click)="toggleEdit()">
+                Toggle Edit
+              </button>
+            </div>
           </div>
         </div>
         <div class="card-body px-0 pb-2 px-4">
@@ -23,6 +28,7 @@
                   id="productId"
                   placeholder="Enter content ID"
                   [(ngModel)]="content.id"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
@@ -33,6 +39,7 @@
                   id="title"
                   placeholder="Enter content title"
                   [(ngModel)]="content.title"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -46,6 +53,7 @@
                   id="author"
                   placeholder="Enter author"
                   [(ngModel)]="content.author"
+                  [disabled]="!editable"
                 />
               </div>
               <div class="form-group col-6">
@@ -56,6 +64,7 @@
                   id="date"
                   placeholder="Enter date created"
                   [(ngModel)]="content.date"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -66,7 +75,8 @@
                   type="file"
                   class="form-control"
                   id="img"
-                  [(ngModel)]="content.img"
+                  [disabled]="!editable"
+                  (change)="selectFile($event)"
                 />
               </div>
               <div class="col-2">
@@ -95,7 +105,7 @@
               </angular-editor>
             </div>
             <div class="card-footer text-center">
-              <button class="btn btn-primary mx-3" (click)="uploadFile()">
+              <button class="btn btn-primary mx-3" (click)="updateContent()">
                 Save Change
               </button>
               <button class="btn btn-danger" (click)="cancel()">Cancel</button>
