@@ -6,6 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./order-edit.component.css'],
 })
 export class OrderEditComponent {
+  editable: boolean = false;
+  toggleEdit() {
+    this.editable = !this.editable;
+  }
+
   // Sample data
   order: any = {
     id: 'O003',
