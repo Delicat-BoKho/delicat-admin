@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
+import { Content } from 'src/app/models/content';
+import { ContentService } from 'src/app/services/content.service';
 
 @Component({
   selector: 'app-contents',
@@ -8,12 +10,11 @@ import { PaginationInstance } from 'ngx-pagination';
   styleUrls: ['./contents.component.css'],
 })
 export class ContentsComponent {
-  @Input() editorConfig: any;
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   modalRef: BsModalRef | null = null;
 
-  errMessage: string = '';
-  contentToDelete: any;
+  contents: Content[] = [];
+  contentToDelete: Content | null = null;
 
   // Define pagination
   paginationConfig: PaginationInstance = {
@@ -25,30 +26,25 @@ export class ContentsComponent {
     this.paginationConfig.currentPage = pageNumber;
   }
 
-  // Sample data
-  contents: any = [
-    {
-      id: 'C001',
-      title: 'Sample Title',
-      img: 'https://via.placeholder.com/150',
-      content: 'Sample Content',
-      author: 'Sample Author',
-      date: '2021-01-01',
-    },
-    {
-      id: 'C002',
-      title: 'Sample Title',
-      img: 'https://via.placeholder.com/150',
-      content: 'Sample Content',
-      author: 'Sample Author',
-      date: '2021-01-01',
-    },
-  ];
-
-  constructor(private modalService: BsModalService) {}
+  constructor(
+    private modalService: BsModalService,
+    private cService: ContentService
+  ) {}
 
   ngOnInit(): void {
-    // Code to view all contents here
+    this.getContents();
+  }
+
+  getContents() {
+    this.cService.getContents().subscribe({
+      next: (res: any) => {
+        this.contents = res;
+        console.log(this.contents);
+      },
+      error: (error) => {
+        console.log('Error occured while fetching contents:' + error);
+      },
+    });
   }
 
   confirmDeleteContent(content: any): void {
@@ -59,9 +55,11 @@ export class ContentsComponent {
   }
 
   deleteContent() {
-    // Code to delete the content here
-    if (this.modalRef) {
-      this.modalRef.hide();
+    if (this.contentToDelete) {
+      this.cService.deleteContentById(this.contentToDelete.id);
+      if (this.modalRef) {
+        this.modalRef.hide();
+      }
     }
   }
 
