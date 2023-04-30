@@ -7,6 +7,11 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./product-edit.component.css'],
 })
 export class ProductEditComponent {
+  editable: boolean = false;
+  toggleEdit() {
+    this.editable = !this.editable;
+  }
+
   // Sample data
   product = new Product();
   percentage: number = 0;
