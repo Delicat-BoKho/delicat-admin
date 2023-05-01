@@ -1,0 +1,17 @@
+<p>sign-up works!</p>
+<div>
+  <label for="">username Addmin</label>
+</div>
+<input type="text" placeholder="userName" #user [(ngModel)]="userName" />
+<div>
+  <label for="">passwword Addmin</label>
+</div>
+<input type="text" placeholder="userName" #pass [(ngModel)]="passWord" />
+<br />
+<button (click)="signUp()">Sign up</button>
+<p>
+  {{ userName }}
+</p>
+<p>
+  {{ passWord }}
+</p>
