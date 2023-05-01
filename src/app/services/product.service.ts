@@ -61,7 +61,6 @@ export class ProductService {
   }
 
   // dislpay products
-
   getProducts() {
     return this.fireStore
       .collection('/ProductTemp')
