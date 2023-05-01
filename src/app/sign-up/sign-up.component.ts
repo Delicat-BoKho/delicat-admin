@@ -23,6 +23,7 @@ export class SignUpComponent implements OnInit {
     this.hashPassword = CryptoJS.SHA256(this.passWord).toString();
     this.admin.passWord = this.hashPassword;
     this.admin.userName = this.userName;
+    this.admin.role = 'admin';
     this.service.createAdminAccount(this.admin);
   }
 

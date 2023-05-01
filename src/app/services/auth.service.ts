@@ -26,7 +26,7 @@ export class AuthService {
   ) {}
   //login admin
   getUserByUserName(userName: string): Observable<Admin> {
-    const userDoc = this.fireStore.collection('/AdminAccount').doc(userName);
+    const userDoc = this.fireStore.collection('/User').doc(userName);
     const user = userDoc.valueChanges() as Observable<Admin>;
     return combineLatest([user]).pipe(
       map(([userData]) => ({
@@ -36,10 +36,11 @@ export class AuthService {
   }
   //sign up for admin
   createAdminAccount(user: Admin) {
-    const myDoc = this.fireStore.collection('/AdminAccount').doc(user.userName);
+    const myDoc = this.fireStore.collection('/User').doc(user.userName);
     const userMeta = {
       userName: user.userName,
       passWord: user.passWord,
+      role: user.role,
     };
     //đẩy data lên
     myDoc

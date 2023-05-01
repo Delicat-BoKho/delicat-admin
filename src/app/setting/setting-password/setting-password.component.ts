@@ -22,7 +22,9 @@ export class SettingPasswordComponent implements AfterViewInit {
   loginSuccess: boolean = false;
   confirmSuccess: boolean = false;
   user = new Admin();
-  constructor(private router: Router, private service: AuthService) {}
+  constructor(private router: Router, private service: AuthService) {
+    console.log(CryptoJS.SHA256('ad1').toString());
+  }
   ngAfterViewInit() {
     const confirmPassword = document.getElementById(
       'confirmPassword'
@@ -72,7 +74,8 @@ export class SettingPasswordComponent implements AfterViewInit {
     // Check if new password and confirm password match
     if (this.loginSuccess && this.newPassword == this.confirmPassword) {
       this.user.userName = userName;
-      this.user.passWord = this.newPassword;
+      this.user.passWord = CryptoJS.SHA256(this.newPassword).toString();
+      this.user.role = 'admin';
       this.updateAdminUser(this.user);
       alert('Password changed successfully.');
     } else {
