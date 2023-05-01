@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
 import { Product } from 'src/app/models/product';
-
+import { ProductService } from 'src/app/services/product.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -11,7 +13,7 @@ import { Product } from 'src/app/models/product';
 export class ProductsComponent {
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   modalRef: BsModalRef | null = null;
-
+  products: any;
   errMessage: string = '';
   productToDelete: any;
 
@@ -26,44 +28,44 @@ export class ProductsComponent {
   }
 
   // Sample data
-  products: Array<Product> = [
-    {
-      id: '1',
-      name: 'Product 1',
-      type: 'Type 1',
-      price: 100,
-      imgURL: ['https://picsum.photos/200/300'],
-      describe: 'This is product 1',
-      tag: 'tag 1',
-      size: 'size 1',
-      color: 'color 1',
-      reviews: [
-        {
-          id: '1',
-          ratingComment: 5,
-          userName: '',
-          dateCreate: '',
-          review: '',
-        },
-      ],
-    },
-  ];
 
-  constructor(private modalService: BsModalService) {}
+  constructor(
+    private modalService: BsModalService,
+    private service: ProductService,
+    private fireStorage: AngularFireStorage,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Code to view all products here
+    this.getProducts();
   }
-
+  //get all products
+  getProducts() {
+    this.service.getProducts().subscribe({
+      next: (res: any) => {
+        this.products = res;
+      },
+      error: (err) => {
+        this.errMessage = err;
+        console.log('Error occured while fetching file meta data');
+      },
+    });
+  }
+  //get a product by id
+  getProduct(id: string) {
+    this.router.navigate(['product-edit/' + id]);
+  }
   confirmDeleteProduct(product: any): void {
     this.productToDelete = product;
     this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
       class: 'modal-dialog-centered',
     });
   }
+  // Code to delete the product here
 
-  deleteProduct() {
-    // Code to delete the product here
+  deleteProduct(product: Product) {
+    this.service.deleteProduct(product);
     if (this.modalRef) {
       this.modalRef.hide();
     }

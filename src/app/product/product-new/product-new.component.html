@@ -1,3 +1,4 @@
+{{ product | json }}
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -59,12 +60,12 @@
 
             <div class="row">
               <label for="productDescription">Product Description</label>
-              <textarea
-                class="form-control"
+              <angular-editor
+                [config]="editorConfig"
                 placeholder="Enter product description"
                 [(ngModel)]="product.describe"
               >
-              </textarea>
+              </angular-editor>
             </div>
             <div class="row">
               <div class="form-group col-4">
@@ -123,6 +124,55 @@
                   placeholder="Enter product colors, separated by a comma"
                   [(ngModel)]="colortemp"
                 />
+              </div>
+            </div>
+            <div class="row">
+              <label for="productReviews">Product Reviews</label>
+              <div class="form-group col-12">
+                <table class="table table-striped">
+                  <tr>
+                    <td>Nhập Id của comment</td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="Cú pháp C + ID sản phẩm, ví dụ CS001"
+                        [(ngModel)]="reviewTemp.id"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập rating của comment</td>
+                    <td>
+                      <input
+                        type="number"
+                        placeholder="từ 1 đến 5"
+                        [(ngModel)]="reviewTemp.ratingComment"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập username của comment</td>
+                    <td>
+                      <input type="text" [(ngModel)]="reviewTemp.userName" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập ngày của comment</td>
+                    <td>
+                      <input
+                        type="text"
+                        placeholder="9 March 2023"
+                        [(ngModel)]="reviewTemp.dateCreate"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhập nội dung của comment</td>
+                    <td>
+                      <input type="text" [(ngModel)]="reviewTemp.review" />
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
 
