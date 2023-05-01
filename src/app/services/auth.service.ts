@@ -39,7 +39,7 @@ export class AuthService {
     const myDoc = this.fireStore.collection('/User').doc(user.userName);
     const userMeta = {
       userName: user.userName,
-      passWord: user.passWord,
+      passWord: user.password,
       role: user.role,
     };
     //đẩy data lên
