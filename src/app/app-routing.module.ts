@@ -19,6 +19,7 @@ import { ContentNewComponent } from './content/content-new/content-new.component
 import { SettingsComponent } from './setting/settings/settings.component';
 import { SettingPasswordComponent } from './setting/setting-password/setting-password.component';
 import { AppComponent } from './app.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
     path: 'setting-pwd',
     component: SettingPasswordComponent,
   },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+  },
 ];
 
 @NgModule({
@@ -120,4 +125,5 @@ export const RoutingComponents = [
   ContentNewComponent,
   SettingsComponent,
   SettingPasswordComponent,
+  SignUpComponent,
 ];
