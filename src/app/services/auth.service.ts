@@ -14,6 +14,8 @@ import { Customer } from '../models/customer';
 import { sha256, sha224 } from 'js-sha256';
 import { Admin } from '../models/user';
 import { Observable, combineLatest, map, switchMap } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +57,7 @@ export class AuthService {
 
   // login method
   login(email: string, password: string) {
-    const passwordHash = sha256(password);
+    const passwordHash = CryptoJS.SHA256(password).toString();
     this.fireauth.signInWithEmailAndPassword(email, passwordHash).then(
       async (res) => {
         localStorage.setItem('token', JSON.stringify(res.user?.uid));
@@ -110,7 +112,7 @@ export class AuthService {
 
   // register method
   register(email: string, password: string) {
-    const passwordHash = sha256(password);
+    const passwordHash = CryptoJS.SHA256(password).toString();
     this.fireauth.createUserWithEmailAndPassword(email, passwordHash).then(
       (res) => {
         alert('Registration Successful');
