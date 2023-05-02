@@ -20,13 +20,11 @@ export class ProductLine {
     public id: string = '',
     public name: string = '',
     public type: string = '',
-    public price: number = 0,
+    public unitPrice: number = 0,
     public imgURL: string = '',
-    // public describe: string = '',
     public tag: string = '',
     public size: any = null,
     public color: any = null,
-    // public reviews: Array<Comment> = [],
     public quantity: number = 1,
     public describeProductLine: string = ''
   ) {}
@@ -35,8 +33,8 @@ export class ProductLine {
 export class saleProduct {
   constructor(
     public id: string = '',
-    public ProductID: string = '',
-    public Quantity: number = 0,
-    public Description: string = ''
+    public productId: string = '',
+    public quantity: number = 0,
+    public description: string = ''
   ) {}
 }
