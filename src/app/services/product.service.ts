@@ -168,4 +168,11 @@ export class ProductService {
       )
       .valueChanges();
   }
+  getProductsByIds1(productIdss: string[]): Observable<Product[]> {
+    return this.fireStore
+      .collection<Product>('/ProductTemp', (ref) =>
+        ref.where('id', 'in', productIdss)
+      )
+      .valueChanges();
+  }
 }

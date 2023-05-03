@@ -52,11 +52,11 @@ export class OrderEditComponent {
       next: (res: any) => {
         this.order = res;
         //chuyen doi kieu date
-        this.order.Date = this.convertDate(this.order.Date);
+        this.order.dateCreated = this.convertDate(this.order.dateCreated);
         console.log(this.order);
         // đẩy hết productID mà KH mua vào mảng arrayProductIdInLine
-        for (let i = 0; i < this.order.SaleProducts.length; i++) {
-          this.arrayProductIdInLine.push(this.order.SaleProducts[i].ProductID);
+        for (let i = 0; i < this.order.saleProducts.length; i++) {
+          this.arrayProductIdInLine.push(this.order.saleProducts[i].productId);
         }
 
         // check các productID nằm trong mảng arrayProductIdInLine
@@ -107,20 +107,22 @@ export class OrderEditComponent {
       if (this.productDetail && this.productDetail.length > i) {
         this.productLineShow[i].name = this.productDetail[i].name;
         this.productLineShow[i].type = this.productDetail[i].type;
-        this.productLineShow[i].price = this.productDetail[i].price;
+
         this.productLineShow[i].imgURL = this.productDetail[i].imgURL[0];
         this.productLineShow[i].tag = this.productDetail[i].tag;
 
         // gọi hàm tách describe thành [size,color]
         var describeSplit = this.splitDescribe(
-          this.order.SaleProducts[i].Description
+          this.order.saleProducts[i].description
         );
 
         this.productLineShow[i].size = describeSplit[1];
         this.productLineShow[i].color = describeSplit[0];
-        this.productLineShow[i].quantity = this.order.SaleProducts[i].Quantity;
+        this.productLineShow[i].quantity = this.order.saleProducts[i].quantity;
         this.productLineShow[i].describeProductLine =
-          this.order.SaleProducts[i].Description;
+          this.order.saleProducts[i].description;
+        this.productLineShow[i].unitPrice =
+          this.order.saleProducts[i].unitPrice;
       }
     }
     console.log(this.productLineShow);
