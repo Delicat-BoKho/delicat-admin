@@ -15,14 +15,15 @@ import { Admin } from '../models/user';
 })
 export class SignUpComponent implements OnInit {
   public userName: string = '';
-  public passWord: string = '';
+  public password: string = '';
   hashPassword: string = '';
   errMessage: string = '';
   admin = new Admin();
   async signUp() {
-    this.hashPassword = CryptoJS.SHA256(this.passWord).toString();
-    this.admin.passWord = this.hashPassword;
+    this.hashPassword = CryptoJS.SHA256(this.password).toString();
+    this.admin.password = this.hashPassword;
     this.admin.userName = this.userName;
+    this.admin.role = 'admin';
     this.service.createAdminAccount(this.admin);
   }
 

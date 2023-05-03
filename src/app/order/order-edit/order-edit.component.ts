@@ -107,7 +107,7 @@ export class OrderEditComponent {
       if (this.productDetail && this.productDetail.length > i) {
         this.productLineShow[i].name = this.productDetail[i].name;
         this.productLineShow[i].type = this.productDetail[i].type;
-
+        this.productLineShow[i].price = this.productDetail[i].price;
         this.productLineShow[i].imgURL = this.productDetail[i].imgURL[0];
         this.productLineShow[i].tag = this.productDetail[i].tag;
 
@@ -118,11 +118,9 @@ export class OrderEditComponent {
 
         this.productLineShow[i].size = describeSplit[1];
         this.productLineShow[i].color = describeSplit[0];
-        this.productLineShow[i].quantity = this.order.saleProducts[i].quantity;
+        this.productLineShow[i].quantity = this.order.SaleProducts[i].Quantity;
         this.productLineShow[i].describeProductLine =
-          this.order.saleProducts[i].description;
-        this.productLineShow[i].unitPrice =
-          this.order.saleProducts[i].unitPrice;
+          this.order.SaleProducts[i].Description;
       }
     }
     console.log(this.productLineShow);
@@ -131,8 +129,8 @@ export class OrderEditComponent {
   // Hàm tách describe thành [size,color]
   splitDescribe(describe: string): [string, string] {
     var temp = describe.split(',');
-    var size = temp[0];
-    var color = temp[1];
+    var size = temp[1];
+    var color = temp[0];
     return [size, color];
   }
   //go back page view all orders

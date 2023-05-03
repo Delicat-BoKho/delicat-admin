@@ -89,7 +89,7 @@
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.Total | currency }}
+                      {{ order.total | currency }}
                     </span>
                   </td>
                   <td>
@@ -128,7 +128,7 @@
                       <button
                         type="button"
                         class="btn btn-danger"
-                        (click)="deleteOrder(order)"
+                        (click)="deleteOrder()"
                       >
                         Yes
                       </button>

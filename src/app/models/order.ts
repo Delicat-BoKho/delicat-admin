@@ -3,7 +3,7 @@ import { saleProduct } from './product';
 export class Order {
   constructor(
     public id: string = '',
-    public customerID: string = '',
+    public customerId: string = '',
     public description: string = '',
     public total: number = 0,
     public dateCreated: string = '',

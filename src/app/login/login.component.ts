@@ -22,17 +22,21 @@ export class LoginComponent implements OnInit {
     this.hashPassWord = CryptoJS.SHA256(this.passWord).toString();
     this.service.getUserByUserName(userName).subscribe({
       next: (res: any) => {
-        if (Object.keys(res).length === 0) {
-          this.errMessage = 'Invalid data';
-        } else if (res == null) {
-          this.errMessage = 'Invalid data';
-        } else {
-          if (this.hashPassWord == res.passWord) {
-            this.errMessage = 'Login successfull';
-            this.router.navigate(['orders']);
-          } else {
+        if (res.role == 'admin') {
+          if (Object.keys(res).length === 0) {
             this.errMessage = 'Invalid data';
+          } else if (res == null) {
+            this.errMessage = 'Invalid data';
+          } else {
+            if (this.hashPassWord == res.passWord) {
+              this.errMessage = 'Login successfull';
+              this.router.navigate(['orders']);
+            } else {
+              this.errMessage = 'Invalid data';
+            }
           }
+        } else {
+          this.errMessage = 'Invalid data';
         }
       },
     });

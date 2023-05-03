@@ -22,11 +22,9 @@ export class ProductLine {
     public type: string = '',
     public unitPrice: number = 0,
     public imgURL: string = '',
-    // public describe: string = '',
     public tag: string = '',
     public size: any = null,
     public color: any = null,
-    // public reviews: Array<Comment> = [],
     public quantity: number = 1,
     public describeProductLine: string = ''
   ) {}
@@ -50,16 +48,8 @@ export class cart {
 export class ProductLineInCart {
   constructor(
     public id: string = '',
-    public name: string = '',
-    public type: string = '',
-    public unitPrice: number = 0,
-    public imgURL: string = '',
-    // public describe: string = '',
-    public tag: string = '',
-    public size: any = null,
-    public color: any = null,
-    // public reviews: Array<Comment> = [],
-    public quantity: number = 1,
-    public describeProductLine: string = ''
+    public ProductID: string = '',
+    public Quantity: number = 0,
+    public Description: string = ''
   ) {}
 }

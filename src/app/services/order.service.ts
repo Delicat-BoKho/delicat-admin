@@ -24,14 +24,14 @@ export class OrderService {
             return this.fireStore
               .collection('/Order')
               .doc(id)
-              .collection('SaleProducts')
+              .collection('saleProducts')
               .get()
               .pipe(
-                map((SaleProducts) => {
-                  const SaleProductArray = SaleProducts.docs.map(
-                    (SaleProduct) => SaleProduct.data()
+                map((saleProducts) => {
+                  const saleProductArray = saleProducts.docs.map(
+                    (saleProduct) => saleProduct.data()
                   );
-                  return { ...data, SaleProducts: SaleProductArray };
+                  return { ...data, saleProducts: saleProductArray };
                 })
               );
           });
@@ -45,22 +45,22 @@ export class OrderService {
     const orderDoc = this.fireStore.collection('/Order').doc(id);
     const order = orderDoc.valueChanges() as Observable<Order>;
     const saleProducts = orderDoc
-      .collection<any>('SaleProducts')
+      .collection<any>('saleProducts')
       .valueChanges();
     return combineLatest([order, saleProducts]).pipe(
       map(([orderData, saleProducts]) => ({
         ...orderData,
-        SaleProducts: saleProducts,
+        saleProducts: saleProducts,
       }))
     );
   }
 
-  async deleteOrder(order: Order) {
-    const orderDocRef = this.fireStore.collection('/Order').doc(order.id).ref;
+  async deleteOrder(id: string) {
+    const orderDocRef = this.fireStore.collection('/Order').doc(id).ref;
     const saleProductsCollectionRef = this.fireStore
       .collection('/Order')
-      .doc(order.id)
-      .collection('SaleProducts').ref;
+      .doc(id)
+      .collection('saleProducts').ref;
 
     const batch = this.fireStore.firestore.batch();
     batch.delete(orderDocRef);
