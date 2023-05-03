@@ -81,7 +81,7 @@ export class AuthService {
                   const customer = new Customer(); //Tạo mới customer theo cấu trúc của Customer
                   const customerMeta = {
                     id: res.user?.uid,
-                    name: customer.name,
+                    name: customer.fullName,
                   };
                   myDoc
                     .set(customerMeta)
