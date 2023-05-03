@@ -104,13 +104,11 @@ export class ProductService {
   }
 
   // delete products
-  async deleteProduct(product: Product) {
-    const productDocRef = this.fireStore
-      .collection('/ProductTemp')
-      .doc(product.id).ref;
+  async deleteProduct(id: string) {
+    const productDocRef = this.fireStore.collection('/ProductTemp').doc(id).ref;
     const reviewsCollectionRef = this.fireStore
       .collection('/ProductTemp')
-      .doc(product.id)
+      .doc(id)
       .collection('reviews').ref;
 
     const batch = this.fireStore.firestore.batch();
