@@ -41,6 +41,7 @@
                   <td class="text-center">
                     <a
                       class="order-info mb-0 id"
+                      (click)="ViewCustomerDetail(order.customerId)"
                       routerLink="/customer/{{ order.customerId }}"
                     >
                       {{ order.customerId }}
