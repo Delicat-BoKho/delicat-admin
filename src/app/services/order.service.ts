@@ -78,10 +78,4 @@ export class OrderService {
         console.error('Error deleting order and reviews: ', error);
       });
   }
-  //get order by ids
-  getOrdersByIds(orderIds: string[]): Observable<Order[]> {
-    return this.fireStore
-      .collection<Order>('/Order', (ref) => ref.where('id', 'in', orderIds))
-      .valueChanges();
-  }
 }

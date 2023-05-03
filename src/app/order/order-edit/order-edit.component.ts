@@ -52,11 +52,11 @@ export class OrderEditComponent {
       next: (res: any) => {
         this.order = res;
         //chuyen doi kieu date
-        this.order.dateCreated = this.convertDate(this.order.dateCreated);
+        this.order.Date = this.convertDate(this.order.Date);
         console.log(this.order);
         // đẩy hết productID mà KH mua vào mảng arrayProductIdInLine
-        for (let i = 0; i < this.order.saleProducts.length; i++) {
-          this.arrayProductIdInLine.push(this.order.saleProducts[i].productId);
+        for (let i = 0; i < this.order.SaleProducts.length; i++) {
+          this.arrayProductIdInLine.push(this.order.SaleProducts[i].ProductID);
         }
 
         // check các productID nằm trong mảng arrayProductIdInLine
@@ -113,7 +113,7 @@ export class OrderEditComponent {
 
         // gọi hàm tách describe thành [size,color]
         var describeSplit = this.splitDescribe(
-          this.order.saleProducts[i].description
+          this.order.SaleProducts[i].Description
         );
 
         this.productLineShow[i].size = describeSplit[1];

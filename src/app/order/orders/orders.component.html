@@ -35,20 +35,20 @@
                   </td>
                   <td>
                     <span class="order-info text-xs font-weight-bold mb-0">
-                      {{ order.dateCreated }}
+                      {{ order.Date }}
                     </span>
                   </td>
                   <td class="text-center">
                     <a
                       class="order-info mb-0 id"
-                      routerLink="/customer/{{ order.customerId }}"
+                      routerLink="/customer/{{ order.CustomerID }}"
                     >
-                      {{ order.customerId }}
+                      {{ order.CustomerID }}
                     </a>
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.paymentMethod }}
+                      {{ order.PaymentMethod }}
                     </span>
                   </td>
                   <!-- <td class="text-center">
@@ -71,20 +71,20 @@
                     <span
                       class="badge"
                       [ngClass]="{
-                        pending: order.status === 'pending',
-                        dispatched: order.status === 'dispatched',
-                        completed: order.status === 'completed',
+                        pending: order.Status === 'pending',
+                        dispatched: order.Status === 'dispatched',
+                        completed: order.Status === 'completed',
                         other: !['pending', 'dispatched', 'completed'].includes(
-                          order.status
+                          order.Status
                         )
                       }"
                     >
-                      {{ order.status }}
+                      {{ order.Status }}
                     </span>
                   </td>
                   <td>
                     <span class="order-info">
-                      {{ order.deliveryAddress }}
+                      {{ order.DeliveryAddress }}
                     </span>
                   </td>
                   <td class="text-center">

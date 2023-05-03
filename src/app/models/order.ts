@@ -5,10 +5,10 @@ export class Order {
     public id: string = '',
     public customerId: string = '',
     public description: string = '',
-    public total: number = 0,
-    public dateCreated: string = '',
-    public paymentMethod: string = '',
-    public status: string = '',
-    public saleProducts: Array<saleProduct> = []
+    public Total: number = 0,
+    public OrderDate: string = '',
+    public PaymentMethod: string = '',
+    public Status: string = '',
+    public SaleProducts: Array<saleProduct> = []
   ) {}
 }
