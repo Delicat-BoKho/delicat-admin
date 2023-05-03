@@ -41,7 +41,7 @@
                   class="form-control"
                   id="username"
                   placeholder="Enter customer username"
-                  [(ngModel)]="customer.username"
+                  [(ngModel)]="customer.userName"
                 />
               </div>
               <div class="form-group col-6">
@@ -102,10 +102,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customer.cart">
+                  <tr *ngFor="let item of productLineShow">
                     <td class="id">#{{ item.id }}</td>
                     <td colspan="2">{{ item.name }}</td>
-                    <td colspan="2">{{ item.specifications }}</td>
+                    <td colspan="2">{{ item.describeProductLine }}</td>
                     <td colspan="1">
                       <input
                         type="number"
@@ -133,31 +133,31 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customer.order">
-                    <td class="id">#{{ item.id }}</td>
-                    <td colspan="2">{{ item.date }}</td>
+                  <tr *ngFor="let order of orders">
+                    <td class="id">#{{ order.id }}</td>
+                    <td colspan="2">{{ order.dateCreated }}</td>
                     <td colspan="2">
                       <input
                         type="number"
                         class="form-control"
-                        [(ngModel)]="item.total"
+                        [(ngModel)]="order.total"
                       />
                     </td>
                     <td>
                       <span
                         class="badge"
                         [ngClass]="{
-                          pending: item.status === 'pending',
-                          dispatched: item.status === 'dispatched',
-                          completed: item.status === 'completed',
+                          pending: order.status === 'pending',
+                          dispatched: order.status === 'dispatched',
+                          completed: order.status === 'completed',
                           other: ![
                             'pending',
                             'dispatched',
                             'completed'
-                          ].includes(item.status)
+                          ].includes(order.status)
                         }"
                       >
-                        {{ item.status }}
+                        {{ order.status }}
                       </span>
                     </td>
                     <td>
@@ -174,25 +174,17 @@
                   <tr>
                     <th colspan="1">Product ID</th>
                     <th colspan="2">Name</th>
-                    <th colspan="2">Specifications</th>
-                    <th colspan="1">Quantity</th>
-                    <th></th>
+                    <th colspan="2">Price</th>
+                    <th colspan="2">Image</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customer.wishlist">
-                    <td class="id">#{{ item.id }}</td>
-                    <td colspan="2">{{ item.name }}</td>
-                    <td colspan="2">{{ item.specifications }}</td>
-                    <td colspan="1">
-                      <input
-                        type="number"
-                        class="form-control"
-                        [(ngModel)]="item.quantity"
-                      />
-                    </td>
-                    <td>
-                      <button class="btn btn-info btn-sm">Details</button>
+                  <tr *ngFor="let product of productDetailinWishlist">
+                    <td class="id">#{{ product.id }}</td>
+                    <td colspan="2">{{ product.name }}</td>
+                    <td colspan="2">{{ product.price }}</td>
+                    <td colspan="2">
+                      <img [src]="product.imgURL" alt="" />
                     </td>
                   </tr>
                 </tbody>

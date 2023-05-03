@@ -20,7 +20,7 @@ export class ProductLine {
     public id: string = '',
     public name: string = '',
     public type: string = '',
-    public price: number = 0,
+    public unitPrice: number = 0,
     public imgURL: string = '',
     public tag: string = '',
     public size: any = null,
@@ -32,9 +32,30 @@ export class ProductLine {
 
 export class saleProduct {
   constructor(
+    public unitPrice: number = 0,
+    public productId: string = '',
+    public quantity: number = 0,
+    public description: string = ''
+  ) {}
+}
+export class cart {
+  constructor(
+    public productId: string = '',
+    public quantity: number = 0,
+    public description: string = ''
+  ) {}
+}
+export class ProductLineInCart {
+  constructor(
     public id: string = '',
-    public ProductID: string = '',
-    public Quantity: number = 0,
-    public Description: string = ''
+    public name: string = '',
+    public type: string = '',
+    public unitPrice: number = 0,
+    public imgURL: string = '',
+    public tag: string = '',
+    public size: any = null,
+    public color: any = null,
+    public quantity: number = 1,
+    public describeProductLine: string = ''
   ) {}
 }
