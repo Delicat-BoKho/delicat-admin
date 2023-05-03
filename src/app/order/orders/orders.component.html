@@ -35,20 +35,20 @@
                   </td>
                   <td>
                     <span class="order-info text-xs font-weight-bold mb-0">
-                      {{ order.Date }}
+                      {{ order.dateCreated }}
                     </span>
                   </td>
                   <td class="text-center">
                     <a
                       class="order-info mb-0 id"
-                      routerLink="/customer/{{ order.CustomerID }}"
+                      routerLink="/customer/{{ order.customerId }}"
                     >
-                      {{ order.CustomerID }}
+                      {{ order.customerId }}
                     </a>
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.PaymentMethod }}
+                      {{ order.paymentMethod }}
                     </span>
                   </td>
                   <!-- <td class="text-center">
@@ -71,25 +71,25 @@
                     <span
                       class="badge"
                       [ngClass]="{
-                        pending: order.Status === 'pending',
-                        dispatched: order.Status === 'dispatched',
-                        completed: order.Status === 'completed',
+                        pending: order.status === 'pending',
+                        dispatched: order.status === 'dispatched',
+                        completed: order.status === 'completed',
                         other: !['pending', 'dispatched', 'completed'].includes(
-                          order.Status
+                          order.status
                         )
                       }"
                     >
-                      {{ order.Status }}
+                      {{ order.status }}
                     </span>
                   </td>
                   <td>
                     <span class="order-info">
-                      {{ order.DeliveryAddress }}
+                      {{ order.deliveryAddress }}
                     </span>
                   </td>
                   <td class="text-center">
                     <span class="order-info">
-                      {{ order.Total | currency }}
+                      {{ order.total | currency }}
                     </span>
                   </td>
                   <td>
@@ -128,7 +128,7 @@
                       <button
                         type="button"
                         class="btn btn-danger"
-                        (click)="deleteOrder(order)"
+                        (click)="deleteOrder()"
                       >
                         Yes
                       </button>

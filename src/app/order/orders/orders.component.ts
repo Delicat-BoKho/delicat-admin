@@ -17,14 +17,15 @@ export class OrdersComponent implements OnInit {
   errMessage: string = '';
   orderToDelete: any;
   public saleProduct: any;
-  public ProductId: string = '';
-  public orderID: string = '';
+  public productId: string = '';
+  public orderId: string = '';
+  orderIdDelete: string = '';
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   ngOnInit(): void {
     // Code to view all orders here
     this.getOrders();
     // console.log(this.getProduct(this.ProductId));
-    console.log(this.orderID);
+    console.log(this.orderId);
   }
   ngAfterViewInit(): void {}
   // Define pagination
@@ -58,18 +59,18 @@ export class OrdersComponent implements OnInit {
     private router: Router
   ) {}
   setOrderID(id: string) {
-    this.orderID = id;
-    console.log('Giá trị của orderID:', this.orderID);
+    this.orderId = id;
+    console.log('Giá trị của orderID:', this.orderId);
   }
   confirmDeleteOrder(order: any): void {
-    this.orderToDelete = order;
+    this.orderIdDelete = order.id;
     this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
       class: 'modal-dialog-centered',
     });
   }
 
-  deleteOrder(order: Order) {
-    this.service.deleteOrder(order);
+  deleteOrder() {
+    this.service.deleteOrder(this.orderIdDelete);
     if (this.modalRef) {
       this.modalRef.hide();
     }
