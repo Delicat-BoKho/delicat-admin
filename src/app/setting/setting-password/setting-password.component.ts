@@ -18,11 +18,13 @@ export class SettingPasswordComponent implements AfterViewInit {
   userName: string = '';
   confirmPassMessage: string = '';
   message: string = '';
-  hashPassWord: string = '';
+  hashPassword: string = '';
   loginSuccess: boolean = false;
   confirmSuccess: boolean = false;
   user = new Admin();
-  constructor(private router: Router, private service: AuthService) {}
+  constructor(private router: Router, private service: AuthService) {
+    console.log(CryptoJS.SHA256('ad1').toString());
+  }
   ngAfterViewInit() {
     const confirmPassword = document.getElementById(
       'confirmPassword'
@@ -40,7 +42,7 @@ export class SettingPasswordComponent implements AfterViewInit {
   }
   getUser(userName: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.hashPassWord = CryptoJS.SHA256(this.currentPassword).toString();
+      this.hashPassword = CryptoJS.SHA256(this.currentPassword).toString();
       this.service.getUserByUserName(userName).subscribe({
         next: (res: any) => {
           if (Object.keys(res).length === 0) {
@@ -50,7 +52,7 @@ export class SettingPasswordComponent implements AfterViewInit {
             this.message = 'Invalid data';
             reject(this.message); // trả về lỗi nếu không tìm thấy dữ liệu
           } else {
-            if (this.hashPassWord == res.passWord) {
+            if (this.hashPassword == res.passWord) {
               this.loginSuccess = true;
               console.log(this.loginSuccess);
               console.log('dang nhap thanh cong');
@@ -72,7 +74,8 @@ export class SettingPasswordComponent implements AfterViewInit {
     // Check if new password and confirm password match
     if (this.loginSuccess && this.newPassword == this.confirmPassword) {
       this.user.userName = userName;
-      this.user.passWord = this.newPassword;
+      this.user.password = CryptoJS.SHA256(this.newPassword).toString();
+      this.user.role = 'admin';
       this.updateAdminUser(this.user);
       alert('Password changed successfully.');
     } else {

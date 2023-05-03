@@ -14,6 +14,8 @@ import { Customer } from '../models/customer';
 import { sha256, sha224 } from 'js-sha256';
 import { Admin } from '../models/user';
 import { Observable, combineLatest, map, switchMap } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,7 +28,7 @@ export class AuthService {
   ) {}
   //login admin
   getUserByUserName(userName: string): Observable<Admin> {
-    const userDoc = this.fireStore.collection('/AdminAccount').doc(userName);
+    const userDoc = this.fireStore.collection('/User').doc(userName);
     const user = userDoc.valueChanges() as Observable<Admin>;
     return combineLatest([user]).pipe(
       map(([userData]) => ({
@@ -36,10 +38,11 @@ export class AuthService {
   }
   //sign up for admin
   createAdminAccount(user: Admin) {
-    const myDoc = this.fireStore.collection('/AdminAccount').doc(user.userName);
+    const myDoc = this.fireStore.collection('/User').doc(user.userName);
     const userMeta = {
       userName: user.userName,
-      passWord: user.passWord,
+      passWord: user.password,
+      role: user.role,
     };
     //đẩy data lên
     myDoc
@@ -54,7 +57,7 @@ export class AuthService {
 
   // login method
   login(email: string, password: string) {
-    const passwordHash = sha256(password);
+    const passwordHash = CryptoJS.SHA256(password).toString();
     this.fireauth.signInWithEmailAndPassword(email, passwordHash).then(
       async (res) => {
         localStorage.setItem('token', JSON.stringify(res.user?.uid));
@@ -109,7 +112,7 @@ export class AuthService {
 
   // register method
   register(email: string, password: string) {
-    const passwordHash = sha256(password);
+    const passwordHash = CryptoJS.SHA256(password).toString();
     this.fireauth.createUserWithEmailAndPassword(email, passwordHash).then(
       (res) => {
         alert('Registration Successful');
