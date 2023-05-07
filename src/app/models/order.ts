@@ -9,6 +9,7 @@ export class Order {
     public dateCreated: string = '',
     public paymentMethod: string = '',
     public status: string = '',
+    public deliveryAddress: string = '',
     public saleProducts: Array<saleProduct> = []
   ) {}
 }

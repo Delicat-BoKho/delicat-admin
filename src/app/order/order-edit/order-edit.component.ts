@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Product, ProductLine } from 'src/app/models/product';
-
+import { Location } from '@angular/common';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
-import { delay } from 'rxjs/operators';
-import { finalize, forkJoin, switchMap, Observable } from 'rxjs';
 import { parse, format } from 'date-fns';
+import { Order } from 'src/app/models/order';
+import { Component } from '@angular/core';
+
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
@@ -23,7 +22,6 @@ export class OrderEditComponent {
 
   // thông tin chi tiết của từng sản phẩm được mua
   productDetail: Array<Product> = [];
-
   // thông tin hiển thị lên UI
   public productLineShow: Array<ProductLine> = [];
 
@@ -32,7 +30,8 @@ export class OrderEditComponent {
     private service: OrderService,
     private activateRoute: ActivatedRoute,
     private serviceProduct: ProductService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -48,11 +47,13 @@ export class OrderEditComponent {
 
   // Hàm lấy ra thông tin chi tiết của order by ID
   getOrder(id: string) {
+    this.productDetail = [];
+    this.arrayProductIdInLine = [];
     this.service.getOrder(id).subscribe({
       next: (res: any) => {
         this.order = res;
         //chuyen doi kieu date
-        this.order.dateCreated = this.convertDate(this.order.dateCreated);
+        // this.order.dateCreated = this.convertDate(this.order.dateCreated);
         console.log(this.order);
         // đẩy hết productID mà KH mua vào mảng arrayProductIdInLine
         for (let i = 0; i < this.order.saleProducts.length; i++) {
@@ -71,7 +72,7 @@ export class OrderEditComponent {
       },
     });
   }
-  //ham chuyen doi kieu date
+  // ham chuyen doi kieu date
   convertDate(date: any) {
     date = parse(date, 'MMMM d, yyyy', new Date());
     date = format(date, 'MM/dd/yyyy');
@@ -137,5 +138,12 @@ export class OrderEditComponent {
   goBack() {
     this.router.navigate(['orders']);
   }
-  onSave() {}
+  onSave(order: Order) {
+    if (window.confirm('Are you sure you want to update ' + '?')) {
+      this.service.saveMetaDataOfFile(order);
+      console.log('tests');
+      console.log(order);
+      this.router.navigate(['orders']);
+    }
+  }
 }

@@ -86,4 +86,7 @@ export class OrdersComponent implements OnInit {
   ViewOrderDetail(id: string) {
     this.router.navigate(['order-edit/' + id]);
   }
+  ViewCustomerDetail(id: string) {
+    this.router.navigate(['customer-edit/' + id]);
+  }
 }

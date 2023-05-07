@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Order } from '../models/order';
 import { Observable, combineLatest, map, switchMap } from 'rxjs';
+import { or } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +77,30 @@ export class OrderService {
       })
       .catch((error) => {
         console.error('Error deleting order and reviews: ', error);
+      });
+  }
+ saveMetaDataOfFile(order: Order) {
+    //Tạo một document có id tương tự như id nhập tay
+    //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
+    const myDoc = this.fireStore.collection('/Order').doc(order.id);
+    //Tạo subcollection cho mảng reviews
+    const orderMeta = {
+      deliveryAddress: order.deliveryAddress,
+      id: order.id,
+      customerId: order.customerId,
+      total: order.total,
+      dateCreated: order.dateCreated,
+      paymentMethod: order.paymentMethod,
+      status: order.status,
+    };
+    //đẩy data lên
+    myDoc
+      .set(orderMeta)
+      .then(() => {
+        console.log('Document successfully written!');
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error);
       });
   }
   //get order by ids
