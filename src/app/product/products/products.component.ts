@@ -15,8 +15,7 @@ export class ProductsComponent {
   modalRef: BsModalRef | null = null;
   products: any;
   errMessage: string = '';
-  productToDelete: any;
-
+  productIdDelete: string = '';
   // Define pagination
   paginationConfig: PaginationInstance = {
     id: 'products',
@@ -57,7 +56,7 @@ export class ProductsComponent {
     this.router.navigate(['product-edit/' + id]);
   }
   confirmDeleteProduct(product: any): void {
-    this.productToDelete = product;
+    this.productIdDelete = product.id;
     this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
       class: 'modal-dialog-centered',
     });
@@ -65,14 +64,14 @@ export class ProductsComponent {
   // Code to delete the product here
 
   deleteProduct(product: Product) {
-    this.service.deleteProduct(product);
+    this.service.deleteProduct(this.productIdDelete);
     if (this.modalRef) {
       this.modalRef.hide();
     }
   }
 
   cancelDeleteProduct() {
-    this.productToDelete = null;
+    this.productIdDelete = '';
     if (this.modalRef) {
       this.modalRef.hide();
     }

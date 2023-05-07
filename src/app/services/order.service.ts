@@ -79,7 +79,7 @@ export class OrderService {
         console.error('Error deleting order and reviews: ', error);
       });
   }
-  saveMetaDataOfFile(order: Order) {
+ saveMetaDataOfFile(order: Order) {
     //Tạo một document có id tương tự như id nhập tay
     //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
     const myDoc = this.fireStore.collection('/Order').doc(order.id);
@@ -102,5 +102,11 @@ export class OrderService {
       .catch((error) => {
         console.error('Error writing document: ', error);
       });
+  }
+  //get order by ids
+  getOrdersByIds(orderIds: string[]): Observable<Order[]> {
+    return this.fireStore
+      .collection<Order>('/Order', (ref) => ref.where('id', 'in', orderIds))
+      .valueChanges();
   }
 }
