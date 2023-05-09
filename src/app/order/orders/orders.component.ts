@@ -81,6 +81,11 @@ export class OrdersComponent implements OnInit {
     this.router.navigate(['customer-edit/' + id]);
   }
 
+  searchOrder: string = '';
+  search() {
+    // WRITE CODE HERE
+  }
+
   currentSortState: string = 'default';
   sortASC() {
     this.currentSortState = 'asc';

@@ -13,8 +13,13 @@
               type="text"
               class="form-control mx-1"
               placeholder="Search ..."
+              [(ngModel)]="searchOrder"
             />
-            <button class="btn btn-info" disabled>
+            <button
+              class="btn btn-info"
+              (click)="search()"
+              style="font-size: 0.8em"
+            >
               <fa-icon [icon]="faSearch"></fa-icon>
             </button>
           </div>
@@ -58,7 +63,7 @@
               <tbody>
                 <tr *ngFor="let order of orders | paginate : paginationConfig">
                   <td>
-                    <h6 class="id text-primary">{{ order.id }}</h6>
+                    <h6 class="id text-primary id">#{{ order.id }}</h6>
                   </td>
                   <td>
                     <span class="order-info text-xs font-weight-bold mb-0">
@@ -77,7 +82,7 @@
                         cursor: pointer;
                       "
                     >
-                      {{ order.customerId }}
+                      #{{ order.customerId }}
                     </a>
                   </td>
                   <td class="text-center">
@@ -116,7 +121,7 @@
                       class="btn btn-info btn-sm mx-1"
                       (click)="ViewOrderDetail(order.id)"
                     >
-                      Detail
+                      Details
                     </button>
                   </td>
                 </tr>
