@@ -1,3 +1,96 @@
+<div class="search">
+  <input type="text" [(ngModel)]="searchProduct" />
+  <button (click)="search()">Search</button>
+  <button (click)="back()">back</button>
+  <div>
+    <form action="">
+      <input
+        type="checkbox"
+        id="suit"
+        name="suit"
+        value="suit"
+        class="form-control"
+        (click)="filterTypeProducts('suit')"
+      />
+      <label for="suit"> suit</label><br />
+      <input
+        type="checkbox"
+        id="accessories"
+        name="accessories"
+        value="accessories"
+        class="form-control"
+        (click)="filterTypeProducts('accessories')"
+      />
+      <label for="accessories">accessories</label><br />
+    </form>
+  </div>
+  <!-- ACESSORIES -->
+  <div>
+    ACESSORIES
+    <form action="">
+      <input
+        type="checkbox"
+        id="hats"
+        name="hats"
+        value="hats"
+        class="form-control"
+        (click)="filterTagProducts('hats')"
+      />
+      <label for="hats"> hats</label><br />
+      <input
+        type="checkbox"
+        id="scarves"
+        name="scarves"
+        value="scarves"
+        class="form-control"
+        (click)="filterTagProducts('scarves')"
+      />
+      <label for="scarves">scarves</label><br />
+      <input
+        type="checkbox"
+        id="shoes"
+        name="shoes"
+        value="shoes"
+        class="form-control"
+        (click)="filterTagProducts('shoes')"
+      />
+      <label for="shoes">shoes</label><br />
+      <input
+        type="checkbox"
+        id="ties"
+        name="ties"
+        value="ties"
+        class="form-control"
+        (click)="filterTagProducts('ties')"
+      />
+      <label for="shoes">ties</label><br />
+    </form>
+  </div>
+  <div>
+    SUIT
+    <form action="">
+      <input
+        type="checkbox"
+        id="suits"
+        name="suits"
+        value="suits"
+        class="form-control"
+        (click)="filterTagProducts('suits')"
+      />
+      <label for="suits"> suits</label><br />
+      <input
+        type="checkbox"
+        id="trousers"
+        name="trousers"
+        value="trousers"
+        class="form-control"
+        (click)="filterTagProducts('trousers')"
+      />
+      <label for="trousers">trousers</label><br />
+    </form>
+  </div>
+</div>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">

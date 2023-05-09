@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -8,16 +9,19 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css'],
 })
-export class ProductEditComponent {
+export class ProductEditComponent implements OnInit {
   @Input() editorConfig: any;
   product: any;
   // Sample data
   percentage: number = 0;
   sizetemp: any = null;
   colortemp: any = null;
-
+  ngOnInit(): void {
+    this.authService.checkValidUser();
+  }
   constructor(
     private service: ProductService,
+    private authService: AuthService,
     private activateRoute: ActivatedRoute,
     private router: Router
   ) {

@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Content } from 'src/app/models/content';
+import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ContentService } from 'src/app/services/content.service';
   templateUrl: './content-new.component.html',
   styleUrls: ['./content-new.component.css'],
 })
-export class ContentNewComponent {
+export class ContentNewComponent implements OnInit {
   content: Content = new Content();
   selectedFile!: FileList;
   percentage: number = 0;
@@ -24,9 +25,13 @@ export class ContentNewComponent {
     placeholder: 'Enter text here...',
     toolbarHiddenButtons: [['insertImage', 'insertVideo', 'fontName']],
   };
-
+  ngOnInit(): void {
+    // Code to view all products here
+    this.authService.checkValidUser();
+  }
   constructor(
     private cService: ContentService,
+    private authService: AuthService,
     private fireStorage: AngularFireStorage,
     private router: Router
   ) {}

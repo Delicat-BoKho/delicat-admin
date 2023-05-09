@@ -1,4 +1,4 @@
-* {
+/* /* * {
   font-family: "Poppins", sans-serif;
   color: #e3f2fd;
 }
@@ -129,4 +129,13 @@ button {
 }
 .modal-footer {
   align-self: center;
+}
+.search {
+  background-color: gray;
+}
+.search input {
+  /* background-color: green; */
+}
+.typeFilter {
+  background-color: rgb(252, 136, 136);
 }

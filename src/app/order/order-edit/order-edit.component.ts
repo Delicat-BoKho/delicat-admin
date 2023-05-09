@@ -6,14 +6,15 @@ import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { parse, format } from 'date-fns';
 import { Order } from 'src/app/models/order';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.css'],
 })
-export class OrderEditComponent {
+export class OrderEditComponent implements OnInit {
   // Sample data
   public order: any;
   errMessage: string = '';
@@ -24,10 +25,13 @@ export class OrderEditComponent {
   productDetail: Array<Product> = [];
   // thông tin hiển thị lên UI
   public productLineShow: Array<ProductLine> = [];
-
+  ngOnInit(): void {
+    this.authService.checkValidUser();
+  }
   constructor(
     private modalService: BsModalService,
     private service: OrderService,
+    private authService: AuthService,
     private activateRoute: ActivatedRoute,
     private serviceProduct: ProductService,
     private router: Router,

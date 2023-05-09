@@ -1,17 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, forkJoin, switchMap, Observable } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { Comment } from 'src/app/models/comment';
 import { object } from '@angular/fire/database';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product-new',
   templateUrl: './product-new.component.html',
   styleUrls: ['./product-new.component.css'],
 })
-export class ProductNewComponent {
+export class ProductNewComponent implements OnInit {
   selectedFiles!: FileList;
   currentFileUpload: any;
   percentage: number = 0;
@@ -21,13 +22,13 @@ export class ProductNewComponent {
   sizetemp: string = '';
   colortemp: string = '';
   reviewTemp = new Comment();
-  productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
 
   @Input() editorConfig: any;
 
   constructor(
     private service: ProductService,
+    private authservice: AuthService,
     private fireStorage: AngularFireStorage
   ) {}
 
@@ -35,6 +36,7 @@ export class ProductNewComponent {
     // this.getProducts();
     // this.getProductByIds();
     console.log(this.listProduct);
+    this.authservice.checkValidUser();
   }
 
   selectFile(event: any) {

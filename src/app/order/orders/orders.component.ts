@@ -6,6 +6,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, RouterLink } from '@angular/router';
 import { Order } from 'src/app/models/order';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -22,6 +23,7 @@ export class OrdersComponent implements OnInit {
   orderIdDelete: string = '';
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   ngOnInit(): void {
+    this.authService.checkValidUser();
     // Code to view all orders here
     this.getOrders();
     // console.log(this.getProduct(this.ProductId));
@@ -55,6 +57,7 @@ export class OrdersComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private service: OrderService,
+    private authService: AuthService,
     private Pservice: ProductService,
     private router: Router
   ) {}

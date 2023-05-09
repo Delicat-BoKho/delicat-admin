@@ -62,10 +62,8 @@ export class ContentService {
 
   // PUT: update content
   updateContent(content: Content) {
-    const currentContent = this.fireStore
-      .collection<Content>('Content')
-      .doc(content.id);
-    const data = {
+    const myDoc = this.fireStore.collection('/Content').doc(content.id);
+    const contentMeta = {
       id: content.id,
       title: content.title,
       img: content.img,
@@ -73,14 +71,13 @@ export class ContentService {
       author: content.author,
       date: content.date,
     };
-    // push data
-    currentContent
-      .update(data)
+    myDoc
+      .set(contentMeta)
       .then(() => {
-        console.log('PUT service works!');
+        console.log('Document successfully written!');
       })
       .catch((error) => {
-        console.error('Erorr at updating service: ', error);
+        console.error('Error writing document: ', error);
       });
   }
 

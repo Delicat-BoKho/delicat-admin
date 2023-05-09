@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import {
@@ -10,12 +10,13 @@ import { CustomerService } from 'src/app/services/customer.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { parse, format } from 'date-fns';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.css'],
 })
-export class CustomerEditComponent {
+export class CustomerEditComponent implements OnInit {
   showPassword: boolean = false;
   customer: any;
   productDetailinCart: Array<Product> = [];
@@ -46,9 +47,14 @@ export class CustomerEditComponent {
       },
     });
   }
+  ngOnInit(): void {
+    // Code to view all products here
+    this.authService.checkValidUser();
+  }
   constructor(
     private service: CustomerService,
     private orderService: OrderService,
+    private authService: AuthService,
     private activateRoute: ActivatedRoute,
     private serviceProduct: ProductService,
     private router: Router

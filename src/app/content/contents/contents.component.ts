@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
 import { Content } from 'src/app/models/content';
+import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { ContentService } from 'src/app/services/content.service';
   templateUrl: './contents.component.html',
   styleUrls: ['./contents.component.css'],
 })
-export class ContentsComponent {
+export class ContentsComponent implements OnInit {
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   modalRef: BsModalRef | null = null;
 
@@ -28,11 +29,14 @@ export class ContentsComponent {
 
   constructor(
     private modalService: BsModalService,
+    private authService: AuthService,
+
     private cService: ContentService
   ) {}
 
   ngOnInit(): void {
     this.getContents();
+    this.authService.checkValidUser();
   }
 
   getContents() {
