@@ -6,8 +6,13 @@
           <div class="container-title">
             <h1 class="title">
               Order
-              <span>{{ order.id }}</span>
+              <span class="id">#{{ order.id }}</span>
             </h1>
+            <div class="text-center">
+              <button class="btn btn-secondary" (click)="toggleEdit()">
+                Toggle Edit
+              </button>
+            </div>
           </div>
         </div>
         <div class="card-body px-0 pb-2 px-4">
@@ -21,6 +26,7 @@
                   id="orderId"
                   placeholder="Enter order ID"
                   [(ngModel)]="order.id"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
@@ -30,6 +36,8 @@
                   class="form-control"
                   id="customerId"
                   [(ngModel)]="order.CustomerID"
+                  disabled
+                  disabled
                 />
               </div>
             </div>
@@ -41,6 +49,7 @@
                 id="orderDate"
                 placeholder="Enter order date"
                 [(ngModel)]="order.dateCreated"
+                disabled
               />
             </div>
             <div class="row">
@@ -50,6 +59,7 @@
                   class="form-control"
                   id="paymentMethod"
                   [(ngModel)]="order.paymentMethod"
+                  [disabled]="!editable"
                 >
                   <option value="Cash">Cash</option>
                   <option value="Credit Card">Credit Card</option>
@@ -64,6 +74,7 @@
                   class="form-control"
                   id="status"
                   [(ngModel)]="order.status"
+                  [disabled]="!editable"
                 >
                   <option [ngValue]="'pending'">Pending</option>
                   <option [ngValue]="'dispatched'">Dispatched</option>
@@ -116,6 +127,7 @@
                   class="form-control"
                   id="address"
                   [(ngModel)]="order.deliveryAddress"
+                  [disabled]="!editable"
                 />
               </div>
             </div>
@@ -127,6 +139,7 @@
                 id="orderTotal"
                 placeholder="Enter order total"
                 [(ngModel)]="order.total"
+                disabled
               />
             </div>
             <div class="card-footer text-center">
