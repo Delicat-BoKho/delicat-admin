@@ -36,6 +36,7 @@ th {
   font-weight: 700;
   opacity: 0.7;
   text-align: left;
+  text-align: center;
 }
 h6.id {
   margin-bottom: 0 !important;
@@ -48,6 +49,15 @@ tr td .customer-info {
 }
 tr td {
   vertical-align: middle !important;
+  text-align: center;
+}
+tr td span,
+tr td div div h6,
+tr td div {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 ul {
   list-style: none;
@@ -91,24 +101,8 @@ ul {
   border-radius: 0;
 }
 
-.modal-header {
-  align-self: center;
-}
-.modal-title {
-  font-weight: bold;
-  color: black;
-}
-.modal-body {
-  align-self: center;
-  color: #1e88e5;
-}
-.modal-footer {
-  align-self: center;
-}
-.search_block {
-  background-color: gray;
-}
-input {
-  background-color: antiquewhite;
-  color: black;
+.inputbox input {
+  width: 80%;
+  display: inline;
+  text-align: left;
 }
