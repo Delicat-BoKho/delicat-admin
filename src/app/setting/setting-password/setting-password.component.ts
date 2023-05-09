@@ -69,11 +69,13 @@ export class SettingPasswordComponent implements AfterViewInit {
       });
     });
   }
-  async changePassword(userName: string) {
-    await this.getUser(userName); // đợi cho hàm getUser kết thúc
+
+  async changePassword() {
+    this.userName = localStorage.getItem('userName')!;
+    await this.getUser(this.userName); // đợi cho hàm getUser kết thúc
     // Check if new password and confirm password match
     if (this.loginSuccess && this.newPassword == this.confirmPassword) {
-      this.user.userName = userName;
+      this.user.userName = this.userName;
       this.user.password = CryptoJS.SHA256(this.newPassword).toString();
       this.user.role = 'admin';
       this.updateAdminUser(this.user);

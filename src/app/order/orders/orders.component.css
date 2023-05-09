@@ -126,3 +126,6 @@ button {
 .modal-footer {
   align-self: center;
 }
+.sort {
+  background-color: gray;
+}
