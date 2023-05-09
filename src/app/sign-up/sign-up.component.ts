@@ -13,7 +13,7 @@ import { Admin } from '../models/user';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   public userName: string = '';
   public password: string = '';
   hashPassword: string = '';
@@ -30,8 +30,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private FormsModule: FormsModule,
     private fireStore: AngularFirestore,
+    private authService: AuthService,
     private fireStorage: AngularFireStorage,
     private service: AuthService
   ) {}
-  ngOnInit(): void {}
 }

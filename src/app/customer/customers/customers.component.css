@@ -105,3 +105,10 @@ ul {
 .modal-footer {
   align-self: center;
 }
+.search_block {
+  background-color: gray;
+}
+input {
+  background-color: antiquewhite;
+  color: black;
+}

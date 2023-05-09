@@ -202,4 +202,9 @@ export class AuthService {
       console.log('Error updating password:', error);
     }
   }
+  checkValidUser() {
+    if (localStorage.length == 0) {
+      this.router.navigate(['login']);
+    }
+  }
 }
