@@ -159,6 +159,7 @@ export class ProductService {
   }
 
   //get list items by ids
+
   getProductsByIds(productIdss: string[]): Observable<Product[]> {
     return this.fireStore
       .collection<Product>('/ProductTemp', (ref) =>

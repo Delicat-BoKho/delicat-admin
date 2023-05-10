@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,4 +9,9 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 })
 export class MenuComponent {
   faUser = faUser;
+  constructor(private router: Router) {}
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['login']);
+  }
 }

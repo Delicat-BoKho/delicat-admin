@@ -4,6 +4,7 @@ import { faL, faLock } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import * as CryptoJS from 'crypto-js';
 import { Admin } from 'src/app/models/user';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-setting-password',
@@ -22,7 +23,11 @@ export class SettingPasswordComponent implements AfterViewInit {
   loginSuccess: boolean = false;
   confirmSuccess: boolean = false;
   user = new Admin();
-  constructor(private router: Router, private service: AuthService) {
+  constructor(
+    private router: Router,
+    private service: AuthService,
+    private location: Location
+  ) {
     console.log(CryptoJS.SHA256('ad1').toString());
   }
   ngAfterViewInit() {
@@ -83,12 +88,12 @@ export class SettingPasswordComponent implements AfterViewInit {
       alert('New password and confirm password do not match.');
       return;
     }
-    this.goToLogin();
+    this.goBack();
   }
   updateAdminUser(user: Admin) {
     this.service.createAdminAccount(user);
   }
-  goToLogin() {
-    this.router.navigate(['/login']);
+  goBack(): void {
+    this.location.back();
   }
 }

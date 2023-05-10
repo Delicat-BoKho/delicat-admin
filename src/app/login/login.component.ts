@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
             if (this.hashPassWord == res.passWord) {
               this.errMessage = 'Login successfull';
               localStorage.setItem('userName', res.userName);
-              this.router.navigate(['orders']);
+              this.router.navigate(['general']);
             } else {
               this.errMessage = 'Invalid data';
             }

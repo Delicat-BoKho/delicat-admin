@@ -12,37 +12,13 @@
         <a href="/general">Home</a>
       </li>
       <li class="navi_item">
-        <a>Customer</a>
-        <div class="subnavi_container">
-          <div class="subnavi_item">
-            <ul class="subnavi">
-              <li>
-                <a routerLink="/customers">All Customers</a>
-              </li>
-              <li>
-                <a routerLink="/customer-new">Create Customer</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <a routerLink="/customers">Customer</a>
       </li>
       <li class="navi_item">
-        <a>Order</a>
-        <div class="subnavi_container">
-          <div class="subnavi_item">
-            <ul class="subnavi">
-              <li>
-                <a routerLink="/orders">All Orders</a>
-              </li>
-              <li>
-                <a routerLink="/order-new">Create Order</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <a routerLink="/orders">Order</a>
       </li>
       <li class="navi_item">
-        <a>Product</a>
+        <a routerLink="/products">Product</a>
         <div class="subnavi_container">
           <div class="subnavi_item">
             <ul class="subnavi">
@@ -57,6 +33,21 @@
         </div>
       </li>
       <li class="navi_item">
+        <a routerLink="/contents">Content</a>
+        <div class="subnavi_container">
+          <div class="subnavi_item">
+            <ul class="subnavi">
+              <li>
+                <a routerLink="/contents">All Contents</a>
+              </li>
+              <li>
+                <a routerLink="/content-new">Create Content</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="navi_item">
         <a><fa-icon [icon]="faUser"></fa-icon></a>
         <div class="subnavi_container">
           <div class="subnavi_item">
@@ -65,7 +56,7 @@
                 <a routerLink="/change-pwd">Change password</a>
               </li>
               <li>
-                <a routerLink="">Logout</a>
+                <a routerLink="" (click)="logout()">Logout</a>
               </li>
             </ul>
           </div>

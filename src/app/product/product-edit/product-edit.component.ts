@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
-import { NgForm } from '@angular/forms';
-declare var $: any;
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -26,7 +26,8 @@ export class ProductEditComponent implements OnInit {
     private service: ProductService,
     private authService: AuthService,
     private activateRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -65,8 +66,8 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
-  goBack() {
-    this.router.navigate(['products']);
+  goBack(): void {
+    this.location.back();
   }
   public editable: boolean = false;
   toggleEdit() {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-customer-new',
@@ -69,8 +70,10 @@ export class CustomerNewComponent {
     address: '123 Main St',
   };
 
-  constructor() {}
+  constructor(private location: Location) {}
 
   onSave() {}
-  goBack() {}
+  goBack(): void {
+    this.location.back();
+  }
 }
