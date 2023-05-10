@@ -1,5 +1,31 @@
 <button (click)="lineChartRevenueByMonths()">click here</button>
-<button (click)="pieChartNumberProductByTypes()">click pie</button>
+<!-- <button (click)="pieChartNumberProductByTypes()">click pie</button>
+<button (click)="getAllProductIdInOrders()">tesst</button>
+<button (click)="getAllProductTypeInAllOrders()">tesst2</button> -->
 
-<div id="main"></div>
-<div id="main2"></div>
+<div id="container">
+  <div class="kpi-card purple">
+    <span class="card-value">{{ countOrders }}</span>
+    <span class="card-text">Orders</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+
+  <div class="kpi-card grey-dark">
+    <span class="card-value">{{ countCustomers }}</span>
+    <span class="card-text">Customers</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+
+  <div class="kpi-card red">
+    <span class="card-value">${{ revenue }}</span>
+    <span class="card-text">Total Sales</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+  <div class="kpi-card orange">
+    <span class="card-value">{{ countSoldProducts }}</span>
+
+    <span class="card-text">Products sold</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+</div>
+<div id="lineChart"></div>

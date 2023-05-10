@@ -59,3 +59,6 @@ export class ProductLineInCart {
     public describeProductLine: string = ''
   ) {}
 }
+export class dataPie {
+  constructor(public value: number = 0, public name: string = '') {}
+}
