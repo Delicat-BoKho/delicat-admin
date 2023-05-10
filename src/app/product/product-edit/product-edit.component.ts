@@ -68,4 +68,8 @@ export class ProductEditComponent implements OnInit {
   goBack() {
     this.router.navigate(['products']);
   }
+  public editable: boolean = false;
+  toggleEdit() {
+    this.editable = !this.editable;
+  }
 }
