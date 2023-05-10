@@ -22,8 +22,10 @@ export class OrdersComponent implements OnInit {
   faSort = faSort;
   faSortDesc = faSortDesc;
   faSortAsc = faSortAsc;
-
-  orders: any;
+  orders: Order[] = [];
+  ordersTemp: Order[] = [];
+  foundOrders: Order[] = [];
+  searchOrder: string = '';
   errMessage: string = '';
   orderToDelete: any;
   public saleProduct: any;
@@ -54,6 +56,7 @@ export class OrdersComponent implements OnInit {
     this.service.getOrders().subscribe({
       next: (res: any) => {
         this.orders = res;
+        this.ordersTemp = res;
         console.log(this.orders);
       },
       error: (err) => {
@@ -62,7 +65,36 @@ export class OrdersComponent implements OnInit {
       },
     });
   }
-
+  sortAscending: boolean = true;
+  sortOrdersByTotal() {
+    // Sử dụng phương thức sort() để sắp xếp các sản phẩm theo giá
+    this.orders.sort((a, b) => {
+      if (a.total < b.total) {
+        return this.sortAscending ? -1 : 1;
+      } else if (a.total > b.total) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
+  sortOrdersByDate() {
+    this.orders.sort((a, b) => {
+      const dateA = new Date(a.dateCreated);
+      const dateB = new Date(b.dateCreated);
+      if (dateA < dateB) {
+        return this.sortAscending ? -1 : 1;
+      } else if (dateA > dateB) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
   constructor(
     private service: OrderService,
     private authService: AuthService,
@@ -80,23 +112,116 @@ export class OrdersComponent implements OnInit {
   ViewCustomerDetail(id: string) {
     this.router.navigate(['customer-edit/' + id]);
   }
-
-  searchOrder: string = '';
+  //search
   search() {
-    // WRITE CODE HERE
+    this.foundOrders = [];
+    for (let i = 0; i < this.ordersTemp.length; i++) {
+      const order = this.ordersTemp[i];
+      if (
+        order.id.toLowerCase().includes(this.searchOrder.toLowerCase()) ||
+        order.dateCreated.toLowerCase().includes(this.searchOrder.toLowerCase())
+      ) {
+        this.foundOrders.push(order);
+      }
+    }
+    this.ordersTemp = this.foundOrders;
+    this.orders = this.ordersTemp;
+  }
+  //filter order by payment method
+  selectedPayment: string[] = [];
+  filteredOrderByPayment: Order[] = [];
+  filterPaymentMethod(checkboxId: string) {
+    let checkboxElement: HTMLInputElement = document.getElementById(
+      checkboxId
+    ) as HTMLInputElement;
+    if (checkboxElement.checked) {
+      this.selectedPayment.push(checkboxElement.value);
+      if (this.selectedStatus.length == 0) {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+      } else {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+        this.filterStatusTemp(this.orders);
+      }
+      // this.filterStatusTemp(this.orders);
+    } else {
+      this.selectedPayment = this.selectedPayment.filter(
+        (item) => item !== checkboxElement.value
+      );
+      if (this.selectedPayment.length == 0) {
+        if (this.selectedStatus.length == 0) {
+          this.orders = this.ordersTemp;
+        } else {
+          this.orders = this.ordersTemp;
+          this.filterStatusTemp(this.orders);
+        }
+      } else {
+        this.filterPaymentMethodTemp();
+        // this.filterStatusTemp(this.orders);
+      }
+    }
+  }
+  filterPaymentMethodTemp() {
+    this.filteredOrderByPayment = [];
+    for (let i = 0; i < this.ordersTemp.length; i++) {
+      const order = this.ordersTemp[i];
+      for (let j = 0; j < this.selectedPayment.length; j++) {
+        if (
+          order.paymentMethod.toLowerCase() ==
+          this.selectedPayment[j].toLowerCase()
+        ) {
+          this.filteredOrderByPayment.push(order);
+        }
+      }
+    }
+    this.orders = this.filteredOrderByPayment;
   }
 
-  currentSortState: string = 'default';
-  sortASC() {
-    this.currentSortState = 'asc';
-    // WRITE CODE HERE
+  //filter by status
+  selectedStatus: string[] = [];
+  filteredOrderByStatus: Order[] = [];
+  filterStatus(checkboxId: string) {
+    let checkboxElement: HTMLInputElement = document.getElementById(
+      checkboxId
+    ) as HTMLInputElement;
+    if (checkboxElement.checked) {
+      if (this.selectedPayment.length != 0) {
+        this.selectedStatus.push(checkboxElement.value);
+        this.filterPaymentMethodTemp();
+        this.filterStatusTemp(this.orders);
+      } else {
+        this.selectedStatus.push(checkboxElement.value);
+        this.filterStatusTemp(this.ordersTemp);
+        console.log('test');
+      }
+    } else {
+      this.selectedStatus = this.selectedStatus.filter(
+        (item) => item !== checkboxElement.value
+      );
+      if (this.selectedStatus.length == 0) {
+        if (this.selectedPayment.length == 0) {
+          this.orders = this.ordersTemp;
+        } else {
+          this.filterPaymentMethodTemp();
+        }
+      } else {
+        this.filterStatusTemp(this.orders);
+      }
+    }
   }
-  sortDESC() {
-    this.currentSortState = 'desc';
-    // WRITE CODE HERE
-  }
-  sortDefault() {
-    this.currentSortState = 'default';
-    // WRITE CODE HERE
+  filterStatusTemp(orders: any) {
+    this.filteredOrderByStatus = [];
+    for (let i = 0; i < orders.length; i++) {
+      const order = orders[i];
+      for (let j = 0; j < this.selectedStatus.length; j++) {
+        if (
+          order.status.toLowerCase() == this.selectedStatus[j].toLowerCase()
+        ) {
+          this.filteredOrderByStatus.push(order);
+        }
+      }
+    }
+    this.orders = this.filteredOrderByStatus;
   }
 }

@@ -38,7 +38,6 @@
                 value="suit"
                 class="form-check-input"
                 (click)="filterTypeProducts('suit')"
-                [checked]="typeFilter.suit"
               />
               <label for="suit"> suit</label> <br />
               <input
@@ -48,7 +47,6 @@
                 value="accessories"
                 class="form-check-input"
                 (click)="filterTypeProducts('accessories')"
-                [checked]="typeFilter.accessories"
               />
               <label for="accessories">accessories</label> <br />
             </div>
@@ -62,7 +60,6 @@
                 value="hats"
                 class="form-check-input"
                 (click)="filterTagProducts('hats')"
-                [checked]="accessoriesFilter.hats"
               />
               <label for="hats"> hats</label><br />
               <input
@@ -72,7 +69,6 @@
                 value="scarves"
                 class="form-check-input"
                 (click)="filterTagProducts('scarves')"
-                [checked]="accessoriesFilter.scarves"
               />
               <label for="scarves">scarves</label><br />
               <input
@@ -82,7 +78,6 @@
                 value="shoes"
                 class="form-check-input"
                 (click)="filterTagProducts('shoes')"
-                [checked]="accessoriesFilter.shoes"
               />
               <label for="shoes">shoes</label><br />
               <input
@@ -92,7 +87,6 @@
                 value="ties"
                 class="form-check-input"
                 (click)="filterTagProducts('ties')"
-                [checked]="accessoriesFilter.ties"
               />
               <label for="shoes">ties</label><br />
             </div>
@@ -106,7 +100,6 @@
                 value="suits"
                 class="form-check-input"
                 (click)="filterTagProducts('suits')"
-                [checked]="suitFilter.suits"
               />
               <label for="suits"> suits</label><br />
               <input
@@ -116,7 +109,6 @@
                 value="trousers"
                 class="form-check-input"
                 (click)="filterTagProducts('trousers')"
-                [checked]="suitFilter.trousers"
               />
               <label for="trousers">Trousers</label><br />
             </div>
@@ -132,26 +124,8 @@
                   <th colspan="2">Type</th>
                   <th colspan="2" class="sort">
                     Price
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'default'"
-                      (click)="sortASC()"
-                    >
+                    <button class="btn" (click)="sortProductsByPrice()">
                       <fa-icon [icon]="faSort"></fa-icon>
-                    </button>
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'asc'"
-                      (click)="sortDESC()"
-                    >
-                      <fa-icon [icon]="faSortAsc"></fa-icon>
-                    </button>
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'desc'"
-                      (click)="sortDefault()"
-                    >
-                      <fa-icon [icon]="faSortDesc"></fa-icon>
                     </button>
                   </th>
                   <th colspan="2">Tag</th>
