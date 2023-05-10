@@ -27,6 +27,11 @@ const routes: Routes = [
     component: AlertComponent,
   },
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch:'full'
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },
