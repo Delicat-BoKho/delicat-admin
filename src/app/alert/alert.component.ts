@@ -8,13 +8,8 @@ import * as echarts from 'echarts';
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent implements OnInit {
-  products: Product[] = []; //product list show to user
-  productsOrigin: Product[] = [];
-  productsTemp: Product[] = [];
-  foundProducts: Product[] = [];
+  products: Product[] = [];
   errMessage: string = '';
-  searchProduct: string = '';
-  prices: number[] = [];
 
   constructor(private productService: ProductService) {}
 
@@ -25,22 +20,17 @@ export class AlertComponent implements OnInit {
   renderChart1(): void {
     this.productService.getProducts().subscribe({
       next: (res: any) => {
-        this.productsOrigin = res;
-        this.productsTemp = this.productsOrigin;
-        this.products = this.productsTemp;
-        this.prices = this.productsOrigin.map((p) => (p ? p.price : 0));
-        let distinctPrices = [...new Set(this.prices)];
+        this.products = res;
+        let prices = this.products.map((p) => (p ? p.price : 0));
+        let distinctPrices = [...new Set(prices)];
         distinctPrices.sort((a, b) => a - b);
-        this.prices.sort((a, b) => a - b);
+        prices.sort((a, b) => a - b);
         // count the number of distinctPrice in prices
         let counts = [];
         let j = 0;
         for (let i = 0; i < distinctPrices.length; i++) {
           let count = 0;
-          while (
-            j < this.prices.length &&
-            this.prices[j] === distinctPrices[i]
-          ) {
+          while (j < prices.length && prices[j] === distinctPrices[i]) {
             count++;
             j++;
           }
@@ -53,17 +43,39 @@ export class AlertComponent implements OnInit {
           let chart = echarts.init(chartElement);
 
           let option = {
+            textStyle: {
+              fontFamily: "'Kanit', sans-serif",
+            },
+            title: {
+              text: 'Product Price Counts',
+              left: 'center',
+            },
             xAxis: {
               type: 'category',
               data: distinctPrices,
+              name: 'Price',
             },
             yAxis: {
               type: 'value',
+              name: 'Count',
             },
             series: [
               {
                 data: counts,
                 type: 'bar',
+                showBackground: true,
+                backgroundStyle: {
+                  color: 'rgba(180, 180, 180, 0.2)',
+                },
+                itemStyle: {
+                  color: '#1565c0',
+                },
+                label: {
+                  show: true, // enable label display
+                  position: 'top', // display labels on top of bars
+                  color: 'black', // set label text color
+                  fontSize: 12, // set label font size
+                },
               },
             ],
           };
@@ -73,7 +85,7 @@ export class AlertComponent implements OnInit {
       },
       error: (err) => {
         this.errMessage = err;
-        console.log('Error occured while fetching file meta data');
+        console.log('Error: ' + err);
       },
     });
   }
