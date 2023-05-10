@@ -1,12 +1,31 @@
-<app-menu></app-menu>
+<button (click)="lineChartRevenueByMonths()">click here</button>
+<!-- <button (click)="pieChartNumberProductByTypes()">click pie</button>
+<button (click)="getAllProductIdInOrders()">tesst</button>
+<button (click)="getAllProductTypeInAllOrders()">tesst2</button> -->
 
-<p>general works!</p>
-<form action="/action_page.php">
-  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-  <label for="vehicle1"> I have a bike</label><br />
-  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" />
-  <label for="vehicle2"> I have a car</label><br />
-  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-  <label for="vehicle3"> I have a boat</label><br /><br />
-  <input type="submit" value="Submit" />
-</form>
+<div id="container">
+  <div class="kpi-card purple">
+    <span class="card-value">{{ countOrders }}</span>
+    <span class="card-text">Orders</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+
+  <div class="kpi-card grey-dark">
+    <span class="card-value">{{ countCustomers }}</span>
+    <span class="card-text">Customers</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+
+  <div class="kpi-card red">
+    <span class="card-value">${{ revenue }}</span>
+    <span class="card-text">Total Sales</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+  <div class="kpi-card orange">
+    <span class="card-value">{{ countSoldProducts }}</span>
+
+    <span class="card-text">Products sold</span>
+    <i class="fas fa-shopping-cart icon"></i>
+  </div>
+</div>
+<div id="lineChart"></div>

@@ -29,6 +29,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.30.0",
+    "echarts": "^5.4.2",
     "js-sha256": "^0.9.0",
     "ngx-bootstrap": "^10.2.0",
     "ngx-pagination": "^6.0.3",
