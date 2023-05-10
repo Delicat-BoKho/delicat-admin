@@ -107,11 +107,11 @@
             <div class="card-footer text-center">
               <button
                 class="btn btn-primary mx-3"
-                (click)="updateContent(content)"
+                (click)="confirmSaveChanges(content)"
               >
                 Save Change
               </button>
-              <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+              <button class="btn btn-danger" (click)="goBack()">Cancel</button>
             </div>
           </div>
         </div>
@@ -119,3 +119,26 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<ng-template #saveChangesConfirmationModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Save Changes Confirmation?</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Are you sure you want to update this product?</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="updateContent(content)"
+    >
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      No
+    </button>
+  </div>
+</ng-template>

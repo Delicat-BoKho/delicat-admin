@@ -43,3 +43,17 @@ td {
 input {
   width: 100%;
 }
+.modal-header {
+  align-self: center;
+}
+.modal-title {
+  font-weight: bold;
+  color: black;
+}
+.modal-body {
+  align-self: center;
+  color: #1e88e5;
+}
+.modal-footer {
+  align-self: center;
+}
