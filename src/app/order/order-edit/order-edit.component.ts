@@ -112,7 +112,6 @@ export class OrderEditComponent implements OnInit {
       if (this.productDetail && this.productDetail.length > i) {
         this.productLineShow[i].name = this.productDetail[i].name;
         this.productLineShow[i].type = this.productDetail[i].type;
-        this.productLineShow[i].unitPrice = this.productDetail[i].price;
         this.productLineShow[i].imgURL = this.productDetail[i].imgURL[0];
         this.productLineShow[i].tag = this.productDetail[i].tag;
 
@@ -123,9 +122,11 @@ export class OrderEditComponent implements OnInit {
 
         this.productLineShow[i].size = describeSplit[1];
         this.productLineShow[i].color = describeSplit[0];
-        this.productLineShow[i].quantity = this.order.SaleProducts[i].Quantity;
+        this.productLineShow[i].quantity = this.order.saleProducts[i].Quantity;
         this.productLineShow[i].describeProductLine =
-          this.order.SaleProducts[i].Description;
+          this.order.saleProducts[i].Description;
+        this.productLineShow[i].unitPrice =
+          this.order.saleProducts[i].unitPrice;
       }
     }
     console.log(this.productLineShow);
@@ -149,5 +150,10 @@ export class OrderEditComponent implements OnInit {
       console.log(order);
       this.router.navigate(['orders']);
     }
+  }
+
+  public editable: boolean = false;
+  toggleEdit() {
+    this.editable = !this.editable;
   }
 }

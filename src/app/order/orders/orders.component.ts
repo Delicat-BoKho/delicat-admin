@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { OrderService } from 'src/app/services/order.service';
@@ -7,7 +6,12 @@ import { ProductService } from 'src/app/services/product.service';
 import { Router, RouterLink } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import { AuthService } from 'src/app/services/auth.service';
-import { el } from 'date-fns/locale';
+import {
+  faSearch,
+  faSort,
+  faSortDesc,
+  faSortAsc,
+} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -15,16 +19,18 @@ import { el } from 'date-fns/locale';
 })
 export class OrdersComponent implements OnInit {
   modalRef: BsModalRef | null = null;
-  orders: Order[] = [];
-  ordersTemp: Order[] = [];
-
+  orders: any;
   errMessage: string = '';
   orderToDelete: any;
   public saleProduct: any;
   public productId: string = '';
   public orderId: string = '';
   orderIdDelete: string = '';
-  @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
+  faSearch = faSearch;
+  faSort = faSort;
+  faSortDesc = faSortDesc;
+  faSortAsc = faSortAsc;
+
   ngOnInit(): void {
     this.authService.checkValidUser();
     // Code to view all orders here
@@ -88,7 +94,6 @@ export class OrdersComponent implements OnInit {
   }
 
   constructor(
-    private modalService: BsModalService,
     private service: OrderService,
     private authService: AuthService,
     private Pservice: ProductService,
@@ -98,26 +103,6 @@ export class OrdersComponent implements OnInit {
     this.orderId = id;
     console.log('Giá trị của orderID:', this.orderId);
   }
-  confirmDeleteOrder(order: any): void {
-    this.orderIdDelete = order.id;
-    this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
-      class: 'modal-dialog-centered',
-    });
-  }
-
-  deleteOrder() {
-    this.service.deleteOrder(this.orderIdDelete);
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
-  }
-
-  cancelDeleteOrder() {
-    this.orderToDelete = null;
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
-  }
 
   ViewOrderDetail(id: string) {
     this.router.navigate(['order-edit/' + id]);
@@ -125,6 +110,7 @@ export class OrdersComponent implements OnInit {
   ViewCustomerDetail(id: string) {
     this.router.navigate(['customer-edit/' + id]);
   }
+<<<<<<< HEAD
   //filter order by payment method
   selectedPayment: string[] = [];
   filteredOrderByPayment: Order[] = [];
@@ -210,5 +196,25 @@ export class OrdersComponent implements OnInit {
       }
     }
     this.orders = this.filteredOrderByStatus;
+=======
+
+  searchOrder: string = '';
+  search() {
+    // WRITE CODE HERE
+  }
+
+  currentSortState: string = 'default';
+  sortASC() {
+    this.currentSortState = 'asc';
+    // WRITE CODE HERE
+  }
+  sortDESC() {
+    this.currentSortState = 'desc';
+    // WRITE CODE HERE
+  }
+  sortDefault() {
+    this.currentSortState = 'default';
+    // WRITE CODE HERE
+>>>>>>> dev
   }
 }
