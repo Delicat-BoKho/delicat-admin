@@ -22,6 +22,7 @@ export class AlertComponent implements OnInit {
   ngOnInit(): void {
     this.renderChart0();
     this.renderChart1();
+    this.renderChart2();
   }
 
   renderChart0(): void {
@@ -184,6 +185,98 @@ export class AlertComponent implements OnInit {
       error: (err) => {
         this.errMessage = err;
         console.log('Error: ' + err);
+      },
+    });
+  }
+
+  renderChart2(): void {
+    this.orderService.getOrders().subscribe({
+      next: (res: any) => {
+        this.orders = res;
+        this.productService.getProducts().subscribe({
+          next: (res: any) => {
+            this.products = res;
+            // Create a map to store the revenue for each product type
+            const revenueByType = new Map<string, number>();
+            this.products.forEach((product) => {
+              if (product.type) {
+                revenueByType.set(product.type, 0);
+              }
+            });
+            this.orders.forEach((order) => {
+              order.saleProducts.forEach((saleProduct) => {
+                const product = this.products.find(
+                  (p) => p.id === saleProduct.productId
+                );
+                if (product && revenueByType.has(product.type)) {
+                  const type = product.type;
+                  const quantity = saleProduct.quantity;
+                  const unitPrice = saleProduct.unitPrice;
+                  const totalSales = revenueByType.get(type) || 0;
+                  revenueByType.set(type, totalSales + quantity * unitPrice);
+                }
+              });
+            });
+
+            const chartData = Array.from(revenueByType).map(
+              ([type, sales]) => ({
+                name: type,
+                value: sales,
+              })
+            );
+
+            let chartElement = document.getElementById('chart2');
+
+            if (chartElement) {
+              let chart = echarts.init(chartElement);
+
+              let option = {
+                textStyle: {
+                  fontFamily: "'Kanit', sans-serif",
+                },
+                title: {
+                  text: 'Revenue by Product Type',
+                  left: 'center',
+                },
+                tooltip: {
+                  trigger: 'item',
+                  formatter: '{a} <br/>{b}: ${c} ({d}%)',
+                },
+                series: [
+                  {
+                    name: 'Revenue',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                      borderRadius: 10,
+                      borderColor: '#fff',
+                      borderWidth: 2,
+                    },
+                    data: chartData,
+                    label: {
+                      show: true,
+                      formatter: '{b} ({d}%)',
+                    },
+                    labelLine: {
+                      show: true,
+                    },
+                  },
+                ],
+              };
+
+              chart.setOption(option);
+            }
+          },
+          error: (err) => {
+            this.errMessage = err;
+            console.log('Error get products: ' + err);
+          },
+        });
+      },
+      error: (err) => {
+        this.errMessage = err;
+        console.log('Error inside get orders: ' + err);
       },
     });
   }
