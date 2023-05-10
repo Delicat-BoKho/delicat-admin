@@ -146,6 +146,10 @@ export class AlertComponent implements OnInit {
               text: 'Product Price Counts',
               left: 'center',
             },
+            tooltip: {
+              trigger: 'item',
+              formatter: '{a} <br/> ${b}: {c} (times)',
+            },
             xAxis: {
               type: 'category',
               data: distinctPrices,
@@ -157,20 +161,18 @@ export class AlertComponent implements OnInit {
             },
             series: [
               {
+                name: 'Appearances',
                 data: counts,
                 type: 'bar',
                 showBackground: true,
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)',
                 },
-                itemStyle: {
-                  color: '#1565c0',
-                },
                 label: {
-                  show: true, // enable label display
-                  position: 'top', // display labels on top of bars
-                  color: 'black', // set label text color
-                  fontSize: 12, // set label font size
+                  show: true,
+                  position: 'top',
+                  color: 'black',
+                  fontSize: 12,
                 },
               },
             ],
