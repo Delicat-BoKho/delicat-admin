@@ -6,12 +6,15 @@ import { ProductService } from 'src/app/services/product.service';
 import { Router, RouterLink } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import { AuthService } from 'src/app/services/auth.service';
+<<<<<<< HEAD
 import {
   faSearch,
   faSort,
   faSortDesc,
   faSortAsc,
 } from '@fortawesome/free-solid-svg-icons';
+=======
+>>>>>>> parent of f345f60 (add functions)
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -45,36 +48,7 @@ export class OrdersComponent implements OnInit {
     itemsPerPage: 8,
     currentPage: 1,
   };
-  sortAscending: boolean = true;
-  sortOrdersByTotal() {
-    // Sử dụng phương thức sort() để sắp xếp các sản phẩm theo giá
-    this.orders.sort((a, b) => {
-      if (a.total < b.total) {
-        return this.sortAscending ? -1 : 1;
-      } else if (a.total > b.total) {
-        return this.sortAscending ? 1 : -1;
-      } else {
-        return 0;
-      }
-    });
-    this.sortAscending = !this.sortAscending;
-    return this.orders;
-  }
-  sortOrdersByDate() {
-    this.orders.sort((a, b) => {
-      const dateA = new Date(a.dateCreated);
-      const dateB = new Date(b.dateCreated);
-      if (dateA < dateB) {
-        return this.sortAscending ? -1 : 1;
-      } else if (dateA > dateB) {
-        return this.sortAscending ? 1 : -1;
-      } else {
-        return 0;
-      }
-    });
-    this.sortAscending = !this.sortAscending;
-    return this.orders;
-  }
+
   onPageChange(pageNumber: number) {
     this.paginationConfig.currentPage = pageNumber;
   }
@@ -82,7 +56,6 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     this.service.getOrders().subscribe({
       next: (res: any) => {
-        this.ordersTemp = res;
         this.orders = res;
         console.log(this.orders);
       },
@@ -110,7 +83,7 @@ export class OrdersComponent implements OnInit {
   ViewCustomerDetail(id: string) {
     this.router.navigate(['customer-edit/' + id]);
   }
-<<<<<<< HEAD
+
   //filter order by payment method
   selectedPayment: string[] = [];
   filteredOrderByPayment: Order[] = [];
@@ -196,25 +169,5 @@ export class OrdersComponent implements OnInit {
       }
     }
     this.orders = this.filteredOrderByStatus;
-=======
-
-  searchOrder: string = '';
-  search() {
-    // WRITE CODE HERE
-  }
-
-  currentSortState: string = 'default';
-  sortASC() {
-    this.currentSortState = 'asc';
-    // WRITE CODE HERE
-  }
-  sortDESC() {
-    this.currentSortState = 'desc';
-    // WRITE CODE HERE
-  }
-  sortDefault() {
-    this.currentSortState = 'default';
-    // WRITE CODE HERE
->>>>>>> dev
   }
 }
