@@ -50,7 +50,8 @@ export class CustomersComponent {
           .includes(this.searchCustomer.toLowerCase()) ||
         customer.fullName
           .toLowerCase()
-          .includes(this.searchCustomer.toLowerCase())
+          .includes(this.searchCustomer.toLowerCase()) ||
+        customer.id.toLowerCase().includes(this.searchCustomer.toLowerCase())
       ) {
         this.foundCustomers.push(customer);
       }

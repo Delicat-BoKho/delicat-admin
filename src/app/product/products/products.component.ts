@@ -185,8 +185,11 @@ export class ProductsComponent {
     if (checkboxElement.checked) {
       this.selectedTag.push(checkboxElement.value);
       this.filterTagProductsTemp();
-      console.log(checkboxElement.value, this.selectedType);
     } else {
+      this.selectedTag = this.selectedTag.filter(
+        (item) => item !== checkboxElement.value
+      );
+      console.log(this.selectedTag);
       if (this.selectedTag.length == 0) {
         if (this.selectedType.length == 0) {
           this.products = this.productsTemp;
@@ -194,14 +197,13 @@ export class ProductsComponent {
           this.filterTypeProductsTemp();
         }
       } else {
-        this.selectedTag = this.selectedTag.filter(
-          (item) => item !== checkboxElement.value
-        );
         if (this.selectedType.length == 0) {
           this.products = this.productsTemp;
+          this.filterTagProductsTemp();
           console.log('test');
         } else {
           this.filterTypeProductsTemp();
+          this.filterTagProductsTemp();
         }
       }
     }

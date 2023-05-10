@@ -54,7 +54,36 @@ export class OrdersComponent implements OnInit {
       },
     });
   }
-
+  sortAscending: boolean = true;
+  sortOrdersByTotal() {
+    // Sử dụng phương thức sort() để sắp xếp các sản phẩm theo giá
+    this.orders.sort((a, b) => {
+      if (a.total < b.total) {
+        return this.sortAscending ? -1 : 1;
+      } else if (a.total > b.total) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
+  sortOrdersByDate() {
+    this.orders.sort((a, b) => {
+      const dateA = new Date(a.dateCreated);
+      const dateB = new Date(b.dateCreated);
+      if (dateA < dateB) {
+        return this.sortAscending ? -1 : 1;
+      } else if (dateA > dateB) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
   constructor(
     private service: OrderService,
     private authService: AuthService,
@@ -81,18 +110,29 @@ export class OrdersComponent implements OnInit {
     ) as HTMLInputElement;
     if (checkboxElement.checked) {
       this.selectedPayment.push(checkboxElement.value);
-      this.filterPaymentMethodTemp();
-      this.filterStatusTemp(this.orders);
+      if (this.selectedStatus.length == 0) {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+      } else {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+        this.filterStatusTemp(this.orders);
+      }
+      // this.filterStatusTemp(this.orders);
     } else {
       this.selectedPayment = this.selectedPayment.filter(
         (item) => item !== checkboxElement.value
       );
       if (this.selectedPayment.length == 0) {
-        this.orders = this.ordersTemp;
-        this.filterStatusTemp(this.orders);
+        if (this.selectedStatus.length == 0) {
+          this.orders = this.ordersTemp;
+        } else {
+          this.orders = this.ordersTemp;
+          this.filterStatusTemp(this.orders);
+        }
       } else {
         this.filterPaymentMethodTemp();
-        this.filterStatusTemp(this.orders);
+        // this.filterStatusTemp(this.orders);
       }
     }
   }

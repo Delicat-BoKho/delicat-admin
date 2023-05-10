@@ -144,4 +144,10 @@ export class CustomerEditComponent implements OnInit {
   goBack() {
     this.router.navigate(['customers']);
   }
+  viewProductDetail(id: string) {
+    this.router.navigate(['product-edit/' + id]);
+  }
+  viewOrderDetail(id: string) {
+    this.router.navigate(['order-edit/' + id]);
+  }
 }
