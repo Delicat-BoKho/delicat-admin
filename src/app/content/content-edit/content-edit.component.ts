@@ -7,6 +7,7 @@ import { Content } from 'src/app/models/content';
 import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
 import { finalize } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-content-edit',
@@ -40,7 +41,8 @@ export class ContentEditComponent implements OnInit {
     private authService: AuthService,
     private fireStorage: AngularFireStorage,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -142,8 +144,8 @@ export class ContentEditComponent implements OnInit {
     console.log('Content updated successfully!');
   }
 
-  goBack() {
-    this.router.navigate(['/contents']);
+  goBack(): void {
+    this.location.back();
   }
 
   resetForm() {

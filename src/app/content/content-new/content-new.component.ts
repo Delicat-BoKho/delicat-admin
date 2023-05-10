@@ -5,6 +5,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Content } from 'src/app/models/content';
 import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-content-new',
@@ -33,7 +34,8 @@ export class ContentNewComponent implements OnInit {
     private cService: ContentService,
     private authService: AuthService,
     private fireStorage: AngularFireStorage,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   selectFile(event: any) {
@@ -80,8 +82,8 @@ export class ContentNewComponent implements OnInit {
     }
   }
 
-  cancel() {
-    this.router.navigate(['/contents']);
+  goBack(): void {
+    this.location.back();
   }
 
   resetForm() {

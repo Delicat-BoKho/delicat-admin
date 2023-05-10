@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-order-new',
   templateUrl: './order-new.component.html',
@@ -27,7 +29,9 @@ export class OrderNewComponent {
     ],
   };
 
-  constructor() {}
+  constructor(private location: Location) {}
   createOrder() {}
-  goBack() {}
+  goBack(): void {
+    this.location.back();
+  }
 }

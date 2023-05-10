@@ -141,9 +141,8 @@ export class OrderEditComponent implements OnInit {
     var color = temp[0];
     return [size, color];
   }
-  //go back page view all orders
-  goBack() {
-    this.router.navigate(['orders']);
+  goBack(): void {
+    this.location.back();
   }
 
   public editable: boolean = false;
