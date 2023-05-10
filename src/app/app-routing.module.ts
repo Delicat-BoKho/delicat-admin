@@ -91,7 +91,7 @@ const routes: Routes = [
     component: SettingsComponent,
   },
   {
-    path: 'setting-pwd',
+    path: 'change-pwd',
     component: SettingPasswordComponent,
   },
   {
