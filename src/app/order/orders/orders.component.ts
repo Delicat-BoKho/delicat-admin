@@ -6,33 +6,22 @@ import { ProductService } from 'src/app/services/product.service';
 import { Router, RouterLink } from '@angular/router';
 import { Order } from 'src/app/models/order';
 import { AuthService } from 'src/app/services/auth.service';
-<<<<<<< HEAD
-import {
-  faSearch,
-  faSort,
-  faSortDesc,
-  faSortAsc,
-} from '@fortawesome/free-solid-svg-icons';
-=======
->>>>>>> parent of f345f60 (add functions)
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-  modalRef: BsModalRef | null = null;
-  orders: any;
+  orders: Order[] = [];
+  ordersTemp: Order[] = [];
+
   errMessage: string = '';
   orderToDelete: any;
   public saleProduct: any;
   public productId: string = '';
   public orderId: string = '';
   orderIdDelete: string = '';
-  faSearch = faSearch;
-  faSort = faSort;
-  faSortDesc = faSortDesc;
-  faSortAsc = faSortAsc;
 
   ngOnInit(): void {
     this.authService.checkValidUser();
@@ -48,7 +37,6 @@ export class OrdersComponent implements OnInit {
     itemsPerPage: 8,
     currentPage: 1,
   };
-
   onPageChange(pageNumber: number) {
     this.paginationConfig.currentPage = pageNumber;
   }
@@ -57,6 +45,7 @@ export class OrdersComponent implements OnInit {
     this.service.getOrders().subscribe({
       next: (res: any) => {
         this.orders = res;
+        this.ordersTemp = res;
         console.log(this.orders);
       },
       error: (err) => {
@@ -83,7 +72,6 @@ export class OrdersComponent implements OnInit {
   ViewCustomerDetail(id: string) {
     this.router.navigate(['customer-edit/' + id]);
   }
-
   //filter order by payment method
   selectedPayment: string[] = [];
   filteredOrderByPayment: Order[] = [];
