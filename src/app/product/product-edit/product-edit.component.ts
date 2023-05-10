@@ -1,28 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProductService } from 'src/app/services/product.service';
-import { NgForm } from '@angular/forms';
-declare var $: any;
+
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css'],
 })
 export class ProductEditComponent implements OnInit {
+  @Input() editorConfig: any;
   product: any;
+  // Sample data
   percentage: number = 0;
-
-  @ViewChild('saveChangesConfirmationModal') saveChangesConfirmationModal: any;
-  modalRef: BsModalRef | null = null;
-
+  sizetemp: any = null;
+  colortemp: any = null;
   ngOnInit(): void {
     this.authService.checkValidUser();
   }
   constructor(
-    private modalService: BsModalService,
     private service: ProductService,
     private authService: AuthService,
     private activateRoute: ActivatedRoute,
@@ -44,27 +41,12 @@ export class ProductEditComponent implements OnInit {
       },
     });
   }
-
-  confirmSaveChanges(product: Product) {
-    this.product = product;
-    this.modalRef = this.modalService.show(this.saveChangesConfirmationModal, {
-      class: 'modal-dialog-centered',
-    });
-  }
-
   updateProduct(product: Product) {
-    this.service.saveMetaDataOfFile(this.product);
-    if (this.modalRef) {
-      this.modalRef.hide();
+    if (window.confirm('Are you sure you want to update ' + '?')) {
+      this.service.saveMetaDataOfFile(product);
+      console.log(product);
     }
   }
-
-  cancel() {
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
-  }
-
   goBack() {
     this.router.navigate(['products']);
   }

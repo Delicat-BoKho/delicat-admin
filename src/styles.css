@@ -1,10 +1,10 @@
 /* GLOBAL STYLES */
 
-@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
 @import "../node_modules/font-awesome/css/font-awesome.css";
 
 * {
-  font-family: "Kanit", sans-serif;
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
 }
 
