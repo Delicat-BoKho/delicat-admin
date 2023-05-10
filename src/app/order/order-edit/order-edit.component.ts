@@ -1,12 +1,12 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Product, ProductLine } from 'src/app/models/product';
 import { Location } from '@angular/common';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { parse, format } from 'date-fns';
 import { Order } from 'src/app/models/order';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,7 +15,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./order-edit.component.css'],
 })
 export class OrderEditComponent implements OnInit {
-  // Sample data
+  @ViewChild('saveChangesConfirmationModal') saveChangesConfirmationModal: any;
+  modalRef: BsModalRef | null = null;
+
   public order: any;
   errMessage: string = '';
   // mảng chứa các id của sản phẩm được mua nằm trong order
@@ -139,17 +141,8 @@ export class OrderEditComponent implements OnInit {
     var color = temp[0];
     return [size, color];
   }
-  //go back page view all orders
-  goBack() {
-    this.router.navigate(['orders']);
-  }
-  onSave(order: Order) {
-    if (window.confirm('Are you sure you want to update ' + '?')) {
-      this.service.saveMetaDataOfFile(order);
-      console.log('tests');
-      console.log(order);
-      this.router.navigate(['orders']);
-    }
+  goBack(): void {
+    this.location.back();
   }
 
   public editable: boolean = false;
@@ -159,5 +152,21 @@ export class OrderEditComponent implements OnInit {
 
   viewProductDetail(id: string) {
     this.router.navigate(['product-edit/' + id]);
+  }
+
+  confirmSaveChanges(order: Order) {
+    this.order = order;
+    this.modalRef = this.modalService.show(this.saveChangesConfirmationModal, {
+      class: 'modal-dialog-centered',
+    });
+  }
+  onSave(order: Order) {
+    this.service.saveMetaDataOfFile(order);
+    this.router.navigate(['orders']);
+  }
+  cancel() {
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
   }
 }

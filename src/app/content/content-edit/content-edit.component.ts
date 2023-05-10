@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -6,6 +7,7 @@ import { Content } from 'src/app/models/content';
 import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
 import { finalize } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-content-edit',
@@ -13,6 +15,8 @@ import { finalize } from 'rxjs';
   styleUrls: ['./content-edit.component.css'],
 })
 export class ContentEditComponent implements OnInit {
+  @ViewChild('saveChangesConfirmationModal') saveChangesConfirmationModal: any;
+  modalRef: BsModalRef | null = null;
   selectedFile!: FileList;
   percentage: number = 0;
   editable: boolean = false;
@@ -32,11 +36,13 @@ export class ContentEditComponent implements OnInit {
     this.authService.checkValidUser();
   }
   constructor(
+    private modalService: BsModalService,
     private cService: ContentService,
     private authService: AuthService,
     private fireStorage: AngularFireStorage,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -137,18 +143,31 @@ export class ContentEditComponent implements OnInit {
     await this.cService.createNewContent(this.content);
     console.log('Content updated successfully!');
   }
-  updateContent(content: Content) {
-    if (window.confirm('Are you sure you want to update ' + '?')) {
-      this.cService.updateContent(content);
-      console.log(content);
-      // this.ngOnInit();
-    }
-  }
-  cancel() {
-    this.router.navigate(['/contents']);
+
+  goBack(): void {
+    this.location.back();
   }
 
   resetForm() {
     this.content = new Content();
+  }
+
+  confirmSaveChanges(content: Content) {
+    this.content = content;
+    this.modalRef = this.modalService.show(this.saveChangesConfirmationModal, {
+      class: 'modal-dialog-centered',
+    });
+  }
+
+  updateContent(content: Content) {
+    this.cService.updateContent(content);
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
+  }
+  cancel() {
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
   }
 }

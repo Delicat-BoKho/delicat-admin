@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Comment } from 'src/app/models/comment';
 import { object } from '@angular/fire/database';
 import { AuthService } from 'src/app/services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-new',
@@ -29,7 +30,8 @@ export class ProductNewComponent implements OnInit {
   constructor(
     private service: ProductService,
     private authservice: AuthService,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -98,6 +100,7 @@ export class ProductNewComponent implements OnInit {
     }
   }
 
-  cancel() {}
-  createProduct() {}
+  goBack(): void {
+    this.location.back();
+  }
 }

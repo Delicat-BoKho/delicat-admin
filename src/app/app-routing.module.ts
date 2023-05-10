@@ -27,6 +27,11 @@ const routes: Routes = [
     component: AlertComponent,
   },
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch:'full'
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },
@@ -91,7 +96,7 @@ const routes: Routes = [
     component: SettingsComponent,
   },
   {
-    path: 'setting-pwd',
+    path: 'change-pwd',
     component: SettingPasswordComponent,
   },
   {

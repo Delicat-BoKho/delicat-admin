@@ -11,6 +11,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { parse, format } from 'date-fns';
 import { AuthService } from 'src/app/services/auth.service';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
@@ -57,7 +59,8 @@ export class CustomerEditComponent implements OnInit {
     private authService: AuthService,
     private activateRoute: ActivatedRoute,
     private serviceProduct: ProductService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -140,9 +143,8 @@ export class CustomerEditComponent implements OnInit {
     var color = temp[1];
     return [size, color];
   }
-  onSave() {}
   goBack() {
-    this.router.navigate(['customers']);
+    this.location.back();
   }
   viewProductDetail(id: string) {
     this.router.navigate(['product-edit/' + id]);
