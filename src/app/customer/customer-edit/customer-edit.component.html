@@ -112,7 +112,12 @@
                       </span>
                     </td>
                     <td>
-                      <button class="btn btn-info">Details</button>
+                      <button
+                        class="btn btn-info"
+                        (click)="viewOrderDetail(order.id)"
+                      >
+                        Details
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -149,7 +154,12 @@
                       />
                     </td>
                     <td>
-                      <button class="btn btn-info">Details</button>
+                      <button
+                        class="btn btn-info"
+                        (click)="viewProductDetail(item.id)"
+                      >
+                        Details
+                      </button>
                     </td>
                   </tr>
                 </tbody>

@@ -28,36 +28,22 @@
               <thead>
                 <tr>
                   <th>Order ID</th>
-                  <th>Order Date</th>
+                  <th class="sort">
+                    Order Date
+                    <button class="btn" (click)="sortOrdersByDate()">
+                      <fa-icon [icon]="faSort"></fa-icon>
+                    </button>
+                  </th>
                   <th>Customer ID</th>
                   <th>Payment Method</th>
                   <th>Status</th>
                   <th colspan="2">Delivery Address</th>
                   <th class="sort">
                     Order Total
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'default'"
-                      (click)="sortASC()"
-                    >
+                    <button class="btn" (click)="sortOrdersByTotal()">
                       <fa-icon [icon]="faSort"></fa-icon>
                     </button>
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'asc'"
-                      (click)="sortDESC()"
-                    >
-                      <fa-icon [icon]="faSortAsc"></fa-icon>
-                    </button>
-                    <button
-                      class="btn"
-                      *ngIf="currentSortState === 'desc'"
-                      (click)="sortDefault()"
-                    >
-                      <fa-icon [icon]="faSortDesc"></fa-icon>
-                    </button>
                   </th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>

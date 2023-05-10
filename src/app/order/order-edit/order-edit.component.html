@@ -115,6 +115,14 @@
                         [(ngModel)]="product.unitPrice"
                       />
                     </td>
+                    <td colspan="1">
+                      <input
+                        type="button"
+                        class="form-control"
+                        value="Details"
+                        (click)="viewProductDetail(product.id)"
+                      />
+                    </td>
                   </tr>
                 </tbody>
               </table>
