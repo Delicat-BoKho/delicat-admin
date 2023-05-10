@@ -6,12 +6,24 @@ import { ProductService } from 'src/app/services/product.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import {
+  faSearch,
+  faSort,
+  faSortDesc,
+  faSortAsc,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent {
+  faSearch = faSearch;
+  faSort = faSort;
+  faSortDesc = faSortDesc;
+  faSortAsc = faSortAsc;
+  faXmark = faXmark;
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
   modalRef: BsModalRef | null = null;
   products: Product[] = []; //product list show to user
@@ -30,8 +42,6 @@ export class ProductsComponent {
   onPageChange(pageNumber: number) {
     this.paginationConfig.currentPage = pageNumber;
   }
-
-  // Sample data
 
   constructor(
     private modalService: BsModalService,
@@ -123,6 +133,23 @@ export class ProductsComponent {
   //hàm uncheck
 
   ///// ----/////FILTER TYPE
+  typeFilter = {
+    suit: true,
+    accessories: true,
+  };
+
+  accessoriesFilter = {
+    hats: true,
+    scarves: true,
+    shoes: true,
+    ties: true,
+  };
+
+  suitFilter = {
+    suits: true,
+    trousers: true,
+  };
+
   //hàm này lấy value khi bắt event click vào checkbox
   filterTypeProducts(checkboxId: string) {
     let checkboxElement: HTMLInputElement = document.getElementById(
@@ -211,5 +238,19 @@ export class ProductsComponent {
   back() {
     this.products = this.productsOrigin;
     this.searchProduct = '';
+  }
+
+  currentSortState: string = 'default';
+  sortASC() {
+    this.currentSortState = 'asc';
+    // WRITE CODE HERE
+  }
+  sortDESC() {
+    this.currentSortState = 'desc';
+    // WRITE CODE HERE
+  }
+  sortDefault() {
+    this.currentSortState = 'default';
+    // WRITE CODE HERE
   }
 }

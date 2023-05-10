@@ -151,4 +151,9 @@ export class OrderEditComponent implements OnInit {
       this.router.navigate(['orders']);
     }
   }
+
+  public editable: boolean = false;
+  toggleEdit() {
+    this.editable = !this.editable;
+  }
 }

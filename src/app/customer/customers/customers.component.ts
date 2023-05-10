@@ -1,19 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component } from '@angular/core';
 import { PaginationInstance } from 'ngx-pagination';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/services/auth.service';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent {
-  @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
-  modalRef: BsModalRef | null = null;
+  faSearch = faSearch;
   errMessage: string = '';
   customers: any;
   customerTemp: any;
@@ -33,7 +32,6 @@ export class CustomersComponent {
   // Sample data
 
   constructor(
-    private modalService: BsModalService,
     private service: CustomerService,
     private authService: AuthService,
     private fireStorage: AngularFireStorage,
@@ -78,26 +76,8 @@ export class CustomersComponent {
       },
     });
   }
-  confirmDeleteCustomer(customer: any): void {
-    this.deleteCustomerId = customer.id;
-    this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
-      class: 'modal-dialog-centered',
-    });
-  }
 
-  deleteCustomer() {
-    this.service.deleteCustomer(this.deleteCustomerId);
-    // Code to delete the customer here
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
-  }
   viewDetailCustomer(id: string) {
     this.router.navigate(['customer-edit/' + id]);
-  }
-  cancelDeleteCustomer() {
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
   }
 }
