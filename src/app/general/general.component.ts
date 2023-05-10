@@ -3,6 +3,10 @@ import * as echarts from 'echarts';
 import { EChartsOption } from 'echarts';
 import { OrderService } from '../services/order.service';
 import { Order } from '../models/order';
+import { Product, ProductLine } from '../models/product';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-general',
@@ -13,8 +17,22 @@ export class GeneralComponent {
   orders: Order[] = [];
   months: string[] = [];
   totals: number[] = [];
+  // mảng chứa các id của sản phẩm được mua nằm trong order
+  arrayProductIdInLine: string[] = [];
+
+  // thông tin chi tiết của từng sản phẩm được mua
+  productDetail: Array<Product> = [];
+  // thông tin chi tiết từng sản phẩm kèm số lượng được mua
+  public productLineShow: Array<ProductLine> = [];
   orderTemps: Order[] = [];
-  constructor(private OrderService: OrderService) {
+  constructor(
+    private OrderService: OrderService,
+    private authService: AuthService,
+    private activateRoute: ActivatedRoute,
+    private serviceProduct: ProductService,
+    private router: Router,
+    private location: Location
+  ) {
     this.getOrders();
   }
   getOrders() {
@@ -50,7 +68,6 @@ export class GeneralComponent {
     });
   }
 
-  graph: any;
   option: any;
   chartOption!: EChartsOption;
   errMessage: string = '';
@@ -81,6 +98,59 @@ export class GeneralComponent {
     };
     option && myChart.setOption(option);
   }
+
+  pieChartNumberProductByTypes() {
+    type EChartsOption = echarts.EChartsOption;
+    var chartDom = document.getElementById('main2')!;
+    var myChart = echarts.init(chartDom);
+    var option: EChartsOption;
+    option = {
+      tooltip: {
+        trigger: 'item',
+      },
+      legend: {
+        top: '5%',
+        left: 'center',
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2,
+          },
+          label: {
+            show: false,
+            position: 'center',
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold',
+            },
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' },
+            { value: 580, name: 'Email' },
+            { value: 484, name: 'Union Ads' },
+            { value: 300, name: 'Video Ads' },
+          ],
+        },
+      ],
+    };
+
+    option && myChart.setOption(option);
+  }
+
   convertMonth(months: string[]) {
     for (let i = 0; i < months.length; i++) {
       if (months[i] == '1') {
