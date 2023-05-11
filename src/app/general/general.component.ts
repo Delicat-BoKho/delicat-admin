@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-general',
@@ -37,6 +38,8 @@ export class GeneralComponent implements OnInit {
 
   constructor(
     private OrderService: OrderService,
+    private authService: AuthService,
+
     private CustomerService: CustomerService,
     private ProductService: ProductService
   ) {
@@ -44,6 +47,7 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.checkValidUser();
     this.getOrders();
     this.renderChart0();
     this.renderChart1();

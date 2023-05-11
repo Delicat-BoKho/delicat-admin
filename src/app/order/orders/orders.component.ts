@@ -131,6 +131,8 @@ export class OrdersComponent implements OnInit {
     }
     this.ordersTemp = this.foundOrders;
     this.orders = this.ordersTemp;
+    this.filterPaymentMethodTemp();
+    this.filterStatusTemp(this.orders);
   }
   back() {
     this.searchOrder = '';

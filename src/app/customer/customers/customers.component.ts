@@ -61,6 +61,7 @@ export class CustomersComponent {
   }
   back() {
     this.searchCustomer = '';
+    this.customers = this.customerTemp;
   }
   ngOnInit(): void {
     // Code to view all customers here

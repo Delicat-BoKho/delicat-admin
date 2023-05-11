@@ -42,6 +42,9 @@ export class OrderEditComponent implements OnInit {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
       if (id != null) {
+        this.productLineShow = [];
+        this.productDetail = [];
+        this.arrayProductIdInLine = [];
         this.getOrder(id);
         console.log(id);
       }
@@ -53,10 +56,11 @@ export class OrderEditComponent implements OnInit {
 
   // Hàm lấy ra thông tin chi tiết của order by ID
   getOrder(id: string) {
-    this.productDetail = [];
-    this.arrayProductIdInLine = [];
     this.service.getOrder(id).subscribe({
       next: (res: any) => {
+        this.productLineShow = [];
+        this.productDetail = [];
+        this.arrayProductIdInLine = [];
         this.order = res;
         //chuyen doi kieu date
         // this.order.dateCreated = this.convertDate(this.order.dateCreated);
@@ -161,7 +165,10 @@ export class OrderEditComponent implements OnInit {
   }
   onSave(order: Order) {
     this.service.saveMetaDataOfFile(order);
-    this.router.navigate(['orders']);
+    if (this.modalRef) {
+      this.modalRef.hide();
+      this.productLineShow = [];
+    }
   }
   cancel() {
     if (this.modalRef) {
