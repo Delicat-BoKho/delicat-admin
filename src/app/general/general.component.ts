@@ -3,7 +3,12 @@ import * as echarts from 'echarts';
 import { OrderService } from '../services/order.service';
 import { Order } from '../models/order';
 import { CustomerService } from '../services/customer.service';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faShoppingCart,
+  faUser,
+  faMoneyBill,
+  faBox,
+} from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product';
 
@@ -14,6 +19,9 @@ import { Product } from '../models/product';
 })
 export class GeneralComponent implements OnInit {
   faShoppingCart = faShoppingCart;
+  faUser = faUser;
+  faMoneyBill = faMoneyBill;
+  faBox = faBox;
 
   public order: any;
   orders: Order[] = [];
