@@ -214,7 +214,7 @@ export class GeneralComponent implements OnInit {
                   fontFamily: "'Kanit', sans-serif",
                 },
                 title: {
-                  text: 'Sales by Product Type',
+                  text: 'The quantity of products sold by type.',
                   left: 'center',
                 },
                 tooltip: {

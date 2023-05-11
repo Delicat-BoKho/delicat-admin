@@ -19,9 +19,7 @@ export class ProductService {
     //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
     const myDoc = this.fireStore.collection('/ProductTemp').doc(product.id);
     //Tạo subcollection cho mảng reviews
-    const subCollection = myDoc
-      .collection('reviews')
-      .doc(product.reviews[0].id).ref;
+
     //Tạo một file json vì firebase chỉ nhận data dạng json, không nhận dạng class nên ko đẩy trực tiếp được
     const productMeta = {
       id: product.id,
@@ -38,20 +36,6 @@ export class ProductService {
     //đẩy data lên
     myDoc
       .set(productMeta)
-      .then(() => {
-        console.log('Document successfully written!');
-      })
-      .catch((error) => {
-        console.error('Error writing document: ', error);
-      });
-    subCollection
-      .set({
-        id: product.reviews[0].id,
-        ratingComment: product.reviews[0].ratingComment,
-        userName: product.reviews[0].userName,
-        dateCreate: product.reviews[0].dateCreate,
-        review: product.reviews[0].review,
-      })
       .then(() => {
         console.log('Document successfully written!');
       })
@@ -160,7 +144,7 @@ export class ProductService {
 
   //get list items by ids
 
-  getProductsByIds(productIdss: string[]): Observable<Product[]> {
+  getProductsByIds(productIdss: string[]) {
     return this.fireStore
       .collection<Product>('/ProductTemp', (ref) =>
         ref.where('id', 'in', productIdss)

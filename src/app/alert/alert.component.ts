@@ -20,9 +20,9 @@ export class AlertComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.renderChart0();
-    this.renderChart1();
-    this.renderChart2();
+    // this.renderChart0();
+    // this.renderChart1();
+    // this.renderChart2();
   }
 
   renderChart0(): void {

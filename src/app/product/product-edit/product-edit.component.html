@@ -72,12 +72,13 @@
             <div class="row">
               <label for="productDescription">Product Description</label>
               <textarea
-                placeholder="Enter product description"
                 class="form-control"
+                id="describe"
+                name="describe"
+                row="3"
+                placeholder="Enter product description "
                 [(ngModel)]="product.describe"
-                [disabled]="!editable"
-              >
-              </textarea>
+              ></textarea>
             </div>
             <div class="row">
               <div class="form-group col-4">

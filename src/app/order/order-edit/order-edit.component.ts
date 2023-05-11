@@ -26,7 +26,7 @@ export class OrderEditComponent implements OnInit {
   // thông tin chi tiết của từng sản phẩm được mua
   productDetail: Array<Product> = [];
   // thông tin hiển thị lên UI
-  public productLineShow: Array<ProductLine> = [];
+  public productLineShow: ProductLine[] = [];
   ngOnInit(): void {
     this.authService.checkValidUser();
   }
@@ -107,31 +107,30 @@ export class OrderEditComponent implements OnInit {
   setProductLine() {
     for (let i = 0; i < this.arrayProductIdInLine.length; i++) {
       this.productLineShow[i] = new ProductLine(); // Initialize object before setting properties
-
       this.productLineShow[i].id = this.arrayProductIdInLine[i];
-
-      // Check if productDetail array exists and has enough elements
-      if (this.productDetail && this.productDetail.length > i) {
-        this.productLineShow[i].name = this.productDetail[i].name;
-        this.productLineShow[i].type = this.productDetail[i].type;
-        this.productLineShow[i].imgURL = this.productDetail[i].imgURL[0];
-        this.productLineShow[i].tag = this.productDetail[i].tag;
-
-        // gọi hàm tách describe thành [size,color]
-        var describeSplit = this.splitDescribe(
-          this.order.saleProducts[i].description
-        );
-
-        this.productLineShow[i].size = describeSplit[1];
-        this.productLineShow[i].color = describeSplit[0];
-        this.productLineShow[i].quantity = this.order.saleProducts[i].quantity;
-        this.productLineShow[i].describeProductLine =
-          this.order.saleProducts[i].description;
-        this.productLineShow[i].unitPrice =
-          this.order.saleProducts[i].unitPrice;
+      for (let j = 0; j < this.productDetail.length; j++) {
+        if (this.productLineShow[i].id == this.productDetail[j].id) {
+          this.productLineShow[i].name = this.productDetail[j].name;
+          this.productLineShow[i].type = this.productDetail[j].type;
+          this.productLineShow[i].imgURL = this.productDetail[j].imgURL[0];
+          this.productLineShow[i].tag = this.productDetail[j].tag;
+        }
       }
+      // Check if productDetail array exists and has enough elements
+
+      // // gọi hàm tách describe thành [size,color]
+      var describeSplit = this.splitDescribe(
+        this.order.saleProducts[i].description
+      );
+      this.productLineShow[i].size = describeSplit[1];
+      this.productLineShow[i].color = describeSplit[0];
+      this.productLineShow[i].quantity = this.order.saleProducts[i].quantity;
+      this.productLineShow[i].describeProductLine =
+        this.order.saleProducts[i].description;
+      this.productLineShow[i].unitPrice = this.order.saleProducts[i].unitPrice;
     }
-    console.log(this.productLineShow);
+    console.log(this.productDetail);
+    console.log(this.arrayProductIdInLine.length);
   }
 
   // Hàm tách describe thành [size,color]
