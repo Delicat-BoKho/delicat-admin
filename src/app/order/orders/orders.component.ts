@@ -26,6 +26,7 @@ export class OrdersComponent implements OnInit {
   faXmark = faXmark;
   orders: Order[] = [];
   ordersTemp: Order[] = [];
+  ordersOrigin: Order[] = [];
   foundOrders: Order[] = [];
   searchOrder: string = '';
   errMessage: string = '';
@@ -59,6 +60,8 @@ export class OrdersComponent implements OnInit {
       next: (res: any) => {
         this.orders = res;
         this.ordersTemp = res;
+        this.ordersOrigin = res;
+
         console.log(this.orders);
       },
       error: (err) => {
@@ -131,6 +134,10 @@ export class OrdersComponent implements OnInit {
   }
   back() {
     this.searchOrder = '';
+    this.orders = this.ordersOrigin;
+    this.ordersTemp = this.ordersOrigin;
+    this.filterPaymentMethodTemp();
+    this.filterStatusTemp(this.orders);
   }
   //filter order by payment method
   selectedPayment: string[] = [];
@@ -169,18 +176,22 @@ export class OrdersComponent implements OnInit {
   }
   filterPaymentMethodTemp() {
     this.filteredOrderByPayment = [];
-    for (let i = 0; i < this.ordersTemp.length; i++) {
-      const order = this.ordersTemp[i];
-      for (let j = 0; j < this.selectedPayment.length; j++) {
-        if (
-          order.paymentMethod.toLowerCase() ==
-          this.selectedPayment[j].toLowerCase()
-        ) {
-          this.filteredOrderByPayment.push(order);
+    if (this.selectedPayment.length == 0) {
+      return;
+    } else {
+      for (let i = 0; i < this.ordersTemp.length; i++) {
+        const order = this.ordersTemp[i];
+        for (let j = 0; j < this.selectedPayment.length; j++) {
+          if (
+            order.paymentMethod.toLowerCase() ==
+            this.selectedPayment[j].toLowerCase()
+          ) {
+            this.filteredOrderByPayment.push(order);
+          }
         }
       }
+      this.orders = this.filteredOrderByPayment;
     }
-    this.orders = this.filteredOrderByPayment;
   }
 
   //filter by status
@@ -217,16 +228,21 @@ export class OrdersComponent implements OnInit {
   }
   filterStatusTemp(orders: any) {
     this.filteredOrderByStatus = [];
-    for (let i = 0; i < orders.length; i++) {
-      const order = orders[i];
-      for (let j = 0; j < this.selectedStatus.length; j++) {
-        if (
-          order.status.toLowerCase() == this.selectedStatus[j].toLowerCase()
-        ) {
-          this.filteredOrderByStatus.push(order);
+    if (this.selectedStatus.length == 0) {
+      return;
+    } else {
+      console.log('test1');
+      for (let i = 0; i < orders.length; i++) {
+        const order = orders[i];
+        for (let j = 0; j < this.selectedStatus.length; j++) {
+          if (
+            order.status.toLowerCase() == this.selectedStatus[j].toLowerCase()
+          ) {
+            this.filteredOrderByStatus.push(order);
+          }
         }
       }
+      this.orders = this.filteredOrderByStatus;
     }
-    this.orders = this.filteredOrderByStatus;
   }
 }

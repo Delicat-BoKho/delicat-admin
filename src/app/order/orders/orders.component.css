@@ -120,21 +120,13 @@ button {
 .inputbox fa-icon {
   font-size: 1.5em;
 }
+.lableltxtBox {
+  color: black;
+}
 .sort button fa-icon {
   color: #7b809a;
   line-height: 1.25;
   font-weight: 700;
   font-size: 1.5em;
   opacity: 0.7;
-}
-.btn-x {
-  font-size: 1em;
-  position: absolute;
-  right: 155px;
-}
-.btn-x fa-icon {
-  color: #8c90a5;
-}
-.btn-x fa-icon:hover {
-  color: #565969;
 }

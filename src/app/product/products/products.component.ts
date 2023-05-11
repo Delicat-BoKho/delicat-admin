@@ -247,6 +247,26 @@ export class ProductsComponent {
   //không search nữa
   back() {
     this.products = this.productsOrigin;
+    this.productsTemp = this.productsOrigin;
     this.searchProduct = '';
+    if (this.selectedType.length == 0 && this.selectedTag.length == 0) {
+      this.products = this.productsOrigin;
+    }
+    if (this.selectedType.length != 0) {
+      if (this.selectedTag.length == 0) {
+        console.log('test');
+        this.filterTypeProductsTemp();
+      } else {
+        this.filterTypeProductsTemp();
+        this.filterTagProductsTemp();
+      }
+    } else if (this.selectedTag.length != 0) {
+      if (this.selectedType.length == 0) {
+        this.filterTagProductsTemp();
+      } else {
+        this.filterTypeProductsTemp();
+        this.filterTagProductsTemp();
+      }
+    }
   }
 }
