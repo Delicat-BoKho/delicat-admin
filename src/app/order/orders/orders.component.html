@@ -29,7 +29,7 @@
             </button>
           </div>
           <div class="row justify-content-center">
-            <div class="form-check col-2 lableltxtBox">
+            <div class="form-check col-2">
               Status
               <br />
               <input
@@ -40,7 +40,7 @@
                 class="form-check-input"
                 (click)="filterStatus('pending')"
               />
-              <label for="pending" class="lableltxtBox">Pending</label> <br />
+              <label for="pending">Pending</label> <br />
               <input
                 type="checkbox"
                 id="dispatched"
@@ -73,7 +73,7 @@
               <label for="cancelled" class="lableltxtBox">cancelled</label>
               <br />
             </div>
-            <div class="form-check col-2 lableltxtBox">
+            <div class="form-check col-2">
               Payment Method
               <br />
               <input
@@ -84,8 +84,7 @@
                 class="form-check-input"
                 (click)="filterPaymentMethod('creditCart')"
               />
-              <label for="creditCart" class="lableltxtBox"> Credit Card</label
-              ><br />
+              <label for="creditCart"> Credit Card</label><br />
               <input
                 type="checkbox"
                 id="Bitcoin"
@@ -94,7 +93,7 @@
                 class="form-check-input"
                 (click)="filterPaymentMethod('Bitcoin')"
               />
-              <label for="Bitcoin" class="lableltxtBox">Bitcoin</label><br />
+              <label for="Bitcoin">Bitcoin</label><br />
               <input
                 type="checkbox"
                 id="Paypal"
@@ -103,10 +102,10 @@
                 class="form-check-input"
                 (click)="filterPaymentMethod('Paypal')"
               />
-              <label for="Paypal" class="lableltxtBox">Paypal</label><br />
+              <label for="Paypal">Paypal</label><br />
             </div>
 
-            <div class="table-responsive p-0">
+            <div class="table-responsive">
               <table class="table align-items-center mb-0 table-striped">
                 <thead>
                   <tr>
@@ -135,7 +134,7 @@
                   >
                     <td>
                       <h6
-                        class="id text-primary id"
+                        class="id"
                         style="
                           display: block;
                           white-space: nowrap;
