@@ -32,12 +32,15 @@ export class GeneralComponent implements OnInit {
     private CustomerService: CustomerService,
     private ProductService: ProductService
   ) {
-    this.getOrders();
     this.getCustomers();
   }
 
   ngOnInit(): void {
-    this.lineChartRevenueByMonths();
+    this.getOrders();
+    this.renderChart0();
+    this.renderChart1();
+    this.renderChart2();
+    this.renderLineChart();
   }
 
   getOrders() {
@@ -78,52 +81,64 @@ export class GeneralComponent implements OnInit {
       }
     }
   }
-  getDataForLineChartRevenue() {
-    interface YearlyTotal {
-      [months: number]: number;
-    }
+  renderLineChart() {
+    this.OrderService.getOrders().subscribe({
+      next: (res: any) => {
+        this.orders = res;
+        interface YearlyTotal {
+          [months: number]: number;
+        }
+        const result = this.orders.reduce((acc: YearlyTotal, order) => {
+          if (!order.dateCreated) {
+            return acc;
+          }
+          const months = new Date(order.dateCreated).getMonth() + 1;
+          if (!acc[months]) {
+            acc[months] = 0;
+          }
+          acc[months] += order.total;
+          return acc;
+        }, {});
+        this.totalsForLineChart = Object.values(result);
+        this.months = Object.keys(result).map(String);
 
-    const result = this.orders.reduce((acc: YearlyTotal, order) => {
-      if (!order.dateCreated) {
-        return acc;
-      }
-      const months = new Date(order.dateCreated).getMonth() + 1;
-      if (!acc[months]) {
-        acc[months] = 0;
-      }
-      acc[months] += order.total;
-      return acc;
-    }, {});
-    this.totalsForLineChart = Object.values(result);
-    this.months = Object.keys(result).map(String);
-
-    this.convertMonth(this.months);
-  }
-  lineChartRevenueByMonths() {
-    this.getDataForLineChartRevenue();
-    type EChartsOption = echarts.EChartsOption;
-    var chartDom = document.getElementById('lineChart')!;
-    var myChart = echarts.init(chartDom);
-    var option: EChartsOption;
-    option = {
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.months,
+        this.convertMonth(this.months);
+        type EChartsOption = echarts.EChartsOption;
+        var chartDom = document.getElementById('lineChart')!;
+        var myChart = echarts.init(chartDom);
+        var option: EChartsOption;
+        option = {
+          textStyle: {
+            fontFamily: "'Kanit', sans-serif",
+          },
+          title: {
+            text: 'Total sales by months',
+            left: 'center',
+          },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: this.months,
+          },
+          yAxis: {
+            type: 'value',
+          },
+          series: [
+            {
+              data: this.totalsForLineChart,
+              type: 'line',
+              areaStyle: {},
+              smooth: true,
+            },
+          ],
+        };
+        option && myChart.setOption(option);
       },
-      yAxis: {
-        type: 'value',
+      error: (err) => {
+        this.errMessage = err;
+        console.log('Error occured while fetching file meta data');
       },
-      series: [
-        {
-          data: this.totalsForLineChart,
-          type: 'line',
-          areaStyle: {},
-          smooth: true,
-        },
-      ],
-    };
-    option && myChart.setOption(option);
+    });
   }
 
   convertMonth(months: string[]) {

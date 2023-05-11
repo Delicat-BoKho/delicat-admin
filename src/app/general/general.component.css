@@ -7,7 +7,7 @@
 }
 fa-icon {
   float: right;
-  font-size: 700%;
+  font-size: 300%;
   position: absolute;
   top: 0rem;
   left: 7rem;
@@ -31,7 +31,9 @@ fa-icon {
   background: #a83b3b;
   color: #fff;
 }
-
+.border-0 {
+  margin-bottom: 10px;
+}
 .purple {
   background: #886ab5;
   color: #fff;
@@ -49,21 +51,30 @@ fa-icon {
   display: inline-block;
   padding: 1em;
   border-radius: 0.3em;
-  width: 100%;
+  width: 160px;
   min-width: 160px;
   margin-left: 0.5em;
   margin-top: 0.5em;
-  height: 0;
+  height: 100%;
   padding-bottom: 50%;
 }
 
 .card-body {
-  padding: 0;
+  width: 160px;
+  height: 130px;
 }
 .card-value {
   display: block;
-  font-size: 500%;
+  font-size: 200%;
   font-weight: bolder;
+  text-align: center;
+}
+.chart1,
+.chart2,
+.chart0,
+.lineChart {
+  width: 90%;
+  height: 300px;
   text-align: center;
 }
 

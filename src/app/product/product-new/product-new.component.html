@@ -62,7 +62,6 @@
             <div class="row">
               <label for="productDescription">Product Description</label>
               <angular-editor
-                [config]="editorConfig"
                 placeholder="Enter product description"
                 [(ngModel)]="product.describe"
               >
@@ -162,7 +161,7 @@
                     <td>
                       <input
                         type="text"
-                        placeholder="9 March 2023"
+                        placeholder="example: 9 March 2023"
                         [(ngModel)]="reviewTemp.dateCreate"
                       />
                     </td>
