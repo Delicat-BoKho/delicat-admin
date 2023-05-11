@@ -11,6 +11,7 @@ import {
   faSort,
   faSortDesc,
   faSortAsc,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-orders',
@@ -22,6 +23,7 @@ export class OrdersComponent implements OnInit {
   faSort = faSort;
   faSortDesc = faSortDesc;
   faSortAsc = faSortAsc;
+  faXmark = faXmark;
   orders: Order[] = [];
   ordersTemp: Order[] = [];
   foundOrders: Order[] = [];
@@ -126,6 +128,9 @@ export class OrdersComponent implements OnInit {
     }
     this.ordersTemp = this.foundOrders;
     this.orders = this.ordersTemp;
+  }
+  back() {
+    this.searchOrder = '';
   }
   //filter order by payment method
   selectedPayment: string[] = [];

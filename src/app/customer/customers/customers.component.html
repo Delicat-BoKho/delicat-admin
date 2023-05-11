@@ -17,8 +17,15 @@
               placeholder="Search ..."
               [(ngModel)]="searchCustomer"
             />
-            <button class="btn btn-info" (click)="search()">
+            <button
+              class="btn btn-info"
+              (click)="search()"
+              style="font-size: 0.8em"
+            >
               <fa-icon [icon]="faSearch"></fa-icon>
+            </button>
+            <button class="btn-x" (click)="back()" *ngIf="searchCustomer">
+              <fa-icon [icon]="faXmark"></fa-icon>
             </button>
           </div>
           <div class="table-responsive p-0">

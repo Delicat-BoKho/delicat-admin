@@ -5,7 +5,7 @@ import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/services/auth.service';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
@@ -13,6 +13,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 })
 export class CustomersComponent {
   faSearch = faSearch;
+  faXmark = faXmark;
   errMessage: string = '';
   customers: any;
   customerTemp: any;
@@ -57,6 +58,9 @@ export class CustomersComponent {
       }
     }
     this.customers = this.foundCustomers;
+  }
+  back() {
+    this.searchCustomer = '';
   }
   ngOnInit(): void {
     // Code to view all customers here

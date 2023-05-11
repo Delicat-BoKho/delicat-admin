@@ -127,3 +127,14 @@ button {
   font-size: 1.5em;
   opacity: 0.7;
 }
+.btn-x {
+  font-size: 1em;
+  position: absolute;
+  right: 155px;
+}
+.btn-x fa-icon {
+  color: #8c90a5;
+}
+.btn-x fa-icon:hover {
+  color: #565969;
+}

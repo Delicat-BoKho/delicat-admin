@@ -4,12 +4,7 @@
 }
 .id {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-}
-
-/* Styles for tooltips */
-[data-toggle="tooltip"] {
-  position: relative;
-  cursor: pointer;
+  color: #2196f3;
 }
 
 .container-title {
@@ -26,7 +21,6 @@
 }
 
 table {
-  border-collapse: collapse;
   table-layout: fixed;
 }
 th {
@@ -59,12 +53,17 @@ tr td div {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+button {
+  display: inline-block;
+  padding: 0.55em 0.9em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.45rem;
 }
-
 .btn:hover {
   color: white;
 }
@@ -105,4 +104,25 @@ ul {
   width: 80%;
   display: inline;
   text-align: left;
+}
+.inputbox fa-icon {
+  font-size: 1.5em;
+}
+.sort button fa-icon {
+  color: #7b809a;
+  line-height: 1.25;
+  font-weight: 700;
+  font-size: 1.5em;
+  opacity: 0.7;
+}
+.btn-x {
+  font-size: 1em;
+  position: absolute;
+  right: 155px;
+}
+.btn-x fa-icon {
+  color: #8c90a5;
+}
+.btn-x fa-icon:hover {
+  color: #565969;
 }
