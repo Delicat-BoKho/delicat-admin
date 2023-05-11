@@ -1,31 +1,76 @@
-<button (click)="lineChartRevenueByMonths()">click here</button>
-<!-- <button (click)="pieChartNumberProductByTypes()">click pie</button>
-<button (click)="getAllProductIdInOrders()">tesst</button>
-<button (click)="getAllProductTypeInAllOrders()">tesst2</button> -->
+<app-menu></app-menu>
 
-<div id="container">
-  <div class="kpi-card purple">
-    <span class="card-value">{{ countOrders }}</span>
-    <span class="card-text">Orders</span>
-    <i class="fas fa-shopping-cart icon"></i>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card purple">
+            <span class="card-value">{{ countOrders }}</span>
+            <span class="card-text">Orders</span>
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card grey-dark">
+            <span class="card-value">{{ countCustomers }}</span>
+            <span class="card-text">Customers</span>
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card red">
+            <span class="card-value">${{ revenue }}</span>
+            <span class="card-text">Total Sales</span>
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card orange">
+            <span class="card-value">{{ countSoldProducts }}</span>
+            <span class="card-text">Products sold</span>
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="kpi-card grey-dark">
-    <span class="card-value">{{ countCustomers }}</span>
-    <span class="card-text">Customers</span>
-    <i class="fas fa-shopping-cart icon"></i>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card border-0">
+        <div class="card-body">
+          <div id="lineChart"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body chart1">Chart1</div>
+      </div>
+    </div>
   </div>
-
-  <div class="kpi-card red">
-    <span class="card-value">${{ revenue }}</span>
-    <span class="card-text">Total Sales</span>
-    <i class="fas fa-shopping-cart icon"></i>
-  </div>
-  <div class="kpi-card orange">
-    <span class="card-value">{{ countSoldProducts }}</span>
-
-    <span class="card-text">Products sold</span>
-    <i class="fas fa-shopping-cart icon"></i>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body chart0">Chart0</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body chart2">Chart2</div>
+      </div>
+    </div>
   </div>
 </div>
-<div id="lineChart"></div>
