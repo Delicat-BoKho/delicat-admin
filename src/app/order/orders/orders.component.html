@@ -51,10 +51,30 @@
               <tbody>
                 <tr *ngFor="let order of orders | paginate : paginationConfig">
                   <td>
-                    <h6 class="id text-primary id">#{{ order.id }}</h6>
+                    <h6
+                      class="id text-primary id"
+                      style="
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        cursor: pointer;
+                      "
+                    >
+                      #{{ order.id }}
+                    </h6>
                   </td>
                   <td>
-                    <span class="order-info text-xs font-weight-bold mb-0">
+                    <span
+                      class="order-info text-xs font-weight-bold mb-0"
+                      style="
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        cursor: pointer;
+                      "
+                    >
                       {{ order.dateCreated }}
                     </span>
                   </td>
@@ -95,12 +115,30 @@
                     </span>
                   </td>
                   <td colspan="2">
-                    <span class="order-info">
+                    <span
+                      class="order-info"
+                      style="
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        cursor: pointer;
+                      "
+                    >
                       {{ order.deliveryAddress }}
                     </span>
                   </td>
                   <td class="text-center">
-                    <span class="order-info">
+                    <span
+                      class="order-info"
+                      style="
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        cursor: pointer;
+                      "
+                    >
                       {{ order.total | currency }}
                     </span>
                   </td>
