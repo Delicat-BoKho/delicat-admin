@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -71,11 +73,12 @@
               <label for="productDescription">Product Description</label>
               <textarea
                 class="form-control"
-                placeholder="Enter product description"
+                id="describe"
+                name="describe"
+                row="3"
+                placeholder="Enter product description "
                 [(ngModel)]="product.describe"
-                [disabled]="!editable"
-              >
-              </textarea>
+              ></textarea>
             </div>
             <div class="row">
               <div class="form-group col-4">
@@ -124,7 +127,7 @@
                   class="form-control"
                   id="sizes"
                   placeholder="Enter product sizes, separated by a comma"
-                  [(ngModel)]="sizetemp"
+                  [(ngModel)]="product.size"
                   [disabled]="!editable"
                 />
               </div>
@@ -135,19 +138,23 @@
                   class="form-control"
                   id="colors"
                   placeholder="Enter product colors, separated by a comma"
-                  [(ngModel)]="colortemp"
+                  [(ngModel)]="product.color"
                   [disabled]="!editable"
                 />
               </div>
             </div>
-
-            <div class="card-footer text-center">
-              <button class="btn btn-primary mx-3" (click)="onSave()">
-                Save Change
-              </button>
-              <button class="btn btn-primary" (click)="goBack()">
-                Go Back
-              </button>
+            <div class="row">
+              <div class="card-footer text-center">
+                <button
+                  class="btn btn-primary mx-3"
+                  (click)="confirmSaveChanges(product)"
+                >
+                  Save Change
+                </button>
+                <button class="btn btn-primary" (click)="goBack()">
+                  Go Back
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -155,3 +162,26 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<ng-template #saveChangesConfirmationModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Save Changes Confirmation?</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Are you sure you want to update this product?</div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="updateProduct(product)"
+    >
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      No
+    </button>
+  </div>
+</ng-template>

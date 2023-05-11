@@ -19,11 +19,17 @@ import { ContentNewComponent } from './content/content-new/content-new.component
 import { SettingsComponent } from './setting/settings/settings.component';
 import { SettingPasswordComponent } from './setting/setting-password/setting-password.component';
 import { AppComponent } from './app.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: 'alert',
     component: AlertComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch:'full'
   },
   {
     path: 'login',
@@ -90,8 +96,12 @@ const routes: Routes = [
     component: SettingsComponent,
   },
   {
-    path: 'setting-pwd',
+    path: 'change-pwd',
     component: SettingPasswordComponent,
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
   },
 ];
 
@@ -120,4 +130,5 @@ export const RoutingComponents = [
   ContentNewComponent,
   SettingsComponent,
   SettingPasswordComponent,
+  SignUpComponent,
 ];

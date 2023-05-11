@@ -1,26 +1,47 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PaginationInstance } from 'ngx-pagination';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { Router, RouterLink } from '@angular/router';
+import { Order } from 'src/app/models/order';
+import { AuthService } from 'src/app/services/auth.service';
+import {
+  faSearch,
+  faSort,
+  faSortDesc,
+  faSortAsc,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
 })
-export class OrdersComponent implements OnInit, AfterViewInit {
-  modalRef: BsModalRef | null = null;
-  orders: any;
-  public saleProduct: any;
+export class OrdersComponent implements OnInit {
+  faSearch = faSearch;
+  faSort = faSort;
+  faSortDesc = faSortDesc;
+  faSortAsc = faSortAsc;
+  faXmark = faXmark;
+  orders: Order[] = [];
+  ordersTemp: Order[] = [];
+  ordersOrigin: Order[] = [];
+  foundOrders: Order[] = [];
+  searchOrder: string = '';
   errMessage: string = '';
   orderToDelete: any;
-  public ProductId: string = '';
-  @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
+  public saleProduct: any;
+  public productId: string = '';
+  public orderId: string = '';
+  orderIdDelete: string = '';
+
   ngOnInit(): void {
+    this.authService.checkValidUser();
     // Code to view all orders here
     this.getOrders();
     // console.log(this.getProduct(this.ProductId));
+    console.log(this.orderId);
   }
   ngAfterViewInit(): void {}
   // Define pagination
@@ -29,6 +50,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     itemsPerPage: 8,
     currentPage: 1,
   };
+
   onPageChange(pageNumber: number) {
     this.paginationConfig.currentPage = pageNumber;
   }
@@ -37,6 +59,9 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.service.getOrders().subscribe({
       next: (res: any) => {
         this.orders = res;
+        this.ordersTemp = res;
+        this.ordersOrigin = res;
+
         console.log(this.orders);
       },
       error: (err) => {
@@ -45,103 +70,181 @@ export class OrdersComponent implements OnInit, AfterViewInit {
       },
     });
   }
-  //lay san pham tu order
-  // getProduct(id: string) {
-  //   this.Pservice.getProduct(id).subscribe({
-  //     next: (res: any) => {
-  //       console.log(res.name);
-  //     },
-  //     error: (err) => {
-  //       this.errMessage = err;
-  //       console.log('Error occured while fetching file meta data');
-  //     },
-  //   });
-  // }
-  // Sample data
-  // orders: any = [
-  //   {
-  //     id: 'O000',
-  //     date: '2023-04-15',
-  //     products: [
-  //       { id: '1', name: 'Product1', quantity: 2 },
-  //       { id: '2', name: 'Product 2', quantity: 1 },
-  //       {
-  //         id: 'S301',
-  //         name: 'Oatmeal Sharkskin Slim Fit Suit',
-  //         quantity: 3,
-  //       },
-  //     ],
-  //     total: 500,
-  //     customerID: 'C001',
-  //     paymentMethod: 'Cash',
-  //     status: 'completed',
-  //   },
-  //   {
-  //     id: 'O001',
-  //     date: '2023-04-16',
-  //     paymentMethod: 'Credit Card',
-  //     products: [
-  //       { name: 'Product 2', quantity: 1 },
-  //       { name: 'Product 4', quantity: 2 },
-  //     ],
-  //     total: 300,
-  //     customerID: 'C002',
-  //     status: 'pending',
-  //   },
-  //   {
-  //     id: 'O002',
-  //     date: '2023-04-16',
-  //     paymentMethod: 'Credit Card',
-  //     products: [
-  //       { name: 'Product 2', quantity: 1 },
-  //       { name: 'Product 4', quantity: 2 },
-  //     ],
-  //     total: 300,
-  //     customerID: 'C003',
-  //     status: 'dispatched',
-  //     deliveryAddress: '1234 Main St, New York, NY 10001',
-  //   },
-  //   {
-  //     id: 'O003',
-  //     date: '2023-04-16',
-  //     paymentMethod: 'Credit Card',
-  //     products: [
-  //       { name: 'Product 2', quantity: 1 },
-  //       { name: 'Product 4', quantity: 2 },
-  //     ],
-  //     total: 300,
-  //     customerID: 'C003',
-  //     status: 'unknown',
-  //     deliveryAddress: '1234 Main St, New York, NY 10001',
-  //   },
-  // ];
-
-  constructor(
-    private modalService: BsModalService,
-    private service: OrderService,
-    private Pservice: ProductService
-  ) {}
-
-  confirmDeleteOrder(order: any): void {
-    this.orderToDelete = order;
-    this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
-      class: 'modal-dialog-centered',
+  sortAscending: boolean = true;
+  sortOrdersByTotal() {
+    // Sử dụng phương thức sort() để sắp xếp các sản phẩm theo giá
+    this.orders.sort((a, b) => {
+      if (a.total < b.total) {
+        return this.sortAscending ? -1 : 1;
+      } else if (a.total > b.total) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
     });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
+  sortOrdersByDate() {
+    this.orders.sort((a, b) => {
+      const dateA = new Date(a.dateCreated);
+      const dateB = new Date(b.dateCreated);
+      if (dateA < dateB) {
+        return this.sortAscending ? -1 : 1;
+      } else if (dateA > dateB) {
+        return this.sortAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+    this.sortAscending = !this.sortAscending;
+    return this.orders;
+  }
+  constructor(
+    private service: OrderService,
+    private authService: AuthService,
+    private Pservice: ProductService,
+    private router: Router
+  ) {}
+  setOrderID(id: string) {
+    this.orderId = id;
+    console.log('Giá trị của orderID:', this.orderId);
   }
 
-  deleteOrder() {
-    // Code to delete the order here
-    if (this.modalRef) {
-      this.modalRef.hide();
+  ViewOrderDetail(id: string) {
+    this.router.navigate(['order-edit/' + id]);
+  }
+  ViewCustomerDetail(id: string) {
+    this.router.navigate(['customer-edit/' + id]);
+  }
+  //search
+  search() {
+    this.foundOrders = [];
+    for (let i = 0; i < this.ordersTemp.length; i++) {
+      const order = this.ordersTemp[i];
+      if (
+        order.id.toLowerCase().includes(this.searchOrder.toLowerCase()) ||
+        order.dateCreated.toLowerCase().includes(this.searchOrder.toLowerCase())
+      ) {
+        this.foundOrders.push(order);
+      }
+    }
+    this.ordersTemp = this.foundOrders;
+    this.orders = this.ordersTemp;
+    this.filterPaymentMethodTemp();
+    this.filterStatusTemp(this.orders);
+  }
+  back() {
+    this.searchOrder = '';
+    this.orders = this.ordersOrigin;
+    this.ordersTemp = this.ordersOrigin;
+    this.filterPaymentMethodTemp();
+    this.filterStatusTemp(this.orders);
+  }
+  //filter order by payment method
+  selectedPayment: string[] = [];
+  filteredOrderByPayment: Order[] = [];
+  filterPaymentMethod(checkboxId: string) {
+    let checkboxElement: HTMLInputElement = document.getElementById(
+      checkboxId
+    ) as HTMLInputElement;
+    if (checkboxElement.checked) {
+      this.selectedPayment.push(checkboxElement.value);
+      if (this.selectedStatus.length == 0) {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+      } else {
+        this.orders = this.ordersTemp;
+        this.filterPaymentMethodTemp();
+        this.filterStatusTemp(this.orders);
+      }
+      // this.filterStatusTemp(this.orders);
+    } else {
+      this.selectedPayment = this.selectedPayment.filter(
+        (item) => item !== checkboxElement.value
+      );
+      if (this.selectedPayment.length == 0) {
+        if (this.selectedStatus.length == 0) {
+          this.orders = this.ordersTemp;
+        } else {
+          this.orders = this.ordersTemp;
+          this.filterStatusTemp(this.orders);
+        }
+      } else {
+        this.filterPaymentMethodTemp();
+        // this.filterStatusTemp(this.orders);
+      }
+    }
+  }
+  filterPaymentMethodTemp() {
+    this.filteredOrderByPayment = [];
+    if (this.selectedPayment.length == 0) {
+      return;
+    } else {
+      for (let i = 0; i < this.ordersTemp.length; i++) {
+        const order = this.ordersTemp[i];
+        for (let j = 0; j < this.selectedPayment.length; j++) {
+          if (
+            order.paymentMethod.toLowerCase() ==
+            this.selectedPayment[j].toLowerCase()
+          ) {
+            this.filteredOrderByPayment.push(order);
+          }
+        }
+      }
+      this.orders = this.filteredOrderByPayment;
     }
   }
 
-  cancelDeleteOrder() {
-    this.orderToDelete = null;
-    if (this.modalRef) {
-      this.modalRef.hide();
+  //filter by status
+  selectedStatus: string[] = [];
+  filteredOrderByStatus: Order[] = [];
+  filterStatus(checkboxId: string) {
+    let checkboxElement: HTMLInputElement = document.getElementById(
+      checkboxId
+    ) as HTMLInputElement;
+    if (checkboxElement.checked) {
+      if (this.selectedPayment.length != 0) {
+        this.selectedStatus.push(checkboxElement.value);
+        this.filterPaymentMethodTemp();
+        this.filterStatusTemp(this.orders);
+      } else {
+        this.selectedStatus.push(checkboxElement.value);
+        this.filterStatusTemp(this.ordersTemp);
+        console.log('test');
+      }
+    } else {
+      this.selectedStatus = this.selectedStatus.filter(
+        (item) => item !== checkboxElement.value
+      );
+      if (this.selectedStatus.length == 0) {
+        if (this.selectedPayment.length == 0) {
+          this.orders = this.ordersTemp;
+        } else {
+          this.filterPaymentMethodTemp();
+        }
+      } else {
+        this.filterStatusTemp(this.orders);
+      }
     }
   }
-
-  //Get orders
+  filterStatusTemp(orders: any) {
+    this.filteredOrderByStatus = [];
+    if (this.selectedStatus.length == 0) {
+      return;
+    } else {
+      console.log('test1');
+      for (let i = 0; i < orders.length; i++) {
+        const order = orders[i];
+        for (let j = 0; j < this.selectedStatus.length; j++) {
+          if (
+            order.status.toLowerCase() == this.selectedStatus[j].toLowerCase()
+          ) {
+            this.filteredOrderByStatus.push(order);
+          }
+        }
+      }
+      this.orders = this.filteredOrderByStatus;
+    }
+  }
 }

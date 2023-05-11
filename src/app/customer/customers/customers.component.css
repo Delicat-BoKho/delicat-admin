@@ -1,15 +1,10 @@
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Kanit", sans-serif;
   color: #e3f2fd;
 }
 .id {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-}
-
-/* Styles for tooltips */
-[data-toggle="tooltip"] {
-  position: relative;
-  cursor: pointer;
+  color: #2196f3;
 }
 
 .container-title {
@@ -26,7 +21,6 @@
 }
 
 table {
-  border-collapse: collapse;
   table-layout: fixed;
 }
 th {
@@ -36,6 +30,7 @@ th {
   font-weight: 700;
   opacity: 0.7;
   text-align: left;
+  text-align: center;
 }
 h6.id {
   margin-bottom: 0 !important;
@@ -48,13 +43,27 @@ tr td .customer-info {
 }
 tr td {
   vertical-align: middle !important;
+  text-align: center;
 }
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+tr td span,
+tr td div div h6,
+tr td div {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
+button {
+  display: inline-block;
+  padding: 0.55em 0.9em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.45rem;
+}
 .btn:hover {
   color: white;
 }
@@ -91,17 +100,29 @@ ul {
   border-radius: 0;
 }
 
-.modal-header {
-  align-self: center;
+.inputbox input {
+  width: 80%;
+  display: inline;
+  text-align: left;
 }
-.modal-title {
-  font-weight: bold;
-  color: black;
+.inputbox fa-icon {
+  font-size: 1.5em;
 }
-.modal-body {
-  align-self: center;
-  color: #1e88e5;
+.sort button fa-icon {
+  color: #7b809a;
+  line-height: 1.25;
+  font-weight: 700;
+  font-size: 1.5em;
+  opacity: 0.7;
 }
-.modal-footer {
-  align-self: center;
+.btn-x {
+  font-size: 1em;
+  position: absolute;
+  right: 155px;
+}
+.btn-x fa-icon {
+  color: #8c90a5;
+}
+.btn-x fa-icon:hover {
+  color: #565969;
 }

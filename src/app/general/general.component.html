@@ -1,1 +1,74 @@
-<p>general works!</p>
+<app-menu></app-menu>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card purple">
+            <span class="card-value">{{ countOrders }}</span>
+            <span class="card-text">Orders</span>
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card grey-dark">
+            <span class="card-value">{{ countCustomers }}</span>
+            <span class="card-text">Customers</span>
+            <fa-icon [icon]="faUser"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card red">
+            <span class="card-value">${{ revenue }}</span>
+            <span class="card-text">Total Sales</span>
+            <fa-icon [icon]="faMoneyBill"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0">
+        <div class="card-body">
+          <div class="kpi-card orange">
+            <span class="card-value">{{ countSoldProducts }}</span>
+            <span class="card-text">Products sold</span>
+            <fa-icon [icon]="faBox"></fa-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <div class="card border-0">
+        <div id="lineChart"></div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card border-0">
+        <div class="card-body chart1" id="chart1"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card border-0">
+        <div class="card-body chart0" id="chart0"></div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0">
+        <div class="card-body chart2" id="chart2"></div>
+      </div>
+    </div>
+  </div>
+</div>

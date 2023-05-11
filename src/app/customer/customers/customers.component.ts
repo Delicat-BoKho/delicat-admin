@@ -1,19 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component } from '@angular/core';
 import { PaginationInstance } from 'ngx-pagination';
-
+import { Router } from '@angular/router';
+import { Customer } from 'src/app/models/customer';
+import { CustomerService } from 'src/app/services/customer.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AuthService } from 'src/app/services/auth.service';
+import { faSearch, faXmark } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent {
-  @ViewChild('deleteConfirmationModal') deleteConfirmationModal: any;
-  modalRef: BsModalRef | null = null;
-
+  faSearch = faSearch;
+  faXmark = faXmark;
   errMessage: string = '';
-  customerToDelete: any;
-
+  customers: any;
+  customerTemp: any;
+  deleteCustomerId: string = '';
+  searchCustomer: string = '';
+  foundCustomers: Customer[] = [];
   // Define pagination
   paginationConfig: PaginationInstance = {
     id: 'customers',
@@ -25,57 +31,59 @@ export class CustomersComponent {
   }
 
   // Sample data
-  customers = [
-    {
-      id: 1,
-      username: 'jdoe',
-      password: '123456',
-      cart: [
-        {
-          id: 1,
-          name: 'Customer 1',
-          price: 100,
-          quantity: 1,
-        },
-        {
-          id: 2,
-          name: 'Customer 2',
-          price: 200,
-          quantity: 2,
-        },
-      ],
-      order: [],
-      wishlist: [],
-      fullName: 'John Doe',
-      phone: '1234567890',
-      email: 'jhon@doe.com ',
-    },
-  ];
 
-  constructor(private modalService: BsModalService) {}
-
+  constructor(
+    private service: CustomerService,
+    private authService: AuthService,
+    private fireStorage: AngularFireStorage,
+    private router: Router
+  ) {}
+  search() {
+    this.foundCustomers = [];
+    for (let i = 0; i < this.customerTemp.length; i++) {
+      const customer = this.customerTemp[i];
+      if (
+        customer.userName
+          .toLowerCase()
+          .includes(this.searchCustomer.toLowerCase()) ||
+        customer.phone
+          .toLowerCase()
+          .includes(this.searchCustomer.toLowerCase()) ||
+        customer.fullName
+          .toLowerCase()
+          .includes(this.searchCustomer.toLowerCase()) ||
+        customer.id.toLowerCase().includes(this.searchCustomer.toLowerCase())
+      ) {
+        this.foundCustomers.push(customer);
+      }
+    }
+    this.customers = this.foundCustomers;
+  }
+  back() {
+    this.searchCustomer = '';
+    this.customers = this.customerTemp;
+  }
   ngOnInit(): void {
     // Code to view all customers here
+    this.authService.checkValidUser();
+    this.getCustomers();
   }
-
-  confirmDeleteCustomer(customer: any): void {
-    this.customerToDelete = customer;
-    this.modalRef = this.modalService.show(this.deleteConfirmationModal, {
-      class: 'modal-dialog-centered',
+  //
+  getCustomers() {
+    this.service.getCustomers().subscribe({
+      next: (res: any) => {
+        this.customerTemp = res;
+        this.customers = this.customerTemp;
+        console.log(this.customers);
+      },
+      error: (err) => {
+        this.errMessage = err;
+        console.log('Error occured while fetching file meta data');
+      },
     });
   }
 
-  deleteCustomer() {
-    // Code to delete the customer here
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
-  }
-
-  cancelDeleteCustomer() {
-    this.customerToDelete = null;
-    if (this.modalRef) {
-      this.modalRef.hide();
-    }
+  viewDetailCustomer(id: string) {
+    this.router.navigate(['customer-edit/' + id]);
   }
 }

@@ -1,10 +1,12 @@
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Kanit", sans-serif;
   margin-bottom: 5px;
 }
 
-.id {
+.id,
+.table-striped .id {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  color: #1565c0;
 }
 
 .container-title {
@@ -69,4 +71,8 @@ button {
 }
 .badge.other {
   background-image: linear-gradient(195deg, #747b8a, #495361);
+}
+img {
+  width: 60px;
+  height: auto;
 }

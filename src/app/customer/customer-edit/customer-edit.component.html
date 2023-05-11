@@ -1,13 +1,12 @@
+<app-menu></app-menu>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
       <div class="card my-4">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="container-title">
-            <h1 class="title">
-              Customer
-              <span class="id fw-bold text-danger id">#{{ customer.id }}</span>
-            </h1>
+            <h1 class="title">Customer {{ customer.fullName }}</h1>
           </div>
         </div>
         <div class="card-body px-0 pb-2 px-4">
@@ -21,6 +20,7 @@
                   id="id"
                   placeholder="Enter customer ID"
                   [(ngModel)]="customer.id"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
@@ -30,6 +30,7 @@
                   class="form-control"
                   id="name"
                   [(ngModel)]="customer.fullName"
+                  disabled
                 />
               </div>
             </div>
@@ -41,7 +42,8 @@
                   class="form-control"
                   id="username"
                   placeholder="Enter customer username"
-                  [(ngModel)]="customer.username"
+                  [(ngModel)]="customer.userName"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
@@ -52,73 +54,23 @@
                   id="phone"
                   placeholder="Enter customer number"
                   [(ngModel)]="customer.phone"
+                  disabled
                 />
               </div>
             </div>
             <div class="row">
-              <div class="form-group col-6">
-                <label for="password">Password</label>
-                <input
-                  type="{{ showPassword ? 'text' : 'password' }}"
-                  class="form-control"
-                  id="password"
-                  disabled
-                  [(ngModel)]="customer.password"
-                />
-                <div class="form-check">
-                  <label for="showPassword" class="form-check-label"
-                    >Show password</label
-                  >
-                  <input
-                    id="showPassword"
-                    type="checkbox"
-                    class="form-check-input"
-                    (change)="togglePassword()"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-6">
+              <div class="form-group col-12">
                 <label for="address">Address</label>
                 <div>
                   <textarea
                     class="form-control"
                     id="address"
                     [ngModel]="customer.address"
+                    disabled
                   >
                   </textarea>
                 </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="cart">Cart</label>
-              <table class="table table-responsive table-striped">
-                <thead>
-                  <tr>
-                    <th colspan="1">Product ID</th>
-                    <th colspan="2">Name</th>
-                    <th colspan="2">Specifications</th>
-                    <th colspan="1">Quantity</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of customer.cart">
-                    <td class="id">#{{ item.id }}</td>
-                    <td colspan="2">{{ item.name }}</td>
-                    <td colspan="2">{{ item.specifications }}</td>
-                    <td colspan="1">
-                      <input
-                        type="number"
-                        class="form-control"
-                        [(ngModel)]="item.quantity"
-                      />
-                    </td>
-                    <td>
-                      <button class="btn btn-info btn-sm">Details</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
             <div class="form-group">
               <label for="order">Order</label>
@@ -133,76 +85,116 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customer.order">
-                    <td class="id">#{{ item.id }}</td>
-                    <td colspan="2">{{ item.date }}</td>
+                  <tr *ngFor="let order of orders">
+                    <td class="id">#{{ order.id }}</td>
+                    <td colspan="2">{{ order.dateCreated }}</td>
                     <td colspan="2">
                       <input
                         type="number"
                         class="form-control"
-                        [(ngModel)]="item.total"
+                        [(ngModel)]="order.total"
+                        disabled
                       />
                     </td>
                     <td>
                       <span
                         class="badge"
                         [ngClass]="{
-                          pending: item.status === 'pending',
-                          dispatched: item.status === 'dispatched',
-                          completed: item.status === 'completed',
+                          pending: order.status === 'pending',
+                          dispatched: order.status === 'dispatched',
+                          completed: order.status === 'completed',
                           other: ![
                             'pending',
                             'dispatched',
                             'completed'
-                          ].includes(item.status)
+                          ].includes(order.status)
                         }"
                       >
-                        {{ item.status }}
+                        {{ order.status }}
                       </span>
                     </td>
                     <td>
-                      <button class="btn btn-info btn-sm">Details</button>
+                      <button
+                        class="btn btn-info"
+                        (click)="viewOrderDetail(order.id)"
+                      >
+                        Details
+                      </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div class="form-group">
+              <label for="cart">Cart</label>
+              <table class="table table-responsive table-striped">
+                <thead>
+                  <tr>
+                    <th>Product ID</th>
+                    <th>Image</th>
+                    <th colspan="2">Name</th>
+                    <th colspan="2">Specifications</th>
+                    <th>Quantity</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of productLineShow">
+                    <td class="id">#{{ item.id }}</td>
+                    <td>
+                      <img [src]="item.imgURL" alt="{{ item.name }}" />
+                    </td>
+                    <td colspan="2">{{ item.name }}</td>
+                    <td colspan="2">{{ item.describeProductLine }}</td>
+                    <td>
+                      <input
+                        type="number"
+                        class="form-control text-center"
+                        [(ngModel)]="item.quantity"
+                        disabled
+                        style="width: 80%"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-info"
+                        (click)="viewProductDetail(item.id)"
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-group">
               <label for="wishlist">Wishlist</label>
               <table class="table table-responsive table-striped">
                 <thead>
                   <tr>
                     <th colspan="1">Product ID</th>
+                    <th>Image</th>
                     <th colspan="2">Name</th>
-                    <th colspan="2">Specifications</th>
-                    <th colspan="1">Quantity</th>
-                    <th></th>
+                    <th colspan="2">Price</th>
+                    <th colspan="2"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of customer.wishlist">
-                    <td class="id">#{{ item.id }}</td>
-                    <td colspan="2">{{ item.name }}</td>
-                    <td colspan="2">{{ item.specifications }}</td>
-                    <td colspan="1">
-                      <input
-                        type="number"
-                        class="form-control"
-                        [(ngModel)]="item.quantity"
-                      />
-                    </td>
+                  <tr *ngFor="let product of productDetailinWishlist">
+                    <td class="id">#{{ product.id }}</td>
                     <td>
-                      <button class="btn btn-info btn-sm">Details</button>
+                      <img [src]="product.imgURL" alt="{{ product.name }}" />
                     </td>
+                    <td colspan="2">{{ product.name }}</td>
+                    <td colspan="2">{{ product.price }}</td>
+                    <td colspan="2"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-primary mx-3" (click)="onSave()">
-              Save Change
-            </button>
             <button class="btn btn-danger" (click)="goBack()">Go Back</button>
           </div>
         </div>

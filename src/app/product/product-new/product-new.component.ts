@@ -1,17 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, forkJoin, switchMap, Observable } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { Comment } from 'src/app/models/comment';
 import { object } from '@angular/fire/database';
+import { AuthService } from 'src/app/services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-new',
   templateUrl: './product-new.component.html',
   styleUrls: ['./product-new.component.css'],
 })
-export class ProductNewComponent {
+export class ProductNewComponent implements OnInit {
   selectedFiles!: FileList;
   currentFileUpload: any;
   percentage: number = 0;
@@ -21,18 +23,22 @@ export class ProductNewComponent {
   sizetemp: string = '';
   colortemp: string = '';
   reviewTemp = new Comment();
-  productIdsss = ['A001', 'A002', 'A003'];
   listProduct: Array<Product> = [];
+
+  @Input() editorConfig: any;
 
   constructor(
     private service: ProductService,
-    private fireStorage: AngularFireStorage
+    private authservice: AuthService,
+    private fireStorage: AngularFireStorage,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     // this.getProducts();
     // this.getProductByIds();
     console.log(this.listProduct);
+    this.authservice.checkValidUser();
   }
 
   selectFile(event: any) {
@@ -86,35 +92,6 @@ export class ProductNewComponent {
     this.percentage = 0;
   }
 
-  getProducts() {
-    this.service.getProducts().subscribe({
-      next: (res: any) => {
-        this.products = res;
-      },
-      error: (err) => {
-        this.errMessage = err;
-        console.log('Error occured while fetching file meta data');
-      },
-    });
-  }
-  /////
-  // getProductByIds() {
-  //   for (let i = 0; i < this.productIdsss.length; i++) {
-  //     this.service
-  //       .getProduct(this.productIdsss[i])
-  //       .subscribe((p) => this.listProduct.push(p));
-  //   }
-  // }
-
-  ////
-  //không xóa được hình lưu trong storage
-  deleteProduct(product: Product) {
-    if (window.confirm('Are you sure you want to delete ' + '?')) {
-      this.service.deleteProduct(product);
-      // this.ngOnInit();
-    }
-  }
-
   updateProduct(product: Product) {
     if (window.confirm('Are you sure you want to update ' + '?')) {
       this.service.saveMetaDataOfFile(product);
@@ -123,6 +100,7 @@ export class ProductNewComponent {
     }
   }
 
-  cancel() {}
-  createProduct() {}
+  goBack(): void {
+    this.location.back();
+  }
 }

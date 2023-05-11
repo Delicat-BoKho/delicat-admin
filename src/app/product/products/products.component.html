@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -5,25 +7,132 @@
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
           <div class="container-title">
             <h1 class="title">Products</h1>
-            <div class="text-center">
-              <button class="btn btn-outline-success" routerLink="/product-new">
-                Create New Product
-              </button>
-            </div>
           </div>
         </div>
         <div class="card-body px-0 pb-2">
+          <div class="inputbox p-0 m-3 text-center">
+            <input
+              type="text"
+              class="form-control mx-1"
+              placeholder="Search by product name ..."
+              [(ngModel)]="searchProduct"
+            />
+            <button
+              class="btn btn-info"
+              (click)="search()"
+              style="font-size: 0.8em"
+            >
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </button>
+            <button class="btn-x" (click)="back()" *ngIf="searchProduct">
+              <fa-icon [icon]="faXmark"></fa-icon>
+            </button>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="form-check col-2">
+              Filter by Type
+              <br />
+              <input
+                type="checkbox"
+                id="suit"
+                name="suit"
+                value="suit"
+                class="form-check-input"
+                (click)="filterTypeProducts('suit')"
+              />
+              <label for="suit"> suit</label> <br />
+              <input
+                type="checkbox"
+                id="accessories"
+                name="accessories"
+                value="accessories"
+                class="form-check-input"
+                (click)="filterTypeProducts('accessories')"
+              />
+              <label for="accessories">accessories</label> <br />
+            </div>
+            <div class="form-check col-2">
+              Accessories Tags
+              <br />
+              <input
+                type="checkbox"
+                id="hats"
+                name="hats"
+                value="hats"
+                class="form-check-input"
+                (click)="filterTagProducts('hats')"
+              />
+              <label for="hats"> hats</label><br />
+              <input
+                type="checkbox"
+                id="scarves"
+                name="scarves"
+                value="scarves"
+                class="form-check-input"
+                (click)="filterTagProducts('scarves')"
+              />
+              <label for="scarves">scarves</label><br />
+              <input
+                type="checkbox"
+                id="shoes"
+                name="shoes"
+                value="shoes"
+                class="form-check-input"
+                (click)="filterTagProducts('shoes')"
+              />
+              <label for="shoes">shoes</label><br />
+              <input
+                type="checkbox"
+                id="ties"
+                name="ties"
+                value="ties"
+                class="form-check-input"
+                (click)="filterTagProducts('ties')"
+              />
+              <label for="shoes">ties</label><br />
+            </div>
+            <div class="form-check col-2">
+              Suit Tags
+              <br />
+              <input
+                type="checkbox"
+                id="suits"
+                name="suits"
+                value="suits"
+                class="form-check-input"
+                (click)="filterTagProducts('suits')"
+              />
+              <label for="suits"> suits</label><br />
+              <input
+                type="checkbox"
+                id="trousers"
+                name="trousers"
+                value="trousers"
+                class="form-check-input"
+                (click)="filterTagProducts('trousers')"
+              />
+              <label for="trousers">Trousers</label><br />
+            </div>
+          </div>
+
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0 table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th colspan="2">Name</th>
-                  <th>Type</th>
-                  <th>Price</th>
-                  <th>Tag</th>
-                  <th>Size</th>
-                  <th>Color</th>
+                  <th colspan="4">Name</th>
+                  <th colspan="2">Image</th>
+                  <th colspan="2">Type</th>
+                  <th colspan="2" class="sort">
+                    Price
+                    <button class="btn" (click)="sortProductsByPrice()">
+                      <fa-icon [icon]="faSort"></fa-icon>
+                    </button>
+                  </th>
+                  <th colspan="2">Tag</th>
+                  <th colspan="2">Size</th>
+                  <th colspan="2">Color</th>
                   <th></th>
                 </tr>
               </thead>
@@ -33,44 +142,49 @@
                 >
                   <td>
                     <div class="d-flex px-2 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="id text-primary">#{{ product.id }}</h6>
-                      </div>
+                      <div class="id text-primary">#{{ product.id }}</div>
                     </div>
                   </td>
-                  <td colspan="2">
-                    <span class="product-info text-xs font-weight-bold mb-0">
+                  <td colspan="4">
+                    <span class="product-info">
                       {{ product.name }}
                     </span>
                   </td>
-
-                  <td>
+                  <td colspan="2">
+                    <img [src]="product.imgURL" alt="{{ product.name }}" />
+                  </td>
+                  <td colspan="2">
                     <span class="product-info">
                       {{ product.type }}
                     </span>
                   </td>
-                  <td>
+                  <td colspan="2">
                     <span class="product-info">
                       {{ product.price | currency }}
                     </span>
                   </td>
-                  <td>
+                  <td colspan="2">
                     <span class="product-info">
                       {{ product.tag }}
                     </span>
                   </td>
-                  <td>
+                  <td colspan="2">
                     <span class="product-info">
                       {{ product.size }}
                     </span>
                   </td>
-                  <td>
+                  <td colspan="2">
                     <span class="product-info">
                       {{ product.color }}
                     </span>
                   </td>
-                  <td>
-                    <button class="btn btn-info btn-sm mx-1">Edit</button>
+                  <td colspan="2">
+                    <button
+                      class="btn btn-info btn-sm mx-1"
+                      (click)="getProduct(product.id)"
+                    >
+                      Details
+                    </button>
 
                     <button
                       class="btn btn-danger btn-sm"
@@ -79,6 +193,38 @@
                       Delete
                     </button>
                   </td>
+                  <ng-template #deleteConfirmationModal>
+                    <div class="modal-header">
+                      <h5 class="modal-title">Delete Confirmation</h5>
+                      <button
+                        type="button"
+                        class="close"
+                        aria-label="Close"
+                        (click)="cancelDeleteProduct()"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this product?
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        (click)="deleteProduct(product)"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="cancelDeleteProduct()"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </ng-template>
                 </tr>
               </tbody>
             </table>
@@ -99,29 +245,3 @@
 </div>
 
 <!-- delete confirmation modal -->
-<ng-template #deleteConfirmationModal>
-  <div class="modal-header">
-    <h5 class="modal-title">Delete Confirmation</h5>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="cancelDeleteProduct()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">Are you sure you want to delete this product?</div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="deleteProduct()">
-      Yes
-    </button>
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancelDeleteProduct()"
-    >
-      No
-    </button>
-  </div>
-</ng-template>

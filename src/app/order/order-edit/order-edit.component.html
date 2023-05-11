@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -6,7 +8,7 @@
           <div class="container-title">
             <h1 class="title">
               Order
-              <span class="id fw-bold text-danger">{{ order.id }}</span>
+              <span class="id">#{{ order.id }}</span>
             </h1>
             <div class="text-center">
               <button class="btn btn-secondary" (click)="toggleEdit()">
@@ -35,7 +37,7 @@
                   type="text"
                   class="form-control"
                   id="customerId"
-                  [(ngModel)]="order.customerID"
+                  [(ngModel)]="order.customerId"
                   disabled
                 />
               </div>
@@ -47,7 +49,7 @@
                 class="form-control"
                 id="orderDate"
                 placeholder="Enter order date"
-                [(ngModel)]="order.date"
+                [(ngModel)]="order.dateCreated"
                 disabled
               />
             </div>
@@ -90,24 +92,39 @@
                   <tr>
                     <th colspan="1">Product ID</th>
                     <th colspan="3">Name</th>
-                    <th>Tag</th>
-                    <th>Type</th>
-                    <th>Color</th>
-                    <th>Size</th>
-                    <th>Quantity</th>
-                    <th>Line Total</th>
+                    <th colspan="2">Specifications</th>
+                    <th colspan="1">Quantity</th>
+                    <th colspan="1">Unit Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let product of order.products">
-                    <td>{{ product.id }}</td>
+                  <tr *ngFor="let product of productLineShow">
+                    <td colspan="1">{{ product.id }}</td>
                     <td colspan="3">{{ product.name }}</td>
-                    <td>{{ product.tag }}</td>
-                    <td>{{ product.type }}</td>
-                    <td>{{ product.color }}</td>
-                    <td>{{ product.size }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td>{{ product.linetotal }}</td>
+                    <td colspan="2">{{ product.describeProductLine }}</td>
+                    <td colspan="1">
+                      <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="product.quantity"
+                      />
+                    </td>
+                    <td colspan="1">
+                      <input
+                        type="number"
+                        class="form-control"
+                        [(ngModel)]="product.unitPrice"
+                      />
+                    </td>
+                    <td colspan="1">
+                      <button
+                        type="button"
+                        class="btn btn-info btn-sm mx-1"
+                        (click)="viewProductDetail(product.id)"
+                      >
+                        Details
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -116,13 +133,12 @@
             <div class="form-group">
               <label for="deliveryAddress">Delivery Address</label>
               <div class="test">
-                <textarea
+                <input
                   class="form-control"
-                  id="deliveryAddress"
-                  [ngModel]="order.deliveryAddress"
+                  id="address"
+                  [(ngModel)]="order.deliveryAddress"
                   [disabled]="!editable"
-                >
-                </textarea>
+                />
               </div>
             </div>
             <div class="form-group">
@@ -137,12 +153,13 @@
               />
             </div>
             <div class="card-footer text-center">
-              <button class="btn btn-primary mx-3" (click)="onSave()">
+              <button
+                class="btn btn-info mx-3"
+                (click)="confirmSaveChanges(order)"
+              >
                 Save Change
               </button>
-              <button class="btn btn-primary" (click)="goBack()">
-                Go Back
-              </button>
+              <button class="btn btn-danger" (click)="goBack()">Go Back</button>
             </div>
           </div>
         </div>
@@ -150,3 +167,22 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<ng-template #saveChangesConfirmationModal>
+  <div class="modal-header">
+    <h5 class="modal-title">Save Changes Confirmation?</h5>
+    <button type="button" class="close" aria-label="Close" (click)="cancel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">Are you sure you want to update this order?</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onSave(order)">
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">
+      No
+    </button>
+  </div>
+</ng-template>

@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <div class="container py-4">
   <div class="row">
     <div class="col-12">
@@ -8,144 +10,238 @@
           </div>
         </div>
         <div class="card-body px-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0 table-striped">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Order Date</th>
-                  <th>Customer ID</th>
-                  <th>Payment Method</th>
-                  <th>Products & Quantity</th>
-                  <th>Status</th>
-                  <th>Delivery Address</th>
-                  <th>Order Total</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let order of orders | paginate : paginationConfig">
-                  <td>
-                    <div class="d-flex px-2 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="id text-primary">{{ order.id }}</h6>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span class="order-info text-xs font-weight-bold mb-0">
-                      {{ order.Date }}
-                    </span>
-                  </td>
-                  <td class="text-center">
-                    <a
-                      class="order-info mb-0 id"
-                      routerLink="/customer/{{ order.CustomerID }}"
-                    >
-                      {{ order.CustomerID }}
-                    </a>
-                  </td>
-                  <td class="text-center">
-                    <span class="order-info">
-                      {{ order.PaymentMethod }}
-                    </span>
-                  </td>
-                  <td class="text-center">
-                    <ul>
-                      <li
-                        class="order-info id"
-                        #p
-                        *ngFor="let product of order.SaleProducts"
-                        [attr.data-toggle]="'tooltip'"
-                        [attr.title]="product.ProductID"
+          <div class="inputbox p-0 m-3 text-center">
+            <input
+              type="text"
+              class="form-control mx-1"
+              placeholder="Search ..."
+              [(ngModel)]="searchOrder"
+            />
+            <button
+              class="btn btn-info"
+              (click)="search()"
+              style="font-size: 0.8em"
+            >
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </button>
+            <button class="btn-x" (click)="back()" *ngIf="searchOrder">
+              <fa-icon [icon]="faXmark"></fa-icon>
+            </button>
+          </div>
+          <div class="row justify-content-center">
+            <div class="form-check col-2">
+              Status
+              <br />
+              <input
+                type="checkbox"
+                id="pending"
+                name="pending"
+                value="pending"
+                class="form-check-input"
+                (click)="filterStatus('pending')"
+              />
+              <label for="pending">Pending</label> <br />
+              <input
+                type="checkbox"
+                id="dispatched"
+                name="dispatched"
+                value="dispatched"
+                class="form-check-input"
+                (click)="filterStatus('dispatched')"
+              />
+              <label for="dispatched" class="lableltxtBox">dispatched</label>
+              <br />
+
+              <input
+                type="checkbox"
+                id="completed"
+                name="completed"
+                value="completed"
+                class="form-check-input"
+                (click)="filterStatus('completed')"
+              />
+              <label for="completed" class="lableltxtBox">completed</label>
+              <br />
+              <input
+                type="checkbox"
+                id="cancelled"
+                name="cancelled"
+                value="cancelled"
+                class="form-check-input"
+                (click)="filterStatus('cancelled')"
+              />
+              <label for="cancelled" class="lableltxtBox">cancelled</label>
+              <br />
+            </div>
+            <div class="form-check col-2">
+              Payment Method
+              <br />
+              <input
+                type="checkbox"
+                id="creditCart"
+                name="creditCart"
+                value="Credit Card"
+                class="form-check-input"
+                (click)="filterPaymentMethod('creditCart')"
+              />
+              <label for="creditCart"> Credit Card</label><br />
+
+              <input
+                type="checkbox"
+                id="Paypal"
+                name="Paypal"
+                value="Paypal"
+                class="form-check-input"
+                (click)="filterPaymentMethod('Paypal')"
+              />
+              <label for="Paypal">Paypal</label><br />
+            </div>
+
+            <div class="table-responsive">
+              <table class="table align-items-center mb-0 table-striped">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th class="sort">
+                      Order Date
+                      <button class="btn" (click)="sortOrdersByDate()">
+                        <fa-icon [icon]="faSort"></fa-icon>
+                      </button>
+                    </th>
+                    <th>Customer ID</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th colspan="2">Delivery Address</th>
+                    <th class="sort">
+                      Order Total
+                      <button class="btn" (click)="sortOrdersByTotal()">
+                        <fa-icon [icon]="faSort"></fa-icon>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let order of orders | paginate : paginationConfig"
+                  >
+                    <td>
+                      <h6
+                        class="id"
+                        style="
+                          display: block;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          cursor: pointer;
+                        "
                       >
-                        <!-- {{ getProduct(product.ProductID) }} -->
-                        {{ product.ProductID }} |
-                        {{ product.ProductName }}
-                        ({{ product.Description }}) ({{ product.Quantity }})
-                      </li>
-                    </ul>
-                  </td>
-                  <td class="text-center text-sm">
-                    <span
-                      class="badge"
-                      [ngClass]="{
-                        pending: order.Status === 'pending',
-                        dispatched: order.Status === 'dispatched',
-                        completed: order.Status === 'completed',
-                        other: !['pending', 'dispatched', 'completed'].includes(
-                          order.Status
-                        )
-                      }"
-                    >
-                      {{ order.Status }}
-                    </span>
-                  </td>
-                  <td>
-                    <span class="order-info">
-                      {{ order.DeliveryAddress }}
-                    </span>
-                  </td>
-                  <td class="text-center">
-                    <span class="order-info">
-                      {{ order.Total | currency }}
-                    </span>
-                  </td>
-                  <td>
-                    <button class="btn btn-info btn-sm">Edit</button>
-                  </td>
-                  <td>
-                    <button
-                      class="btn btn-danger btn-sm"
-                      (click)="confirmDeleteOrder(order)"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                        #{{ order.id }}
+                      </h6>
+                    </td>
+                    <td>
+                      <span
+                        class="order-info text-xs font-weight-bold mb-0"
+                        style="
+                          display: block;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          cursor: pointer;
+                        "
+                      >
+                        {{ order.dateCreated }}
+                      </span>
+                    </td>
+                    <td class="text-center customer-id">
+                      <a
+                        class="order-info mb-0 id"
+                        (click)="ViewCustomerDetail(order.customerId)"
+                        style="
+                          display: block;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          cursor: pointer;
+                        "
+                      >
+                        #{{ order.customerId }}
+                      </a>
+                    </td>
+                    <td class="text-center">
+                      <span class="order-info">
+                        {{ order.paymentMethod }}
+                      </span>
+                    </td>
+
+                    <td class="text-center text-sm">
+                      <span
+                        class="badge"
+                        [ngClass]="{
+                          pending: order.status === 'pending',
+                          dispatched: order.status === 'dispatched',
+                          completed: order.status === 'completed',
+                          other: ![
+                            'pending',
+                            'dispatched',
+                            'completed'
+                          ].includes(order.status)
+                        }"
+                      >
+                        {{ order.status }}
+                      </span>
+                    </td>
+                    <td colspan="2">
+                      <span
+                        class="order-info"
+                        style="
+                          display: block;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          cursor: pointer;
+                        "
+                      >
+                        {{ order.deliveryAddress }}
+                      </span>
+                    </td>
+                    <td class="text-center">
+                      <span
+                        class="order-info"
+                        style="
+                          display: block;
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          cursor: pointer;
+                        "
+                      >
+                        {{ order.total | currency }}
+                      </span>
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-info btn-sm mx-1"
+                        (click)="ViewOrderDetail(order.id)"
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="d-flex justify-content-center my-3">
-  <pagination-controls
-    id="orders"
-    previousLabel="Previous"
-    nextLabel="Next"
-    (pageChange)="onPageChange($event)"
-  ></pagination-controls>
+  <div class="d-flex justify-content-center my-3">
+    <pagination-controls
+      id="orders"
+      previousLabel="Previous"
+      nextLabel="Next"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
+  </div>
 </div>
-
-<!-- delete confirmation modal -->
-<ng-template #deleteConfirmationModal>
-  <div class="modal-header">
-    <h5 class="modal-title">Delete Confirmation</h5>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="cancelDeleteOrder()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">Are you sure you want to delete this order?</div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="deleteOrder()">
-      Yes
-    </button>
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancelDeleteOrder()"
-    >
-      No
-    </button>
-  </div>
-</ng-template>

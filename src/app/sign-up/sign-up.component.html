@@ -1,0 +1,19 @@
+<app-menu></app-menu>
+
+<p>create acc for admin</p>
+<div>
+  <label for="">username Addmin</label>
+</div>
+<input type="text" placeholder="userName" #user [(ngModel)]="userName" />
+<div>
+  <label for="">passwword Addmin</label>
+</div>
+<input type="text" placeholder="passWord" #pass [(ngModel)]="password" />
+<br />
+<button (click)="signUp()">Sign up</button>
+<p>
+  {{ userName }}
+</p>
+<p>
+  {{ password }}
+</p>

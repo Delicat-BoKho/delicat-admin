@@ -1,21 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Content } from 'src/app/models/content';
+import { AuthService } from 'src/app/services/auth.service';
 import { ContentService } from 'src/app/services/content.service';
+import { finalize } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-content-edit',
   templateUrl: './content-edit.component.html',
   styleUrls: ['./content-edit.component.css'],
 })
-export class ContentEditComponent {
+export class ContentEditComponent implements OnInit {
+  @ViewChild('saveChangesConfirmationModal') saveChangesConfirmationModal: any;
+  modalRef: BsModalRef | null = null;
   selectedFile!: FileList;
   percentage: number = 0;
   editable: boolean = false;
   content: any;
-
+  contentTemp = new Content();
   // Define angular-editor configurations
   editorConfig: AngularEditorConfig = {
     editable: false,
@@ -25,12 +31,18 @@ export class ContentEditComponent {
     placeholder: 'Enter text here...',
     toolbarHiddenButtons: [['insertImage', 'insertVideo', 'fontName']],
   };
-
+  ngOnInit(): void {
+    // Code to view all products here
+    this.authService.checkValidUser();
+  }
   constructor(
+    private modalService: BsModalService,
     private cService: ContentService,
+    private authService: AuthService,
     private fireStorage: AngularFireStorage,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private location: Location
   ) {
     activateRoute.paramMap.subscribe((param) => {
       let id = param.get('id');
@@ -64,6 +76,7 @@ export class ContentEditComponent {
     this.cService.getContentById(id).subscribe({
       next: (data) => {
         this.content = data;
+        this.contentTemp = this.content;
         this.content.date = this.convertToDate(this.content.date)
           .toISOString()
           .slice(0, 10);
@@ -93,45 +106,68 @@ export class ContentEditComponent {
     this.selectedFile = event.target.files;
   }
 
-  async updateContent() {
+  async updateLoadFileContent() {
     const id = this.content.id;
-
+    const promises = [];
     let url: string;
     if (this.selectedFile && this.selectedFile.length > 0) {
-      const file = this.selectedFile[0];
-      const filePath = `content/${id}/${file.name}`;
-      const fileRef = this.fireStorage.ref(filePath);
-      try {
-        // Start the upload task and get the upload percentage
-        const task = this.fireStorage.upload(filePath, file);
-        task.percentageChanges().subscribe((percentage) => {
-          this.percentage = percentage ?? 0; // Use 0 if percentage is undefined
-        });
-        // Wait for the upload to complete and get the download URL
-        await task;
-        url = await fileRef.getDownloadURL().toPromise();
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        return;
-      }
-    } else {
-      // If no file is selected, get the download URL of the existing image
-      const existingRef = this.fireStorage.ref(this.content.img);
-      url = await existingRef.getDownloadURL().toPromise();
+      const path = 'content/' + this.selectedFile[0].name;
+      const fileRef = this.fireStorage.ref(path);
+      const uploadTask = fileRef.put(this.selectedFile[0]);
+      const promise = new Promise((resolve, reject) => {
+        uploadTask
+          .snapshotChanges()
+          .pipe(
+            finalize(() => {
+              fileRef.getDownloadURL().subscribe((downloadLink) => {
+                this.content.img = downloadLink;
+                resolve(undefined);
+              }, reject);
+            })
+          )
+          .subscribe({
+            next: (res: any) => {
+              this.percentage = (res.bytesTransferred * 100) / res.totalBytes;
+            },
+            error: (err) => {
+              console.log('Error occurred');
+              reject(err);
+            },
+          });
+      });
+      promises.push(promise);
     }
     // Update the content object with the download URL and create the new content document
-    this.content.img = url;
+    await Promise.all(promises);
     this.content.date = this.formatDate(this.content.date);
     await this.cService.createNewContent(this.content);
     console.log('Content updated successfully!');
-    this.resetForm();
   }
 
-  cancel() {
-    this.router.navigate(['/contents']);
+  goBack(): void {
+    this.location.back();
   }
 
   resetForm() {
     this.content = new Content();
+  }
+
+  confirmSaveChanges(content: Content) {
+    this.content = content;
+    this.modalRef = this.modalService.show(this.saveChangesConfirmationModal, {
+      class: 'modal-dialog-centered',
+    });
+  }
+
+  updateContent(content: Content) {
+    this.cService.updateContent(content);
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
+  }
+  cancel() {
+    if (this.modalRef) {
+      this.modalRef.hide();
+    }
   }
 }
