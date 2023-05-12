@@ -17,7 +17,7 @@ export class ProductService {
   saveMetaDataOfFile(product: Product) {
     //Tạo một document có id tương tự như id nhập tay
     //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
-    const myDoc = this.fireStore.collection('/ProductTemp').doc(product.id);
+    const myDoc = this.fireStore.collection('/Product').doc(product.id);
     //Tạo subcollection cho mảng reviews
 
     //Tạo một file json vì firebase chỉ nhận data dạng json, không nhận dạng class nên ko đẩy trực tiếp được
@@ -47,7 +47,7 @@ export class ProductService {
   // dislpay products
   getProducts() {
     return this.fireStore
-      .collection('/ProductTemp')
+      .collection('/Product')
       .snapshotChanges()
       .pipe(
         map((products) => {
@@ -55,7 +55,7 @@ export class ProductService {
             const data = product.payload.doc.data() as Product;
             const id = product.payload.doc.id;
             return this.fireStore
-              .collection('/ProductTemp')
+              .collection('/Product')
               .doc(id)
               .collection('reviews')
               .get()
@@ -76,7 +76,7 @@ export class ProductService {
   // display one product
 
   getProduct(id: string): Observable<Product> {
-    const productDoc = this.fireStore.collection('/ProductTemp').doc(id);
+    const productDoc = this.fireStore.collection('/Product').doc(id);
     const product = productDoc.valueChanges() as Observable<Product>;
     const reviews = productDoc.collection<any>('reviews').valueChanges();
     return combineLatest([product, reviews]).pipe(
@@ -89,9 +89,9 @@ export class ProductService {
 
   // delete products
   async deleteProduct(id: string) {
-    const productDocRef = this.fireStore.collection('/ProductTemp').doc(id).ref;
+    const productDocRef = this.fireStore.collection('/Product').doc(id).ref;
     const reviewsCollectionRef = this.fireStore
-      .collection('/ProductTemp')
+      .collection('/Product')
       .doc(id)
       .collection('reviews').ref;
 
@@ -113,7 +113,7 @@ export class ProductService {
   updateProduct(product: Product) {
     //Tạo một document có id tương tự như id nhập tay
     //Đẩy cùng id thì nó sẽ tự động ghi đè dữ liệu
-    const myDoc = this.fireStore.collection('/ProductTemp').doc(product.id);
+    const myDoc = this.fireStore.collection('/Product').doc(product.id);
     //Tạo subcollection cho mảng reviews
     const subCollection = myDoc
       .collection('reviews')
@@ -146,14 +146,14 @@ export class ProductService {
 
   getProductsByIds(productIdss: string[]) {
     return this.fireStore
-      .collection<Product>('/ProductTemp', (ref) =>
+      .collection<Product>('/Product', (ref) =>
         ref.where('id', 'in', productIdss)
       )
       .valueChanges();
   }
   getProductsByIds1(productIdss: string[]): Observable<Product[]> {
     return this.fireStore
-      .collection<Product>('/ProductTemp', (ref) =>
+      .collection<Product>('/Product', (ref) =>
         ref.where('id', 'in', productIdss)
       )
       .valueChanges();
